@@ -10,7 +10,6 @@ function Admin() {
               <ViewMedAll />
             </div>
         </div>
-
       </div>
   );
 }

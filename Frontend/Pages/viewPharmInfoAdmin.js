@@ -1,7 +1,7 @@
 import Sidebar from '../Components/Sidebar.js';
 import PharmTable from '../Components/PharmTable.js';
 
-function viewPharmInfoAdmin() {
+function ViewPharmInfoAdmin() {
     return(
         <div>
           <div id="outer-container">
@@ -15,4 +15,4 @@ function viewPharmInfoAdmin() {
     );
   }
   
-  export default viewPharmInfoAdmin;
+  export default ViewPharmInfoAdmin;

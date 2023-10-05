@@ -2,83 +2,28 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import {
   Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   IconButton,
-  MenuItem,
-  Stack,
-  TextField,
   Tooltip,
 } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
+import { Delete } from '@mui/icons-material';
 
-// Import 'makeData', 'data', and 'states' if they are not declared elsewhere.
-import { makeData, data, states } from './makePatientData';
+import {data} from './makePatientData';
 
 const PatientTable = () => {
-  const [tableData, setTableData] = useState(data);
-  const [validationErrors, setValidationErrors] = useState({});
-
-  const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
-    if (!Object.keys(validationErrors).length) {
-      const updatedData = [...tableData];
-      updatedData[row.index] = values;
-      // Send/receive API updates here if needed.
-      setTableData(updatedData);
-      exitEditingMode(); // Required to exit editing mode and close the modal.
-    }
-  };
-
-  const handleCancelRowEdits = () => {
-    setValidationErrors({});
-  };
+  const [tableData, setTableData] = useState(() => data);
 
   const handleDeleteRow = useCallback(
     (row) => {
       if (
-        !window.confirm(`Are you sure you want to delete ${row.username}`)
+        window.confirm(`Are you sure you want to delete ${row.getValue('username')}`)
       ) {
-        return;
+        // Send an API delete request here, then update the local table data for re-render
+        const updatedData = [...tableData];
+        updatedData.splice(row.index, 1);
+        setTableData(updatedData);
       }
-      // Send API delete request here if needed.
-      const updatedData = [...tableData];
-      updatedData.splice(row.index, 1);
-      setTableData(updatedData);
     },
     [tableData],
-  );
-
-  const getCommonEditTextFieldProps = useCallback(
-    (cell) => {
-      return {
-        error: !!validationErrors[cell.id],
-        helperText: validationErrors[cell.id],
-        onBlur: (event) => {
-          const isValid =
-            cell.column.id === 'email'
-              ? validateEmail(event.target.value)
-              : cell.column.id === 'age'
-              ? validateAge(+event.target.value)
-              : validateRequired(event.target.value);
-          if (!isValid) {
-            // Set validation error for cell if invalid.
-            setValidationErrors({
-              ...validationErrors,
-              [cell.id]: `${cell.column.header} is required`,
-            });
-          } else {
-            // Remove validation error for cell if valid.
-            delete validationErrors[cell.id];
-            setValidationErrors({
-              ...validationErrors,
-            });
-          }
-        },
-      };
-    },
-    [validationErrors],
   );
 
   const columns = useMemo(
@@ -87,7 +32,7 @@ const PatientTable = () => {
         accessorKey: 'id',
         header: 'ID',
         enableColumnOrdering: false,
-        enableEditing: false, // Disable editing on this column
+        enableEditing: false,
         enableSorting: false,
         size: 80,
       },
@@ -95,136 +40,85 @@ const PatientTable = () => {
         accessorKey: 'username',
         header: 'Username',
         size: 140,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
       },
       {
         accessorKey: 'fullName',
         header: 'Full Name',
         size: 140,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
       },
       {
         accessorKey: 'email',
         header: 'Email',
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          type: 'email',
-        }),
+        size: 140,
       },
       {
         accessorKey: 'password',
         header: 'Password',
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          type: 'password',
-        }),
+        size: 140,
       },
       {
         accessorKey: 'dateOfBirth',
         header: 'Date of Birth',
         size: 100,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          type: 'date',
-        }),
       },
       {
         accessorKey: 'gender',
         header: 'Gender',
-        muiTableBodyCellEditTextFieldProps: {
-          select: true, // Change to select for a dropdown
-          children: ['Male', 'Female', 'Other'].map((gender) => (
-            <MenuItem key={gender} value={gender}>
-              {gender}
-            </MenuItem>
-          )),
-        },
+        size: 100,
       },
       {
         accessorKey: 'mobileNumber',
         header: 'Mobile Number',
         size: 140,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          type: 'tel',
-        }),
       },
       {
         accessorKey: 'emergencyContactName',
         header: 'Emergency Contact Name',
         size: 200,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
       },
       {
         accessorKey: 'emergencyContactPhone',
         header: 'Emergency Contact Phone',
         size: 160,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          type: 'tel',
-        }),
       },
       {
         accessorKey: 'relationToPatient',
         header: 'Relation to Patient',
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
+        size: 140,
       },
-    ],
-    [getCommonEditTextFieldProps],
-  );
-
-  return (
-    <>
-      <MaterialReactTable
-        displayColumnDefOptions={{
-          'mrt-row-actions': {
-            muiTableHeadCellProps: {
-              align: 'center',
-            },
-            size: 120,
-          },
-        }}
-        columns={columns}
-        data={tableData}
-        editingMode="modal" // Default
-        enableColumnOrdering
-        enableEditing
-        onEditingRowSave={handleSaveRowEdits}
-        onEditingRowCancel={handleCancelRowEdits}
-        renderRowActions={({ row }) => (
+      {
+        accessorKey: 'delete',
+        header: 'Actions',
+        enableColumnOrdering: false,
+        enableEditing: false,
+        enableSorting: false,
+        size: 120,
+        muiTableBodyCellEditTextFieldProps: {
+          align: 'center',
+        },
+        Cell: ({ row }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
-            <Tooltip arrow placement="left" title="Edit">
-              <IconButton onClick={() => row.startEditing()}>
-                <Edit />
-              </IconButton>
-            </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
               <IconButton color="error" onClick={() => handleDeleteRow(row)}>
                 <Delete />
               </IconButton>
             </Tooltip>
           </Box>
-        )}
+        ),
+      },
+    ],
+    [handleDeleteRow],
+  );
+
+  return (
+    <>
+      <MaterialReactTable
+        columns={columns}
+        data={tableData}
+        enableColumnOrdering
       />
     </>
   );
 };
-
-const validateRequired = (value) => !!value.length;
-const validateEmail = (email) =>
-  !!email.length &&
-  email
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    );
 
 export default PatientTable;

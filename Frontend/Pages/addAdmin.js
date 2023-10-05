@@ -1,17 +1,16 @@
 import Sidebar from '../Components/Sidebar.js';
 
-function addAdmin() {
-    return(
-        <div>
-          <div id="outer-container">
-              <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-              <div id="page-wrap">
-                
-              </div>
-          </div>
-  
+function AddAdmin() {
+  return(
+      <div>
+        <div id="outer-container">
+            <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+            <div id="page-wrap">
+              <p>add admin</p>
+            </div>
         </div>
-    );
-  }
-  
-  export default addAdmin;
+      </div>
+  );
+}
+
+export default AddAdmin;

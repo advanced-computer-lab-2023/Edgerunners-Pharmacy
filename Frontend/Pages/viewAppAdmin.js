@@ -1,17 +1,16 @@
 import Sidebar from '../Components/Sidebar.js';
 
-function viewAppAdmin() {
-    return(
-        <div>
-          <div id="outer-container">
-              <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-              <div id="page-wrap">
-                
-              </div>
-          </div>
-  
+function ViewAppAdmin() {
+  return(
+      <div>
+        <div id="outer-container">
+            <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+            <div id="page-wrap">
+              <p>view app admin</p>
+            </div>
         </div>
-    );
-  }
-  
-  export default viewAppAdmin;
+      </div>
+  );
+}
+
+export default ViewAppAdmin;
