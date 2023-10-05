@@ -1,4 +1,7 @@
 import Sidebar from './Sidebar';
+import ViewMedAll from "./ViewMedAll"
+
+
 
 function Admin() {
   return(
@@ -6,8 +9,8 @@ function Admin() {
         <div id="outer-container">
             <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
             <div id="page-wrap">
-                <h1>Home Page</h1>
-                <h2>to be continued</h2>
+              <ViewMedAll />
+
             </div>
         </div>
 
