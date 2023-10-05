@@ -1,4 +1,5 @@
-import Medicine from "./Medicine"
+import Medicine from "../Components/Medicine.js"
+
 // add medicines from DataBase
 function ViewMedAll() {
   return ( 
