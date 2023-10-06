@@ -1,10 +1,8 @@
-import NewPatient from "./Pages/NewPatient";
+import ViewPatientInfoAdmin from "./Pages/ViewPatientInfoAdmin"
 
 function App() {
   return (
-    <div className="App">
-      <NewPatient />
-    </div>
+    <ViewPatientInfoAdmin />
   );
 }
 
