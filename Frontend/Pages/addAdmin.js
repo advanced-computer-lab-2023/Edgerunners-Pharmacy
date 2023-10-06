@@ -1,3 +1,4 @@
+
 import Card from "../UI/Card";
 import Logo from "../UI/Logo";
 import { useRef } from "react"; 
@@ -64,4 +65,6 @@ return(
     </div>
 )
 }
+
+
 export default AddAdmin;
