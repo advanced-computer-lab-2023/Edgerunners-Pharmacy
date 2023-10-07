@@ -1,8 +1,11 @@
-import ViewPatientInfoAdmin from "./Pages/ViewPatientInfoAdmin"
+import react from "react";
+import AddPatient from "./Pages/AddPatient"
+import AddAdmin from "./Pages/AddAdmin";
+import ViewMedPharm from "./Pages/ViewMedPharm";
 
 function App() {
   return (
-    <ViewPatientInfoAdmin />
+    <ViewMedPharm />
   );
 }
 
