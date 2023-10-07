@@ -1,5 +1,5 @@
-import Card from "../Frontend/UI/Card";
-import Logo from "../Frontend/UI/Logo";
+import Card from "../UI/Card";
+import Logo from "../UI/Logo";
 import { useRef } from "react"; 
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
 //import {fontAwesomeIcon} from "@fortawesome/fontawesome-svg-core"; 
@@ -65,7 +65,7 @@ return(
               <div className=" flex justify-center  mt-6">
                 <br />
                 <br />
-                <button className="  text-sky-600  outline  w-40  h-9  rounded-md   mt-5 shadow"> Confirm </button>
+                <button className="  text-sky-600  outline  w-40  h-9  rounded-md   mt-20 shadow"> Confirm </button>
 
              </div> 
                
