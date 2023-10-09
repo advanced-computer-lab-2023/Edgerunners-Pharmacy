@@ -4,12 +4,35 @@ var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 require("dotenv").config();
+
 const {
   createPatient,
   getPatients,
   updatePatient,
   deletePatient,
 } = require("./Routes/patientController");
+
+const {
+  createMedicine,
+  getMedicines,
+  updateMedicine,
+  deleteMedicine,
+} = require("./Routes/medicineController");
+
+const {
+  createAdmin,
+  getAdmins,
+  updateAdmin,
+  deleteAdmin,
+} = require("./Routes/adminController");
+
+const {
+  createPharmacist,
+  getPharmacists,
+  updatePharmacist,
+  deletePharmacist,
+} = require("./Routes/pharmacistController");
+
 const MongoURI =
   process.env.MONGO_URI ||
   "mongodb+srv://Abdo486A:Boody2002@aclapibackend.xla3vza.mongodb.net/";
@@ -18,6 +41,9 @@ const MongoURI =
 const app = express();
 const port = process.env.PORT || 3001;
 const Patient = require("./Models/Patient.js");
+const Pharmacist = require("./Models/Pharmacist.js");
+const Admin = require("./Models/Admin.js");
+const Medicine = require("./Models/Medicine.js");
 // #Importing the patientController
 
 // configurations
@@ -51,10 +77,20 @@ app.get("/getPatient", getPatients);
 app.put("/updatePatient", updatePatient);
 app.delete("/deletePatient", deletePatient);
 
-// app.post("/addDoctor", createDoctor);
-// app.get("/getDoctor", getDoctors);
-// app.put("/updateDoctor", updateDoctor);
-// app.delete("/deleteDoctor", deleteDoctor);
+app.post("/addPharmacist", createPharmacist);
+app.get("/getPharmacist", getPharmacists);
+app.put("/updatePharmacist", updatePharmacist);
+app.delete("/deletePharmacist", deletePharmacist);
+
+app.post("/addMedicine", createMedicine);
+app.get("/getMedicine", getMedicines);
+app.put("/updateMedicine", updateMedicine);
+app.delete("/deleteMedicine", deleteMedicine);
+
+app.post("/addAdmin", createAdmin);
+app.get("/getAdmin", getAdmins);
+app.put("/updateAdmin", updateAdmin);
+app.delete("/deleteAdmin", deleteAdmin);
 
 /*
                                                     End of your code
