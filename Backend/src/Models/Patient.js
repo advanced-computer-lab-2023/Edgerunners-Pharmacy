@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const patientSchema = new Schema(
+const patientSchemaP = new Schema(
   {
     Username: {
       type: String,
@@ -48,10 +48,14 @@ const patientSchema = new Schema(
       phoneNumberEC: {
         type: String,
       },
+      Relations: {
+        type: Array,
+        required: false,
+      },
     },
   },
   { timestamps: true }
 );
 
-const Patient = mongoose.model("Patient", patientSchema);
-module.exports = Patient;
+const PatientP = mongoose.model("Patient", patientSchemaP);
+module.exports = PatientP;

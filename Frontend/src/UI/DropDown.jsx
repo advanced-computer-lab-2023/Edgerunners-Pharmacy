@@ -18,8 +18,11 @@ const Dropdown = () => {
         value={selectedOption}
         onChange={handleOptionChange}
       >
-        <option value="Wife/Husband">Wife/Husband</option>
+        <option value="Spouse">Spouse</option>
+        <option value="Sibling">Sibling</option>
         <option value="Child">Child</option>
+        <option value="Friend">Friend</option>
+        <option value="Other">Other</option>
       
       </select>
     
