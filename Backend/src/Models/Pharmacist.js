@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const doctorSchema = new Schema(
+const pharmacistSchema = new Schema(
   {
     Username: {
       type: String,
@@ -48,5 +48,5 @@ const doctorSchema = new Schema(
   { timestamps: true }
 );
 
-const Doctor = mongoose.model("doctor", doctorSchema);
-module.exports = Doctor;
+const Pharmacist = mongoose.model("pharmacist", pharmacistSchema);
+module.exports = Pharmacist;
