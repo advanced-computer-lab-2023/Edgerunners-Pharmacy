@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import {
   Box,
@@ -17,31 +17,40 @@ import Logo from '../UI/Logo';
 import { Delete, Edit } from '@mui/icons-material';
 
 // Import 'makeData', 'data', and 'states' if they are not declared elsewhere.
-import {data} from '../Components/makeMedicineDataPharm';
+import { data } from '../Components/makeMedicineDataPharm';
 // add medicines from DataBase
 const ViewMedPharm = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [tableData, setTableData] = useState(data);
   const [validationErrors, setValidationErrors] = useState({});
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editingRow, setEditingRow] = useState(null);
 
   const handleCreateNewRow = (values) => {
     setTableData([...tableData, values]);
     setCreateModalOpen(false);
   };
 
+  const startEditingRow = (row) => {
+    setEditingRow(row);
+    setEditModalOpen(true);
+  };
+
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
     if (!Object.keys(validationErrors).length) {
       const updatedData = [...tableData];
       updatedData[row.index] = values;
-      // Send/receive API updates here if needed.
       setTableData(updatedData);
       exitEditingMode(); // Required to exit editing mode and close the modal.
+      setEditModalOpen(false); // Close the edit modal
     }
   };
 
   const handleCancelRowEdits = () => {
     setValidationErrors({});
+    setEditModalOpen(false); // Close the edit modal without saving changes
   };
+
 
   const handleDeleteRow = useCallback(
     (row) => {
@@ -167,7 +176,7 @@ const ViewMedPharm = () => {
         renderRowActions={({ row }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit">
-              <IconButton onClick={() => row.startEditing()}>
+              <IconButton onClick={() => startEditingRow(row)}>
                 <Edit />
               </IconButton>
             </Tooltip>
@@ -194,6 +203,14 @@ const ViewMedPharm = () => {
         onClose={() => setCreateModalOpen(false)}
         onSubmit={handleCreateNewRow}
       />
+
+      <EditMedicineModal
+        columns={columns}
+        open={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        onSubmit={(values) => handleSaveRowEdits({ exitEditingMode: () => { }, row: editingRow, values })}
+      />
+
     </>
   );
 };
@@ -208,7 +225,6 @@ const CreateNewMedicineModal = ({ open, columns, onClose, onSubmit }) => {
   );
 
   const handleSubmit = () => {
-    // Put your validation logic here
     onSubmit(values);
     onClose();
   };
@@ -242,6 +258,64 @@ const CreateNewMedicineModal = ({ open, columns, onClose, onSubmit }) => {
         <Button onClick={onClose}>Cancel</Button>
         <Button color="secondary" onClick={handleSubmit} variant="contained">
           Create New Medicine
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const EditMedicineModal = ({ open, columns, onClose, onSubmit }) => {
+  const [values, editingRow] = useState({ description: '', price: '' });
+
+  useEffect(() => {
+    // Pre-fill values with the data of the editingRow if available
+    if (editingRow && editingRow.original) {
+      const { description, price } = editingRow.original;
+      values({ description, price });
+    }
+  }, [editingRow]);
+
+  const handleSubmit = () => {
+    // Put your validation logic here
+    onSubmit(values);
+    onClose();
+  };
+
+  return (
+    <Dialog open={open}>
+      <DialogTitle textAlign="center">Edit Medicine</DialogTitle>
+      <DialogContent>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <Stack
+            sx={{
+              width: '100%',
+              minWidth: { xs: '300px', sm: '360px', md: '400px' },
+              gap: '1.5rem',
+            }}
+          >
+            {columns.map((column) => {
+              if (column.accessorKey === 'description' || column.accessorKey === 'price') {
+                return (
+                  <TextField
+                    key={column.accessorKey}
+                    label={column.header}
+                    name={column.accessorKey}
+                    value={values[column.accessorKey]}
+                    onChange={(e) =>
+                      editingRow({ ...values, [e.target.name]: e.target.value })
+                    }
+                  />
+                );
+              }
+              return null; // Skip rendering other columns
+            })}
+          </Stack>
+        </form>
+      </DialogContent>
+      <DialogActions sx={{ p: '1.25rem' }}>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button color="secondary" onClick={handleSubmit} variant="contained">
+          Save
         </Button>
       </DialogActions>
     </Dialog>
