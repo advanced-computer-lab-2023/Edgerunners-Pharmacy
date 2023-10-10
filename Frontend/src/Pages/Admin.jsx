@@ -1,15 +1,9 @@
-import Sidebar from '../Components/Sidebar';
-import ViewMedAll from "./ViewMedAll"
+import ViewMedAdmin from "./ViewMedAdmin"
 
 function Admin() {
   return(
       <div>
-        <div id="outer-container">
-            <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-            <div id="page-wrap">
-              <ViewMedAll />
-            </div>
-        </div>
+        <ViewMedAdmin />
       </div>
   );
 }

@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import { Box } from '@mui/material';
+import Logo from '../UI/Logo';
 
-import { data } from '../Components/makeMedicineDataAll';
+import { data } from './makeMedicineDataAll';
 
-const ViewMedAll = () => {
+const MedTableAll = () => {
   const [tableData, setTableData] = useState(() => data);
 
   const columns = useMemo(
@@ -48,6 +49,9 @@ const ViewMedAll = () => {
 
   return (
     <>
+      <div className=" flex justify-center  mt-6 mb-0 ">
+        <Logo height='4rem' />
+      </div >
       <MaterialReactTable
         columns={columns}
         data={tableData}
@@ -57,4 +61,4 @@ const ViewMedAll = () => {
   );
 };
 
-export default ViewMedAll;
+export default MedTableAll;

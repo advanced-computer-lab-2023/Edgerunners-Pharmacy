@@ -1,11 +1,8 @@
-import react from "react";
-import AddPatient from "./Pages/AddPatient"
-import AddAdmin from "./Pages/AddAdmin";
-import ViewMedPharm from "./Pages/ViewMedPharm";
+import Admin from "./Pages/Admin";
 
 function App() {
   return (
-    <ViewMedPharm />
+    <Admin />
   );
 }
 
