@@ -49,7 +49,7 @@ const patientSchemaP = new Schema(
         type: String,
       },
       Relations: {
-        type: Array,
+        type: String,
         required: false,
       },
     },

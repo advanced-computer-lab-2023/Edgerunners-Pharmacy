@@ -19,8 +19,16 @@ const createMedicine = async (req, res) => {
 
 const getMedicines = async (req, res) => {
   try {
-    const Medicines = await Medicine.find();
-    res.status(200).send({ data: Medicines });
+    const {Description, Name} = req.query;
+    const filter = {};
+    if(Description){
+      filter.Description = Description;
+    }
+    if(Name){
+      filter.Name = Name;
+    }
+    const Medicines = await Medicine.find(filter);
+    res.status(200).send(Medicines);
   } catch (e) {
     res.status(400).send("Error could not get Medicines !!");
   }

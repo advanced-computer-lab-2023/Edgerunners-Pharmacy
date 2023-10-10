@@ -19,9 +19,11 @@
     "url": "https://github.com/advanced-computer-lab-2023/Edgerunners-Clinic.git"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "mongoose": "^6.12.0",
     "nodemon": "^3.0.1",
     "react": "^16.14.0"

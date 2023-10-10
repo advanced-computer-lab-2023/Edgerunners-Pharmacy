@@ -1,6 +1,7 @@
 import Logo from "../UI/Logo";
 import Card from "../UI/Card";
 import { useEffect, useRef } from "react";
+import axios from "axios";
 
 function AddPharmacist(props) {
     const usernameRef = useRef();
@@ -23,16 +24,32 @@ function AddPharmacist(props) {
         const affiliationValue = affiliationRef.current.value;
         const educationValue = educationRef.current.value;
         const AddPharmacist = {
-            userName: usernameValue,
-            fullName: nameValue,
-            email: emailValue,
+            Username: usernameValue,
+            Name: nameValue,
+            Email: emailValue,
             Password: passwordValue,
-            dateOfBirth: dateofbirthValue,
-            hourlyRate: hourlyrateValue,
-            affiliation: affiliationValue,
-            education: educationValue,
+            DOB: dateofbirthValue,
+            Hourlyrate: hourlyrateValue,
+            Affiliation: affiliationValue,
+            Education: educationValue,
         };
         console.log(AddPharmacist);
+        axios
+        .post("http://localhost:3001/addPharmacist", AddPharmacist, {
+
+        })
+        .then((res) => {
+         
+          console.log("Pharmacist added");
+          usernameRef.current.value="";
+          passwordRef.current.value="";         
+
+        })
+        .catch((error) => {
+         
+            console.log("Unable to add Phartmacist");
+          
+        });
     }
 
     return (

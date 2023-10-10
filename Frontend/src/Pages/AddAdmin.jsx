@@ -2,6 +2,7 @@ import Card from "../UI/Card";
 import Logo from "../UI/Logo";
 import { useRef } from "react";
 import Sidebar from "../Components/Sidebar";
+import axios from "axios";
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
 //import {fontAwesomeIcon} from "@fortawesome/fontawesome-svg-core"; 
 
@@ -15,11 +16,28 @@ function AddAdmin(props) {
         const passwordValue = passwordRef.current.value;
         const passwordConValue = passwordConRef.current.value;
         const newAdmin = {
-            userName: usernameValue,
+            Username: usernameValue,
             Password: passwordValue,
-            PasswordConfirm: passwordConValue,
         };
         console.log(newAdmin);
+        axios
+        .post("http://localhost:3001/addAdmin", newAdmin, {
+
+        })
+        .then((res) => {
+         
+          console.log("Admin added");
+          usernameRef.current.value="";
+          passwordRef.current.value="";
+          passwordConRef.current.value="";
+         
+
+        })
+        .catch((error) => {
+         
+            console.log("Unable to add admin");
+          
+        });
     }
     return (
         <div>
