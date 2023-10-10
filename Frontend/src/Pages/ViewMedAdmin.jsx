@@ -1,16 +1,17 @@
+import MedTableAll from "../Components/MedTableAll";
 import Sidebar from '../Components/Sidebar';
 
-function ViewAppAdmin() {
-  return(
-      <div>
+function ViewMedAdmin() {
+  return (
+    <div>
         <div id="outer-container">
             <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
             <div id="page-wrap">
-              <p>view app admin</p>
+              <MedTableAll />
             </div>
         </div>
       </div>
   );
 }
 
-export default ViewAppAdmin;
+export default ViewMedAdmin;

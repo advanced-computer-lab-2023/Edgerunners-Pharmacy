@@ -1,8 +1,9 @@
-import ViewPatientInfoAdmin from "./Pages/ViewPatientInfoAdmin"
+import Admin from "./Pages/Admin";
+import ViewMedPatient from "./Pages/ViewMedPatient";
 
 function App() {
   return (
-    <ViewPatientInfoAdmin />
+    <Admin />
   );
 }
 

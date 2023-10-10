@@ -13,6 +13,7 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
+import Logo from '../UI/Logo';
 import { Delete, Edit } from '@mui/icons-material';
 
 // Import 'makeData', 'data', and 'states' if they are not declared elsewhere.
@@ -142,7 +143,11 @@ const ViewMedPharm = () => {
   );
 
   return (
+
     <>
+      <div className=" flex justify-center  mt-6 mb-0 ">
+        <Logo height='4rem' />
+      </div >
       <MaterialReactTable
         displayColumnDefOptions={{
           'mrt-row-actions': {
@@ -175,7 +180,7 @@ const ViewMedPharm = () => {
         )}
         renderTopToolbarCustomActions={() => (
           <Button
-            color="secondary"
+            color="primary"
             onClick={() => setCreateModalOpen(true)}
             variant="contained"
           >
