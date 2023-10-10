@@ -3,6 +3,7 @@ import Card from "../UI/Card";
 import SelectGender from "../UI/SelectGender";
 import { useRef } from "react";
 import Dropdown from "../UI/DropDown";
+import axios from "axios";
 
 function AddPatient(props) {
     const usernameRef = useRef();
@@ -23,24 +24,42 @@ function AddPatient(props) {
         const emailValue = emailRef.current.value;
         const passwordValue = passwordRef.current.value;
         const dateofbirthValue = dobRef.current.value;
-        const genderValue = genderRef;
+        const genderValue = genderRef.current.value;
         const mobilenumValue = mobilenumRef.current.value;
         const emergencyfullnameValue = emergencyfullnameRef.current.value;
         const emergencymobilenumValue = emergencymobilenumRef.current.value;
-        const emergencyrelationValue = emergencyrelationRef
+        const emergencyrelationValue = emergencyrelationRef.current.value;
         const AddPatient = {
-            userName: usernameValue,
-            fullName: nameValue,
-            email: emailValue,
+            Username: usernameValue,
+            Name: nameValue,
+            Email: emailValue,
             Password: passwordValue,
-            dateOfBirth: dateofbirthValue,
-            gender: genderValue,
-            mobileNumber: mobilenumValue,
-            emergencyFullName: emergencyfullnameValue,
-            emergencyMobileNum: emergencymobilenumValue,
-            emergencyRelation: emergencyrelationValue,
+            DOB: dateofbirthValue,
+            Gender: genderValue,
+            phoneNumber: mobilenumValue,
+            EmergencyContact: {
+				FullnameEC: emergencyfullnameValue,
+				phoneNumberEC: emergencymobilenumValue,
+                Relations: emergencyrelationValue
+			},
         };
         console.log(AddPatient);
+        axios
+        .post("http://localhost:3001/addPatient", AddPatient, {
+
+        })
+        .then((res) => {
+         
+          console.log("Patient added");
+          usernameRef.current.value="";
+          passwordRef.current.value="";         
+
+        })
+        .catch((error) => {
+         
+            console.log("Unable to add Patient");
+          
+        });
     }
 
     return (
@@ -79,7 +98,11 @@ function AddPatient(props) {
                             </div>
                             <div>
                                 <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500  ml-2"> Gender : </label>
-                                <SelectGender ref={genderRef} />
+                                <select ref={genderRef} className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                    <option>Select gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
                             </div>
                             <div >
                                 <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Mobile number : </label>
@@ -96,8 +119,14 @@ function AddPatient(props) {
                                 <br />
                                 <input type="text" id="mobilenumber" name="mobilenumber" ref={emergencymobilenumRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
                             </div>
-                            <Dropdown ref={emergencyrelationRef}/>
-                            <button className="  text-sky-600  outline  w-40  h-9  rounded-md   mt-5 shadow  ml-20 "> Register </button>
+                            <select ref={emergencyrelationRef} className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                    <option>Select Relation</option>
+                                    <option value="Spouse">Spouse</option>
+                                    <option value="Sibling">Sibling</option>
+                                    <option value="Child">Child</option>
+                                    <option value="Friend">Friend</option>
+                                    <option value="Other">Other</option>
+                                </select>                            <button className="  text-sky-600  outline  w-40  h-9  rounded-md   mt-5 shadow  ml-20 "> Register </button>
                         </div>
                     </form>
                 </div>

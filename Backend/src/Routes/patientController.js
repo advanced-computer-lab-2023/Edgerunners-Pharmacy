@@ -18,8 +18,9 @@ const createPatient = async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     DOB: req.body.DOB,
     EmergencyContact: {
-      FullnameEC: req.body.Fullnameec,
-      phoneNumberEC: req.body.phoneNumberec,
+      FullnameEC: req.body.FullnameEC,
+      phoneNumberEC: req.body.phoneNumberEC,
+      Relations : req.body.Relations
     },
   });
   res.status(200).send("Created successfully");

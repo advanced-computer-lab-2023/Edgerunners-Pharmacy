@@ -35,7 +35,7 @@ const {
 
 const MongoURI =
   process.env.MONGO_URI ||
-  "mongodb+srv://Abdo486A:Boody2002@aclapibackend.xla3vza.mongodb.net/";
+  "mongodb+srv://Test1:Test1@cluster0.xo5a1to.mongodb.net/?retryWrites=true&w=majority";
 
 //App variables
 const app = express();
@@ -71,6 +71,8 @@ app.get("/home", (req, res) => {
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+const cors = require("cors");
+app.use(cors());
 
 app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
