@@ -37,16 +37,14 @@ const getMedicines = async (req, res) => {
 const updateMedicine = async (req, res) => {
   //update a Medicine in the database
   const medicine = req.body.Name;
-
-  if (req.body.Description) {
-    Pharmacist.updateOne({ Name: medicine }, { $set: { Description: req.body.Description } });
+  try {
+    await Medicine.updateOne({ Name: medicine }, { $set: { Description: req.body.Description ,Price: req.body.Price} });
+    res.status(200).send("Updated Successfully");
+  } catch (e) {
+    res.status(400).send("Error could not update Medicine !!");
   }
-  if (req.body.Price) {
-    Pharmacist.updateOne(
-      { Name: medicine },
-      { $set: { Price: req.body.Price } },
-    );
-  }
+  
+  
 };
 const findMedicine = async (req, res) => {
   if ((await Medicine.findOne({ Name: req.body.Name }).length) === 0) {
