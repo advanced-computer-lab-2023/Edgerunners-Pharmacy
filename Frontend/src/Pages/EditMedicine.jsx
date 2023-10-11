@@ -10,7 +10,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import Sidebar from '../Components/Sidebar';
 import Logo from '../UI/Logo';
 
-const TABLE_HEAD = ["Name", "Description", "Price"];
+const TABLE_HEAD = ["","Name", "Description", "Price" , "Quantity" , "Sales"];
 
 export default function EditMedicine() {
   const [Medicine, setMedicine] = useState(null);
@@ -103,6 +103,16 @@ export default function EditMedicine() {
               const isEditing = editMode[p.Name] || false;
               return (
                 <tr key={p.Name}>
+                <td className={classes}>
+                    <img src={p.Picture}></img>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {p.Picture}
+                    </Typography>
+                  </td>
                   <td className={classes}>
                     <Typography
                       variant="small"
@@ -153,7 +163,24 @@ export default function EditMedicine() {
                       </Typography>
                     )}
                   </td>
-
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {p.Quantity}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {p.Sales}
+                    </Typography>
+                  </td>
                   <td className={classes}>
                     {isEditing ? (
                       <Box sx={{ display: "flex", gap: "1rem" }}>
