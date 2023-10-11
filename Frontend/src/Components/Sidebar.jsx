@@ -20,6 +20,9 @@ const Sidebar = () => {
       <a className="menu-item" href="/ViewRequestsAdmin">
         View requests
       </a>
+      <a className="menu-item" href="/ViewMedAdmin">
+        View medicines
+      </a>
     </Menu>
   );
 };

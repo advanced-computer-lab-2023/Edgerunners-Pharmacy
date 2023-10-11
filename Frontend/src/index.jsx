@@ -7,6 +7,7 @@ import AddAdmin from './Pages/AddAdmin';
 import ViewPharmInfoAdmin from './Pages/ViewPharmInfoAdmin';
 import ViewPatientInfoAdmin from './Pages/ViewPatientInfoAdmin';
 import ViewRequestsAdmin from './Pages/ViewRequestsAdmin';
+import ViewMedAdmin from './Pages/ViewMedAdmin';
 import App from './App';
 
 
@@ -15,11 +16,13 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<App />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/AddAdmin" element={<AddAdmin />} />
         <Route path="/ViewPharmInfoAdmin" element={<ViewPharmInfoAdmin />} />
         <Route path="/ViewPatientInfoAdmin" element={<ViewPatientInfoAdmin />} />
         <Route path="/ViewRequestsAdmin" element={<ViewRequestsAdmin />} />
+        <Route path="/ViewMedAdmin" element={<ViewMedAdmin />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
