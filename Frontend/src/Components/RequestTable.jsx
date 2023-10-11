@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeRequestTable } from './makeRequestTable'; // Import the data generator
+import axios from 'axios';
 
 const styles = {
   tableContainer: {
@@ -45,27 +46,82 @@ const styles = {
 
 const RequestTable = () => {
 
-    const [requests, setRequests] = useState(makeRequestTable(10)); // Generate 10 random requests initially
-
-    const handleAccept = (id) => {
-        // Find the request with the specified id
-        const updatedRequests = requests.map((request) =>
-        request.id === id ? { ...request, status: 'Accepted' } : request
-        );
-
-        // Update the state with the modified requests
-        setRequests(updatedRequests);
+  const [requests, setRequests] = useState([]); // Generate 10 random requests initially
+  const [editMode, setEditMode] = useState({}); // Replace initialEditModeValue with your initial state value.
+  const [forceEffect, setForceEffect] = useState(false); // Replace initialForceEffectValue with your initial state value.
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/getPharmacist");
+        setRequests(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
+    fetchData();
+    setForceEffect(false);
+  }, [forceEffect]);
 
-    const handleReject = (id) => {
-        // Find the request with the specified id
-        const updatedRequests = requests.map((request) =>
-        request.id === id ? { ...request, status: 'Rejected' } : request
-        );
+  const handleAccept = async (email) => {
+    // Find the request with the specified email and update its status to 'Accepted'
+    const updatedRequests = requests.map((request) =>
+      request.email === email ? { ...request, status: 'Accepted' } : request
+    );
 
-        // Update the state with the modified requests
-        setRequests(updatedRequests);
-    };
+    try {
+      // Send a PUT request to the server to update the status
+      await axios.put('http://localhost:3001/updatePharmacist', {
+        email, // Include the email of the request to update
+        status: 'Accepted',
+      });
+
+      // Update the state with the modified requests
+      setRequests(updatedRequests);
+
+      // Update the editMode for the 'Accepted' status
+      setEditMode((prevEditMode) => ({
+        ...prevEditMode,
+        'Accepted': false,
+      }));
+
+      // Set forceEffect or perform any other actions needed.
+      setForceEffect(true);
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  };
+
+
+  const handleReject = async (email) => {
+    // Find the request with the specified email and update its status to 'Rejected'
+    const updatedRequests = requests.map((request) =>
+      request.email === email ? { ...request, status: 'Rejected' } : request
+    );
+
+    try {
+      // Send a PUT request to the server to update the status
+      await axios.put('http://localhost:3001/updatePharmacist', {
+        email, // Include the email of the request to update
+        status: 'Rejected',
+      });
+
+      // Update the state with the modified requests
+      setRequests(updatedRequests);
+
+      // Update the editMode for the 'Rejected' status
+      setEditMode((prevEditMode) => ({
+        ...prevEditMode,
+        'Rejected': false,
+      }));
+
+      // Set forceEffect or perform any other actions needed.
+      setForceEffect(true);
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  };
+
+  const pendingRequests = requests.filter((request) => request.status === 'Pending');
 
   return (
     <div style={styles.tableContainer}>
@@ -86,7 +142,7 @@ const RequestTable = () => {
           </tr>
         </thead>
         <tbody>
-          {requests.map((request, index) => (
+          {pendingRequests.map((request, index) => (
             <tr
               key={request.id}
               style={index % 2 === 0 ? styles.evenRow : {}}
@@ -102,22 +158,18 @@ const RequestTable = () => {
               <td style={styles.tableCell}>{request.education}</td>
               <td style={styles.tableCell}>{request.status}</td>
               <td style={styles.tableCell}>
-                {request.status === 'Pending' && (
-                  <>
-                    <button
-                      style={styles.acceptButton}
-                      onClick={() => handleAccept(request.id)}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      style={styles.rejectButton}
-                      onClick={() => handleReject(request.id)}
-                    >
-                      Reject
-                    </button>
-                  </>
-                )}
+                <button
+                  style={styles.acceptButton}
+                  onClick={() => handleAccept(request.email)}
+                >
+                  Accept
+                </button>
+                <button
+                  style={styles.rejectButton}
+                  onClick={() => handleReject(request.email)}
+                >
+                  Reject
+                </button>
               </td>
             </tr>
           ))}

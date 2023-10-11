@@ -44,6 +44,10 @@ const pharmacistSchema = new Schema(
       type: String,
       required: true,
     },
+
+    ReqStatus: {
+      type: String,
+    }
   },
   { timestamps: true }
 );

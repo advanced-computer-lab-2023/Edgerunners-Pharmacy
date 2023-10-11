@@ -23,6 +23,7 @@ export const makePharmData = async () => {
     const hourlyRate =p.Hourlyrate; // Hourly rate between 20 and 100
     const affiliation =`${p.Affiliation}` ; // Random hospital affiliation
     const educationalBackground =`${p.Education}`; // Educational background
+    const reqStatus = `${p.reqStatus}`; //Request status
 
     data.push({
          id,
@@ -33,6 +34,7 @@ export const makePharmData = async () => {
       hourlyRate,
       affiliation,
       educationalBackground,
+      reqStatus,
     });
   }
   //console.log(data);
