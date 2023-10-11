@@ -1,6 +1,7 @@
 import Card from "../UI/Card";
 import Logo from "../UI/Logo";
 import { useRef } from "react"; 
+import axios from 'axios';
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
 //import {fontAwesomeIcon} from "@fortawesome/fontawesome-svg-core"; 
 
@@ -21,7 +22,24 @@ function AddMedicine(props){
             Price: priceValue,
             Quantity: quatityValue,
         };
+        
         console.log(newMedicine);
+        axios
+        .post("http://localhost:3001/addMedicine", newMedicine, {
+
+        })
+        .then((res) => {
+         
+          console.log("Medicine added");
+          medicineNameRef.current.value="";
+          medicineIngredientsRef.current.value="";
+          medicinePriceRef.current.value="";
+          medicineQuantityRef.current.value="";
+
+        })
+        .catch((error) => {
+            console.log("Unable to add Medicine");
+        });
     }
 
 return(
