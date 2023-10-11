@@ -10,7 +10,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import Sidebar from '../Components/Sidebar';
 import Logo from '../UI/Logo';
 
-const TABLE_HEAD = ["","Name", "Description", "Price" , "Quantity" , "Sales"];
+const TABLE_HEAD = ["Picture","Name", "Description", "Price" , "Quantity" , "Sales"];
 
 export default function EditMedicine() {
   const [Medicine, setMedicine] = useState(null);

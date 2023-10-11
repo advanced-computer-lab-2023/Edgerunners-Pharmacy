@@ -14,6 +14,7 @@ export const makeRequestTable = (count) => {
     const hourlyRate = getRandomValue(20, 100); // Hourly rate between 20 and 100
     const affiliation = `Hospital ${getRandomValue(1, 5)}`; // Random hospital affiliation
     const educationalBackground = `Education ${id}`; // Educational background
+    const status = `Request status ${id}`;
 
     data.push({
       id,
