@@ -4,6 +4,7 @@ import {
   Box,
   IconButton,
   Tooltip,
+  Button,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { makePatientData } from './makePatientData';

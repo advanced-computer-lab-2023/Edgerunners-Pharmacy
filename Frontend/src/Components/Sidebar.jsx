@@ -8,16 +8,16 @@ const Sidebar = () => {
       <a className="menu-item" href="/Admin">
         Home
       </a>
-      <a className="menu-item" href="/addAdmin">
+      <a className="menu-item" href="/AddAdmin">
         Add an administrator
       </a>
-      <a className="menu-item" href="/viewPharmInfoAdmin">
+      <a className="menu-item" href="/ViewPharmInfoAdmin">
         View pharmacists
       </a>
-      <a className="menu-item" href="/viewPatientInfoAdmin">
+      <a className="menu-item" href="/ViewPatientInfoAdmin">
         View patients
       </a>
-      <a className="menu-item" href="/viewAppAdmin">
+      <a className="menu-item" href="/ViewRequestsAdmin">
         View requests
       </a>
     </Menu>
