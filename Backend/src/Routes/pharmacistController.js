@@ -24,7 +24,7 @@ const createPharmacist = async (req, res) => {
 const getPharmacists = async (req, res) => {
   try {
     const Pharmacists = await Pharmacist.find();
-    res.status(200).send({ data: Pharmacists });
+    res.status(200).send( Pharmacists);
   } catch (e) {
     res.status(400).send("Error could not get Pharmacists !!");
   }

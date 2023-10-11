@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import {
   Box,
@@ -6,21 +6,50 @@ import {
   Tooltip,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
-
-import {data} from './makePharmData';
-
+import { makePharmData } from './makePharmData';
+import axios from 'axios';
 const PharmTable = () => {
-  const [tableData, setTableData] = useState(() => data);
+  const [tableData, setTableData] = useState([]);
 
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await makePharmData(); // Adjust the count as needed
+        setTableData(data);
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+
+      }
+    }
+
+    fetchData();
+  }, []);
   const handleDeleteRow = useCallback(
-    (row) => {
+    async (row) => {
       if (
         window.confirm(`Are you sure you want to delete ${row.getValue('username')}`)
       ) {
-        // Send an API delete request here, then update the local table data for re-render
-        const updatedData = [...tableData];
-        updatedData.splice(row.index, 1);
-        setTableData(updatedData);
+        const usernameToDelete = row.getValue('username');
+        //console.log(usernameToDelete);
+      await axios.delete("http://localhost:3001/deletePharmacist",{data: {Username: usernameToDelete}})
+      .then((response) => {
+        if (response.status === 200) {
+          // Update the local table data to remove the deleted row
+          const updatedData = tableData.filter((item) => item.username !== usernameToDelete);
+          setTableData(updatedData);
+          console.log(`Deleted user: ${usernameToDelete}`);
+        } else {
+          console.error(`Failed to delete user: ${usernameToDelete}`);
+        }
+      })
+      .catch((error) => {
+        console.error(`Error deleting user: ${usernameToDelete}`, error);
+      });
+      // const updatedData = [...tableData];
+      // updatedData.splice(row.index, 1);
+      // setTableData(updatedData);
       }
     },
     [tableData],
@@ -49,11 +78,6 @@ const PharmTable = () => {
       {
         accessorKey: 'email',
         header: 'Email',
-        size: 140,
-      },
-      {
-        accessorKey: 'password',
-        header: 'Password',
         size: 140,
       },
       {
@@ -101,13 +125,13 @@ const PharmTable = () => {
   );
 
   return (
-    <>
+    <div>
       <MaterialReactTable
         columns={columns}
         data={tableData}
         enableColumnOrdering
       />
-    </>
+    </div>
   );
 };
 

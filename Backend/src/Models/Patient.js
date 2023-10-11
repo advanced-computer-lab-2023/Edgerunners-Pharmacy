@@ -50,7 +50,6 @@ const patientSchemaP = new Schema(
       },
       Relations: {
         type: String,
-        required: false,
       },
     },
   },

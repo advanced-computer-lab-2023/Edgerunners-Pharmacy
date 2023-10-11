@@ -1,36 +1,41 @@
 // makeData.js
 
-// Helper function to generate random data
-const getRandomValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+import axios from "axios";
 
-// Function to generate mock data
-export const makePharmData = (count) => {
+export const makePharmData = async () => {
   const data = [];
-  for (let i = 0; i < count; i++) {
-    const id = i + 1;
-    const username = `user${id}`;
-    const fullName = `User ${id} Full Name`;
-    const email = `user${id}@example.com`;
-    const password = `password${id}`;
-    const dateOfBirth = '1990-01-01'; // Replace with a random date generation logic
-    const hourlyRate = getRandomValue(20, 100); // Hourly rate between 20 and 100
-    const affiliation = `Hospital ${getRandomValue(1, 5)}`; // Random hospital affiliation
-    const educationalBackground = `Education ${id}`; // Educational background
+  let Pharmacist = null;
+  try {
+    const response = await axios.get("http://localhost:3001/getPharmacist");
+    Pharmacist = response.data;
+    //console.log(Pharmacist);
+  } catch (error) {
+    console.error("Error fetching Pharmacist:", error);
+  }
+  for (let i = 0 ; i < Pharmacist.length ; i++) {
+    let p = Pharmacist[i];
+    //console.log(p.Username);
+    const id = i;
+    const username = `${p.Username}`;
+    const fullName =`${p.Name}`;
+    const email = `${p.Email}`;
+    const dateOfBirth =p.DOB  ; // Replace with a random date generation logic
+    const hourlyRate =p.Hourlyrate; // Hourly rate between 20 and 100
+    const affiliation =`${p.Affiliation}` ; // Random hospital affiliation
+    const educationalBackground =`${p.Education}`; // Educational background
 
     data.push({
-      id,
+         id,
       username,
       fullName,
       email,
-      password,
       dateOfBirth,
       hourlyRate,
       affiliation,
       educationalBackground,
     });
   }
+  //console.log(data);
   return data;
 };
 
-// Sample data
-export const data = makePharmData(10);

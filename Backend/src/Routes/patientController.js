@@ -29,7 +29,7 @@ const createPatient = async (req, res) => {
 const getPatients = async (req, res) => {
   try {
     const Patients = await Patient.find();
-    res.status(200).send({ data: Patients });
+    res.status(200).send( Patients );
   } catch (e) {
     res.status(400).send("Error could not get Patients !!");
   }
