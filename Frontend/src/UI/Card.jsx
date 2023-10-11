@@ -2,9 +2,9 @@ function Card (props){
 
     return(
         <div className= {`  ${props.width} ${props.height} rounded-md shadow-md  bg-sky-50 flex justify-center `}>
-            <body>
+            <div>
                 {props.children}
-            </body>
+            </div>
         </div>
     )
 }
