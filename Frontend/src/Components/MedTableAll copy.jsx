@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Logo from "../UI/Logo";
-import GetMedicine from "./getMedicine";
+import GetMedicine from "../Pages/getMedicine";
 
-export default function ViewMedPatientCopy() {
+export default function MedTableAllCopy() {
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   let Medicine = GetMedicine({
