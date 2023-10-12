@@ -7,7 +7,7 @@ function ViewMedAdmin() {
     <div>
       <div id="outer-container">
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-        <div id="page-wrap">
+        <div className="mt-6 mb-4"> 
           <MedTableAllCopy />
         </div>
       </div>

@@ -27,7 +27,7 @@ const medicineSchema = new Schema(
         },
         Sales: {
             type: Number,
-            required: true,
+            // required: true,
         }
 
     },

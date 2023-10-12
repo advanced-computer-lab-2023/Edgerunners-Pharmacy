@@ -22,9 +22,11 @@ export default function MedTableAllCopy() {
     return (
       <div className="Bootstrap PatientHome">
         <div className="header">
-          <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
-            <div className="container">
-              <Logo />
+          <div className="justify-center flex -mt-8 ">
+            <Logo />
+          </div>
+          <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg ">
+            <div className="container justify-center flex mt-20 ">
               <button
                 className="navbar-toggler ps-0"
                 type="button"
