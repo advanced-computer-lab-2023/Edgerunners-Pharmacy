@@ -47,7 +47,7 @@ function AddPharmacist(props) {
         })
         .catch((error) => {
          
-            console.log("Unable to add Phartmacist");
+            console.log("Unable to add Pharmacist");
           
         });
     }

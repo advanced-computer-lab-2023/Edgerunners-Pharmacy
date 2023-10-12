@@ -9,7 +9,8 @@ import ViewPatientInfoAdmin from './Pages/Admin/ViewPatientInfoAdmin';
 import ViewRequestsAdmin from './Pages/Admin/ViewRequestsAdmin';
 import ViewMedAdmin from './Pages/Admin/ViewMedAdmin';
 import App from './App';
-
+import AddMedicine from './Pages/Pharmacist/AddMedicine';
+import EditMedicine from './Pages/Pharmacist/EditMedicine';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,6 +24,8 @@ root.render(
         <Route path="/ViewPatientInfoAdmin" element={<ViewPatientInfoAdmin />} />
         <Route path="/ViewRequestsAdmin" element={<ViewRequestsAdmin />} />
         <Route path="/ViewMedAdmin" element={<ViewMedAdmin />} />
+        <Route path="/AddMedicine" element={<AddMedicine />} />
+        <Route path="/EditMedicine" element={<EditMedicine />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -2,7 +2,7 @@ import MedTableAllCopy from "../../Components/MedTableAll copy";
 
 function ViewMedPatient() {
   return (
-    <div>
+    <div className="mt-12">
         <MedTableAllCopy />
     </div>
   );

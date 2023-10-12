@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Logo from "../../UI/Logo";
 import GetMedicine from "../getMedicine";
+import { Card } from "@material-tailwind/react";
+import { useNavigate } from 'react-router-dom';
 
 export default function ViewMedPharmCopy() {
   const [name, setName] = useState();
@@ -17,102 +19,29 @@ export default function ViewMedPharmCopy() {
     });
   };
 
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `/AddMedicine`; 
+    navigate(path);
+  }
+
+  let navigate2 = useNavigate(); 
+  const routeChange2 = () =>{ 
+    let path2 = `/EditMedicine`; 
+    navigate2(path2);
+  }
+
   if (Medicine) {
     console.log(Medicine);
     return (
-      <div className="Bootstrap PatientHome">
-        <div className="header">
-          <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
-            <div className="container">
-              <Logo />
-              <button
-                className="navbar-toggler ps-0"
-                type="button"
-                data-mdb-toggle="collapse"
-                data-mdb-target="#navbarExample01"
-                aria-controls="navbarExample01"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon d-flex justify-content-start align-items-center">
-                  <i className="fas fa-bars"></i>
-                </span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarExample01">
-                <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#pets">
-                      Video Call
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      aria-current="page"
-                      href="#adoptions"
-                    >
-                      Chat
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      aria-current="page"
-                      href="#foundation"
-                    >
-                      My Appointments
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#help">
-                      Health Record
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      aria-current="page"
-                      href="#education"
-                    >
-                      Prescriptions
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#about">
-                      My Account
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#contact">
-                      Log Out
-                    </a>
-                  </li>
-                </ul>
-
-                <ul className="navbar-nav flex-row">
-                  <li className="nav-item">
-                    <a className="nav-link px-2" href="#!">
-                      <i className="fab fa-facebook-square"></i>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link px-2" href="#!">
-                      <i className="fab fa-instagram"></i>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link ps-2" href="#!">
-                      <i className="fab fa-youtube"></i>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
+      <div className="-mt -20">
+        <div className="justify-center flex mt-6 mb-4">
+          <Logo />
         </div>
-        <div className="form-prescription">
+        <div className="form-prescription space-x-3 justify-center flex">
           <label htmlFor="">Name</label>
           <input
+            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-1.5 shadow -mb-4"
             type="text"
             name=""
             id=""
@@ -120,34 +49,42 @@ export default function ViewMedPharmCopy() {
               setName(e.target.value);
             }}
           />
-          <label htmlFor="">Description</label>
+          <label className="" htmlFor="">Description</label>
           <input
+            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-1.5 shadow -mb-4"
             type="text"
             onChange={(e) => {
               setDescription(e.target.value);
             }}
           />
-          <button type="submit" onSubmit={handleSubmit}>
+          <button className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-1.5 shadow -mb-4" type="submit" onSubmit={handleSubmit}>
             submit
           </button>
+          <div className="space-x-2">
+            <button className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-2 shadow -mb-4" onClick={routeChange}> Add medicine </button>
+            <button className=" text-sky-600  outline  w-40  h-9  rounded-md -mt-2 shadow -mb-4" onClick={routeChange2}> Edit medicine </button>
+          </div>
         </div>
-        <div>
+
+        <div className="justify-center flex mt-20 space-x-6">
           {Medicine.map((p, index) => {
             return (
-              <div key={index}>
-                <a>{p.Name}</a>
-                <br />
-                <a>{p.Price + "EGP"}</a>
-                <br />
-                <a>{p.Description}</a>
-                <br />
-                <a>{p.Quantity}</a>
-                <br />
-                <a>{p.Sales}</a>
-                <br />
-                <a>{p.Picture}</a>
-                <br />
-                <button>select</button>
+              <div className="mt-10 pb-10 w-3/12 h-[13rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
+                <div key={index} className="justify-center">
+                  <a>{p.Name}</a>
+                  <br />
+                  <a>{p.Price + "EGP"}</a>
+                  <br />
+                  <a>{p.Description}</a>
+                  <br />
+                  <a>{p.Quantity}</a>
+                  <br />
+                  <a>{p.Sales}</a>
+                  <br />
+                  <a>{p.Picture}</a>
+                  <br />
+                  <button className="justify-center text-sky-600  outline  w-40  h-9  rounded-md   mt-2 shadow">select</button>
+                </div>
               </div>
             );
           })}
