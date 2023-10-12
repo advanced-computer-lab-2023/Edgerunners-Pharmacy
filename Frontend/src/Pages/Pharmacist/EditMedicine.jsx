@@ -1,5 +1,5 @@
 import { Card, Typography } from "@material-tailwind/react";
-import GetMedicine, { DeleteMedicine } from "./getMedicine";
+import GetMedicine, { DeleteMedicine } from "../getMedicine";
 import axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 import { MaterialReactTable } from "material-react-table";
@@ -7,8 +7,8 @@ import { Box, IconButton, Tooltip } from "@mui/material";
 import { Delete, Edit  } from "@mui/icons-material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckIcon from '@mui/icons-material/Check';
-import Sidebar from '../Components/Sidebar';
-import Logo from '../UI/Logo';
+import Sidebar from '../../Components/Sidebar';
+import Logo from '../../UI/Logo';
 
 const TABLE_HEAD = ["Picture","Name", "Description", "Price" , "Quantity" , "Sales"];
 

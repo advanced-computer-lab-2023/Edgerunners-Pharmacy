@@ -1,6 +1,6 @@
-import RequestTable from "../Components/RequestTable"
-import Sidebar from "../Components/Sidebar";
-import Logo from "../UI/Logo";
+import RequestTable from "../../Components/RequestTable"
+import Sidebar from "../../Components/Sidebar";
+import Logo from "../../UI/Logo";
 
 function ViewRequestsAdmin() {
   return (

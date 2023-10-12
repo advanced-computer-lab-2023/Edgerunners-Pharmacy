@@ -15,7 +15,7 @@ const PharmTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await makePharmData(); // Adjust the count as needed
+        const data = await makePharmData();
         setTableData(data);
 
       } catch (error) {
@@ -101,6 +101,11 @@ const PharmTable = () => {
         size: 200,
       },
       {
+        accessorKey: 'reqStatus',
+        header: 'Status',
+        size: 200,
+      },
+      {
         accessorKey: 'delete',
         header: 'Actions',
         enableColumnOrdering: false,
@@ -121,8 +126,9 @@ const PharmTable = () => {
         ),
       },
     ],
-    [handleDeleteRow],
+    [handleDeleteRow]
   );
+  
 
   return (
     <div>

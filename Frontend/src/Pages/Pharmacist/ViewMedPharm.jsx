@@ -13,11 +13,11 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import Logo from '../UI/Logo';
+import Logo from '../../UI/Logo';
 import { Delete, Edit } from '@mui/icons-material';
 
 // Import 'makeData', 'data', and 'states' if they are not declared elsewhere.
-import { data } from '../Components/makeMedicineDataPharm';
+import { data } from '../../Components/makeMedicineDataPharm';
 // add medicines from DataBase
 const ViewMedPharm = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false);

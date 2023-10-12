@@ -1,5 +1,5 @@
-import Logo from "../UI/Logo";
-import Card from "../UI/Card";
+import Logo from "../../UI/Logo";
+import Card from "../../UI/Card";
 import { useEffect, useRef } from "react";
 import axios from "axios";
 

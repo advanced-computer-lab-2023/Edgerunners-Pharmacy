@@ -1,8 +1,8 @@
-import Logo from "../UI/Logo";
-import Card from "../UI/Card";
-import SelectGender from "../UI/SelectGender";
+import Logo from "../../UI/Logo";
+import Card from "../../UI/Card";
+import SelectGender from "../../UI/SelectGender";
 import { useRef } from "react";
-import Dropdown from "../UI/DropDown";
+import Dropdown from "../../UI/DropDown";
 import axios from "axios";
 
 function AddPatient(props) {

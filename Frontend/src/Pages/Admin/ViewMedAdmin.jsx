@@ -1,6 +1,6 @@
-import MedTableAll from "../Components/MedTableAll";
-import Sidebar from '../Components/Sidebar';
-import MedTableAllCopy from "../Components/MedTableAll copy";
+import MedTableAll from "../../Components/MedTableAll";
+import Sidebar from '../../Components/Sidebar';
+import MedTableAllCopy from "../../Components/MedTableAll copy";
 
 function ViewMedAdmin() {
   return (
