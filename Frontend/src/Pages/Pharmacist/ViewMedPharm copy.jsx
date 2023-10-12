@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Logo from "../UI/Logo";
-import GetMedicine from "./getMedicine";
+import Logo from "../../UI/Logo";
+import GetMedicine from "../getMedicine";
 
 export default function ViewMedPharmCopy() {
   const [name, setName] = useState();

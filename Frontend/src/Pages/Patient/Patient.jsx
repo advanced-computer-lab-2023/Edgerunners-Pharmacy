@@ -1,9 +1,9 @@
-import ViewMedAll from "./ViewMedAll"
+import ViewMedPatient from "./ViewMedPatient"
 
 function Patient() {
   return ( 
     <div className = "all"> 
-      <ViewMedAll />
+      <ViewMedPatient />
     </div> 
   ); 
 }

@@ -14,7 +14,7 @@ const createPharmacist = async (req, res) => {
       Hourlyrate: req.body.Hourlyrate,
       Affiliation: req.body.Affiliation,
       Education: req.body.Education,
-      status: "Pending",
+      ReqStatus: "Pending",
     });
     res.status(200).send("Created successfully");
   } catch (e) {

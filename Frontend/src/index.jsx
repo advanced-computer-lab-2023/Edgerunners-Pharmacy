@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter, Route, Routes, Switch } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Admin from './Pages/Admin'
-import AddAdmin from './Pages/AddAdmin';
-import ViewPharmInfoAdmin from './Pages/ViewPharmInfoAdmin';
-import ViewPatientInfoAdmin from './Pages/ViewPatientInfoAdmin';
-import ViewRequestsAdmin from './Pages/ViewRequestsAdmin';
-import ViewMedAdmin from './Pages/ViewMedAdmin';
+import Admin from './Pages/Admin/Admin'
+import AddAdmin from './Pages/Admin/AddAdmin';
+import ViewPharmInfoAdmin from './Pages/Admin/ViewPharmInfoAdmin';
+import ViewPatientInfoAdmin from './Pages/Admin/ViewPatientInfoAdmin';
+import ViewRequestsAdmin from './Pages/Admin/ViewRequestsAdmin';
+import ViewMedAdmin from './Pages/Admin/ViewMedAdmin';
 import App from './App';
 
 

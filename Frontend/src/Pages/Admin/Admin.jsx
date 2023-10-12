@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../UI/Logo";
+import Logo from "../../UI/Logo";
 import "./Admin.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

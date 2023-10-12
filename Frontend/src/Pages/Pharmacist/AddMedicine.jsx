@@ -1,5 +1,5 @@
-import Card from "../UI/Card";
-import Logo from "../UI/Logo";
+import Card from "../../UI/Card";
+import Logo from "../../UI/Logo";
 import { useRef } from "react"; 
 import axios from 'axios';
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
