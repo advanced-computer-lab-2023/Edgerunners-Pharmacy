@@ -1,98 +1,121 @@
 .Admin {
-  body {
-    font-family: "Sen", sans-serif;
-    margin: 0;
-    padding: 0;
-  }
+  font-family: "Sen", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-  .nav-color-bg {
-    background-color: rgba(147, 175, 218, 0.3);
-  }
+.nav-color-bg {
+  background-color: rgba(147, 175, 218, 0.8);
+}
 
-  .nav-link {
-    color: #000;
-  }
+.nav-link {
+  color: #000;
+}
 
-  .information-div {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    font-weight: 700;
-    background-color: rgb(224, 233, 241);
-  }
+.information-div {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  font-weight: 700;
+  background-color: rgb(224, 233, 241);
+}
 
-  h1 {
-    font-weight: 700;
-    font-size: 50px;
-  }
+h1 {
+  font-weight: 700;
+  font-size: 50px;
+}
 
-  .clinic-name {
-    color: rgb(62, 87, 170);
-  }
+.clinic-name {
+  color: rgb(62, 87, 170);
+}
 
-  .body {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-  }
+.body {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
 
-  .description {
-    margin-top: -5rem;
-    background-color: #fff;
-    box-shadow: 2px 2px 2px 2px;
-    width: 30%;
-    padding: 1rem;
-    text-align: center;
-  }
+.description {
+  z-index: 55;
+  margin-top: -5rem;
+  background-color: #fff;
+  box-shadow: 2px 2px 2px 2px;
+  width: 30%;
+  padding: 1rem;
+  text-align: center;
+}
 
-  .description p {
-    font-size: 14px;
-    text-align: left;
-  }
+.description p {
+  font-size: 14px;
+  text-align: left;
+}
 
-  .footer {
-    margin-top: 8rem;
-  }
+.footer {
+  margin-top: 8rem;
+}
 
-  .footer-in {
-    margin: 0;
-    justify-content: center;
-  }
+.footer-in {
+  margin: 0;
+  justify-content: center;
+}
 
-  .headers {
-    text-align: center;
-  }
+.headers {
+  text-align: center;
+}
 
-  .footer h3 {
-    margin-bottom: 2rem;
-    font-weight: 600;
-  }
+.footer h3 {
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
 
-  .col-4 h3 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-size: 20px;
-    text-align: left;
-  }
+.col-4 h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 20px;
+  text-align: left;
+}
 
-  .footer .col-4 {
-    margin: 1rem;
-    width: 25%;
-    border-radius: 25px;
-    box-shadow: 1px 1px 1px 1px;
-    padding: 2rem;
-  }
+.footer .col-4 {
+  margin: 1rem;
+  width: 25%;
+  border-radius: 25px;
+  box-shadow: 1px 1px 1px 1px;
+  padding: 2rem;
+}
 
-  .footer-in {
-    text-align: left;
-  }
+.footer-in {
+  text-align: left;
+}
 
-  .col-4 p {
-    font-size: 14px;
-    text-align: left;
-  }
+.col-4 p {
+  font-size: 14px;
+  text-align: left;
+}
 
-  .form-prescription {
-    margin-top: 20rem;
-  }
+.form-prescription {
+  margin-top: 20rem;
+}
+
+.doctor-img {
+  width: auto;
+  height: 600px;
+}
+
+.doctor-img-div {
+  width: auto;
+  height: 600px;
+}
+
+.body-doctor {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.information-div-doctor {
+  display: flex;
+  padding: 4rem;
+  align-items: center;
+  font-weight: 700;
+  background-color: rgb(224, 233, 241);
 }
