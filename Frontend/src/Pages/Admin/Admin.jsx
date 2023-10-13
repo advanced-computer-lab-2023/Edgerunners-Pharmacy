@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../../UI/Logo";
-import "./Admin.scss";
+import './Admin.scss'
+import '../Bootstrap.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBedPulse,
@@ -13,13 +14,14 @@ import {
   faPrescriptionBottleMedical,
 } from "@fortawesome/free-solid-svg-icons";
 
-function Admin() {
+export default function Admin() {
   return (
     <div className="Bootstrap Admin">
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-            <Logo />
+          <a href="/Admin"><Logo /></a>
+            
             <button
               className="navbar-toggler ps-0"
               type="button"
@@ -103,7 +105,7 @@ function Admin() {
           <div className="welcome-div">
             <h1>Welcome To</h1>
             <h1>
-              <span className="clinic-name">El-7a2ny </span>Medical Clinic
+              <span className="clinic-name">El-7a2ny </span>Pharmacy
             </h1>
           </div>
         </div>
@@ -132,11 +134,12 @@ function Admin() {
           />
           <h3>Header 2</h3>
           <p>
-            El7a2ny encompasses everything from trying to find a doctor,
-            scheduling meetings with doctors, conducting on-premise or online
-            meetings, getting prescriptions, getting reminders for follow-ups,
-            accessing medical history, and ordering medication that was
-            prescribed
+          El7a2ny is a comprehensive healthcare platform that simplifies your healthcare journey. 
+          Our platform offers a wide range of services, allowing patients to view available medicines, 
+          place orders, and engage in direct chat consultations with experienced doctors and pharmacists. 
+          Whether you're seeking medication, professional medical advice, or seamless prescription fulfillment, 
+          our virtual pharmacy provides an all-in-one solution.
+          Experience a seamless healthcare experience that puts you in control of your wellness journey
           </p>
         </div>
       </div>
@@ -146,6 +149,72 @@ function Admin() {
           <h3>What You Need..</h3>
         </div>
         <div className="footer-in row">
+          {/* <div className="col-4">
+            <FontAwesomeIcon
+              icon={faPeopleGroup}
+              size="4x"
+              style={{ color: "#82d76a" }}
+            />
+             <a href = "http://localhost:5173/viewFamilyMem">
+            <h3>Family</h3>
+            </a>
+            <p>
+              add family members using name, National ID, age, gender and
+              relation to the patient link another patient account as a family
+              member
+            </p>
+          </div> */}
+          <div className="col-4">
+            <FontAwesomeIcon
+              icon={faHandHoldingMedical}
+              size="4x"
+              style={{ color: "#82d76a" }}
+            />
+             <a href = "/ViewMedPatient">
+            <h3>Medicine</h3>
+            </a>
+            <p>View all available medicines</p>
+          </div>
+          <div className="col-4">
+            <FontAwesomeIcon
+              icon={faCalendarCheck}
+              size="4x"
+              style={{ color: "#82d76a" }}
+            />
+            <h3>View my cart</h3>
+            <p>
+              view all the medicine added to your cart
+            </p>
+          </div>
+          {/* <div className="col-4">
+            <FontAwesomeIcon
+              icon={faStethoscope}
+              size="4x"
+              style={{ color: "#82d76a" }}
+            />
+            <a href = "http://localhost:5173/Doctors">
+            <h3>Our Doctors</h3>
+            </a>
+            <p>view a list of all doctors along with their speciality</p>
+          </div> */}
+          <div className="col-4">
+            <FontAwesomeIcon
+              icon={faPrescriptionBottleMedical}
+              size="4x"
+              style={{ color: "#82d76a" }}
+            />
+            <h3>Clinic</h3>
+            <p>Chat with a doctor</p>
+          </div>
+          <div className="col-4">
+            <FontAwesomeIcon
+              icon={faPrescriptionBottleMedical}
+              size="4x"
+              style={{ color: "#82d76a" }}
+            />
+            <h3>Pharmacy</h3>
+            <p>Chat with a pharmacist</p>
+          </div>
           <div className="col-4">
             <FontAwesomeIcon
               icon={faFileCirclePlus}
@@ -155,63 +224,8 @@ function Admin() {
             <h3>Upload/Remove Documents</h3>
             <p>upload/remove documents for my medical history</p>
           </div>
-
-          <div className="col-4">
-            <FontAwesomeIcon
-              icon={faPeopleGroup}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <h3>Family</h3>
-            <p>
-              add family members using name, National ID, age, gender and
-              relation to the patient link another patient account as a family
-              member
-            </p>
-          </div>
-          <div className="col-4">
-            <FontAwesomeIcon
-              icon={faCalendarCheck}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <h3>Make Appointment</h3>
-            <p>
-              select an appointment date and time for myself or for a family
-              member
-            </p>
-          </div>
-          <div className="col-4">
-            <FontAwesomeIcon
-              icon={faStethoscope}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <h3>Our Doctors</h3>
-            <p>view a list of all doctors along with their speciality</p>
-          </div>
-          <div className="col-4">
-            <FontAwesomeIcon
-              icon={faHandHoldingMedical}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <h3>Health Packages</h3>
-            <p>view all details of selected doctor including specilaty</p>
-          </div>
-          <div className="col-4">
-            <FontAwesomeIcon
-              icon={faPrescriptionBottleMedical}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <h3>Pharmacy</h3>
-            <p>view the available quantity, and sales of each medicine</p>
-          </div>
         </div>
       </div>
     </div>
   );
 }
-
-export default Admin;

@@ -8,9 +8,13 @@ import ViewPharmInfoAdmin from './Pages/Admin/ViewPharmInfoAdmin';
 import ViewPatientInfoAdmin from './Pages/Admin/ViewPatientInfoAdmin';
 import ViewRequestsAdmin from './Pages/Admin/ViewRequestsAdmin';
 import ViewMedAdmin from './Pages/Admin/ViewMedAdmin';
+import ViewMedPatient from './Pages/Patient/ViewMedPatient';
 import App from './App';
 import AddMedicine from './Pages/Pharmacist/AddMedicine';
 import EditMedicine from './Pages/Pharmacist/EditMedicine';
+import ViewMedPharmCopy from './Pages/Pharmacist/ViewMedPharm copy';
+import Patient from './Pages/Patient/Patient';
+import Pharm from './Pages/Pharmacist/Pharm';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,6 +30,10 @@ root.render(
         <Route path="/ViewMedAdmin" element={<ViewMedAdmin />} />
         <Route path="/AddMedicine" element={<AddMedicine />} />
         <Route path="/EditMedicine" element={<EditMedicine />} />
+        <Route path="/ViewMedPatient" element={<ViewMedPatient />} />
+        <Route path="/ViewMedPharm" element={<ViewMedPharmCopy />} />
+        <Route path="/Patient" element={<Patient />} />
+        <Route path="/Pharm" element={<Pharm />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
