@@ -6,16 +6,16 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ViewMedPharmCopy() {
   const [name, setName] = useState();
-  const [description, setDescription] = useState();
+  const [medicinaluse, setMedicinalUse] = useState();
   let Medicine = GetMedicine({
     Name: name,
-    Description: description,
+    MedicinalUse: medicinaluse,
   });
   const handleSubmit = async (e) => {
     e.preventDefaut();
     Medicine = await GetMedicine({
       Name: name,
-      Description: description,
+      MedicinalUse: medicinaluse,
     });
   };
 
@@ -49,16 +49,16 @@ export default function ViewMedPharmCopy() {
               setName(e.target.value);
             }}
           />
-          <label className="-mb-4 -mt-60">Description</label>
+          <label className="-mb-4 -mt-60">Medicinal Use</label>
           <input
             className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
             type="text"
             onChange={(e) => {
-              setDescription(e.target.value);
+              setMedicinalUse(e.target.value);
             }}
           />
           <button className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4" type="submit" onSubmit={handleSubmit}>
-            submit
+            Submit
           </button>
           <div className="space-x-2 -mt-60">
             <button className="  text-sky-600  outline  w-40  h-9  rounded-md shadow" onClick={routeChange}> Add medicine </button>
@@ -69,7 +69,7 @@ export default function ViewMedPharmCopy() {
         <div className="justify-center flex -mt-40 space-x-6">
           {Medicine.map((p, index) => {
             return (
-              <div className="mt-10 mb-2 pb-2 w-3/12 h-[13.5rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
+              <div className="mt-10 mb-2 pb-2 w-3/12 h-[15rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
                 <div key={index} className="justify-center pl-4 mt-2">
                   <a >{p.Name}</a>
                   <br />
@@ -77,13 +77,15 @@ export default function ViewMedPharmCopy() {
                   <br />
                   <a >{p.Description}</a>
                   <br />
+                  <a >{p.MedicinalUse}</a>
+                  <br />
                   <a >{p.Quantity}</a>
                   <br />
                   <a >{p.Sales}</a>
                   <br />
                   <a >{p.Picture}</a>
                   <br />
-                  <button className="justify-end text-sky-600  outline  w-40  h-9  rounded-md mb-2 mt-2 shadow">select</button>
+                  <button className="justify-end text-sky-600  outline  w-40  h-9  rounded-md mb-2 mt-2 shadow">Select</button>
                 </div>
               </div>
             );

@@ -1,120 +1,35 @@
 import React, { useState } from "react";
 import Logo from "../UI/Logo";
 import GetMedicine from "../Pages/getMedicine";
+import { Card } from "@material-tailwind/react";
+import { useNavigate } from 'react-router-dom';
 
 export default function MedTableAllCopy() {
   const [name, setName] = useState();
-  const [description, setDescription] = useState();
+  const [medicinaluse, setMedicinalUse] = useState();
   let Medicine = GetMedicine({
     Name: name,
-    Description: description,
+    MedicinalUse: medicinaluse,
   });
   const handleSubmit = async (e) => {
     e.preventDefaut();
     Medicine = await GetMedicine({
       Name: name,
-      Description: description,
+      MedicinalUse: medicinaluse,
     });
   };
 
   if (Medicine) {
     console.log(Medicine);
     return (
-      <div className="Bootstrap PatientHome">
-        <div className="header">
-          <div className="justify-center flex -mt-8 ">
-            <Logo />
-          </div>
-          <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg ">
-            <div className="container justify-center flex mt-20 ">
-              <button
-                className="navbar-toggler ps-0"
-                type="button"
-                data-mdb-toggle="collapse"
-                data-mdb-target="#navbarExample01"
-                aria-controls="navbarExample01"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon d-flex justify-content-start align-items-center">
-                  <i className="fas fa-bars"></i>
-                </span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarExample01">
-                <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#pets">
-                      Video Call
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      aria-current="page"
-                      href="#adoptions"
-                    >
-                      Chat
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      aria-current="page"
-                      href="#foundation"
-                    >
-                      My Appointments
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#help">
-                      Health Record
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      aria-current="page"
-                      href="#education"
-                    >
-                      Prescriptions
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#about">
-                      My Account
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#contact">
-                      Log Out
-                    </a>
-                  </li>
-                </ul>
-
-                <ul className="navbar-nav flex-row">
-                  <li className="nav-item">
-                    <a className="nav-link px-2" href="#!">
-                      <i className="fab fa-facebook-square"></i>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link px-2" href="#!">
-                      <i className="fab fa-instagram"></i>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link ps-2" href="#!">
-                      <i className="fab fa-youtube"></i>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
+      <div className="">
+        <div className="justify-center flex mt-6 mb-4">
+          <Logo />
         </div>
-        <div className="form-prescription">
-          <label htmlFor="">Name</label>
+        <div className="form-prescription space-x-3 justify-center flex -mb-16">
+          <label className="-mb-4 -mt-60">Name</label>
           <input
+            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
             type="text"
             name=""
             id=""
@@ -122,30 +37,36 @@ export default function MedTableAllCopy() {
               setName(e.target.value);
             }}
           />
-          <label htmlFor="">Description</label>
+          <label className="-mb-4 -mt-60">Medicinal Use</label>
           <input
+            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
             type="text"
             onChange={(e) => {
-              setDescription(e.target.value);
+              setMedicinalUse(e.target.value);
             }}
           />
-          <button type="submit" onSubmit={handleSubmit}>
-            submit
+          <button className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4" type="submit" onSubmit={handleSubmit}>
+            Submit
           </button>
         </div>
-        <div>
+
+        <div className="justify-center flex -mt-40 space-x-6">
           {Medicine.map((p, index) => {
             return (
-              <div key={index}>
-                <a>{p.Name}</a>
-                <br />
-                <a>{p.Price + "EGP"}</a>
-                <br />
-                <a>{p.Description}</a>
-                <br />
-                <a>{p.Picture}</a>
-                <br />
-                <button>select</button>
+              <div className="mt-10 mb-2 pb-2 w-3/12 h-[12rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
+                <div key={index} className="justify-center pl-4 mt-2">
+                  <a >{p.Name}</a>
+                  <br />
+                  <a >{p.Price + "EGP"}</a>
+                  <br />
+                  <a >{p.Description}</a>
+                  <br />
+                  <a >{p.MedicinalUse}</a>
+                  <br />
+                  <a >{p.Picture}</a>
+                  <br />
+                  <button className="justify-end text-sky-600  outline  w-40  h-9  rounded-md mb-2 mt-2 shadow">Select</button>
+                </div>
               </div>
             );
           })}

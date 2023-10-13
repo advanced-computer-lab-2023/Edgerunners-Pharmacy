@@ -5,8 +5,8 @@ const medicineSchema = new Schema(
     {
         Picture: {
             type: String,
-            required: true,
-            unique: true,
+            // unique: true,
+            // required: true,
         },
         Name: {
             type: String,
@@ -14,6 +14,10 @@ const medicineSchema = new Schema(
             unique: true,
         },
         Description: {
+            type: String,
+            required: true,
+        },
+        MedicinalUse: {
             type: String,
             required: true,
         },

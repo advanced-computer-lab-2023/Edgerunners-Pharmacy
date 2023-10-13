@@ -186,9 +186,9 @@ export default function Pharm() {
               style={{ color: "#82d76a" }}
               bounce
             />
-            <h3>View my cart</h3>
+            <h3>Archive/Unarchive Medicine</h3>
             <p>
-              view all the medicine added to your cart
+              Choose medicine to archive/unarchive
             </p>
           </div>
           {/* <div className="col-4">
@@ -219,8 +219,8 @@ export default function Pharm() {
               style={{ color: "#82d76a" }}
               bounce
             />
-            <h3>Pharmacy</h3>
-            <p>Chat with a pharmacist</p>
+            <h3>Sales Report</h3>
+            <p>View sales based on a chosen month</p>
           </div>
           <div className="col-4">
             <FontAwesomeIcon

@@ -185,7 +185,7 @@ export default function Admin() {
               style={{ color: "#82d76a" }}
             />
             <a href="/AddAdmin">
-              <h3>Add admin</h3>
+              <h3>Add Admin</h3>
             </a>
             <p>
               Add a new admin to the system
