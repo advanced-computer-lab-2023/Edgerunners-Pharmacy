@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;700&family=Poppins:wght@400;700&display=swap');
+
 .Admin {
   font-family: "Sen", sans-serif;
   margin: 0;
@@ -21,8 +23,19 @@
 }
 
 h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   font-size: 50px;
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
 }
 
 .clinic-name {
@@ -46,6 +59,7 @@ h1 {
 }
 
 .description p {
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   text-align: left;
 }
@@ -60,15 +74,18 @@ h1 {
 }
 
 .headers {
+  line-height: 1rem;
   text-align: center;
 }
 
 .footer h3 {
+  font-family: 'Poppins', sans-serif;
   margin-bottom: 2rem;
   font-weight: 600;
 }
 
 .col-4 h3 {
+  font-family: 'Poppins', sans-serif;
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-size: 20px;
@@ -88,6 +105,7 @@ h1 {
 }
 
 .col-4 p {
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   text-align: left;
 }
@@ -116,6 +134,7 @@ h1 {
   display: flex;
   padding: 4rem;
   align-items: center;
-  font-weight: 700;
+  font-weight: bold;
   background-color: rgb(224, 233, 241);
+  font-family: 'Poppins', sans-serif;
 }

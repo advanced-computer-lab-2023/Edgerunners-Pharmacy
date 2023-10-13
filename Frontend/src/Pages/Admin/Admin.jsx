@@ -12,6 +12,8 @@ import {
   faStethoscope,
   faHandHoldingMedical,
   faPrescriptionBottleMedical,
+  faUserInjured,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Admin() {
@@ -20,8 +22,8 @@ export default function Admin() {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-          <a href="/Admin"><Logo /></a>
-            
+            <a href="/Admin"><Logo /></a>
+
             <button
               className="navbar-toggler ps-0"
               type="button"
@@ -107,6 +109,7 @@ export default function Admin() {
             <h1>
               <span className="clinic-name">El-7a2ny </span>Pharmacy
             </h1>
+            <h3>Admin Homepage</h3>
           </div>
         </div>
       </div>
@@ -118,8 +121,8 @@ export default function Admin() {
             size="5x"
             style={{ color: "#1860dc" }}
           />
-          <h3>Header 1</h3>
           <p>
+            <br></br>
             El7a2ny is a software solution for clinics, doctors, pharmacists and
             patients alike to streamline and automate the interactions between
             patients, medical doctors and pharmacists
@@ -132,21 +135,21 @@ export default function Admin() {
             size="5x"
             style={{ color: "#1860dc" }}
           />
-          <h3>Header 2</h3>
           <p>
-          El7a2ny is a comprehensive healthcare platform that simplifies your healthcare journey. 
-          Our platform offers a wide range of services, allowing patients to view available medicines, 
-          place orders, and engage in direct chat consultations with experienced doctors and pharmacists. 
-          Whether you're seeking medication, professional medical advice, or seamless prescription fulfillment, 
-          our virtual pharmacy provides an all-in-one solution.
-          Experience a seamless healthcare experience that puts you in control of your wellness journey
+            <br></br>
+            El7a2ny is a comprehensive healthcare platform that simplifies your healthcare journey.
+            Our platform offers a wide range of services, allowing patients to view available medicines,
+            place orders, and engage in direct chat consultations with experienced doctors and pharmacists.
+            Whether you're seeking medication, professional medical advice, or seamless prescription fulfillment,
+            our virtual pharmacy provides an all-in-one solution.
+            Experience a seamless healthcare experience that puts you in control of your wellness journey
           </p>
         </div>
       </div>
       <div className="footer">
         <div className="headers">
-          <h3>Choose Our Any Services</h3>
-          <h3>What You Need..</h3>
+          <h3>Choose Our Any Services<br>
+          </br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a></h3>
         </div>
         <div className="footer-in row">
           {/* <div className="col-4">
@@ -170,20 +173,22 @@ export default function Admin() {
               size="4x"
               style={{ color: "#82d76a" }}
             />
-             <a href = "/ViewMedPatient">
-            <h3>Medicine</h3>
+            <a href="/ViewMedAdmin">
+              <h3>Edeny el gor3a</h3>
             </a>
             <p>View all available medicines</p>
           </div>
           <div className="col-4">
             <FontAwesomeIcon
-              icon={faCalendarCheck}
+              icon={faUserPlus}
               size="4x"
               style={{ color: "#82d76a" }}
             />
-            <h3>View my cart</h3>
+            <a href="/AddAdmin">
+              <h3>Add admin</h3>
+            </a>
             <p>
-              view all the medicine added to your cart
+              Add a new admin to the system
             </p>
           </div>
           {/* <div className="col-4">
@@ -199,21 +204,25 @@ export default function Admin() {
           </div> */}
           <div className="col-4">
             <FontAwesomeIcon
-              icon={faPrescriptionBottleMedical}
+              icon={faUserInjured}
               size="4x"
               style={{ color: "#82d76a" }}
             />
-            <h3>Clinic</h3>
-            <p>Chat with a doctor</p>
+            <a href="/ViewPatientInfoAdmin">
+              <h3>Patients</h3>
+            </a>
+            <p>View all patients</p>
           </div>
           <div className="col-4">
             <FontAwesomeIcon
-              icon={faPrescriptionBottleMedical}
+              icon={faUserDoctor}
               size="4x"
               style={{ color: "#82d76a" }}
             />
-            <h3>Pharmacy</h3>
-            <p>Chat with a pharmacist</p>
+            <a href="/ViewPharmInfoAdmin">
+            <h3>Doctoooooor</h3>
+            </a>
+            <p>View all pharmacists</p>
           </div>
           <div className="col-4">
             <FontAwesomeIcon
@@ -221,8 +230,10 @@ export default function Admin() {
               size="4x"
               style={{ color: "#82d76a" }}
             />
-            <h3>Upload/Remove Documents</h3>
-            <p>upload/remove documents for my medical history</p>
+            <a href="/ViewRequestsAdmin">
+            <h3>Requests</h3>
+            </a>
+            <p>View all pharmacists' requests</p>
           </div>
         </div>
       </div>

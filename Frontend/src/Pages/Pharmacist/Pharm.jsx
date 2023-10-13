@@ -12,6 +12,8 @@ import {
   faStethoscope,
   faHandHoldingMedical,
   faPrescriptionBottleMedical,
+  faSyringe,
+  faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Pharm() {
@@ -107,6 +109,7 @@ export default function Pharm() {
             <h1>
               <span className="clinic-name">El-7a2ny </span>Pharmacy
             </h1>
+            <h3>Pharmacist Homepage</h3>
           </div>
         </div>
       </div>
@@ -118,8 +121,8 @@ export default function Pharm() {
             size="5x"
             style={{ color: "#1860dc" }}
           />
-          <h3>Header 1</h3>
           <p>
+            <br></br>
             El7a2ny is a software solution for clinics, doctors, pharmacists and
             patients alike to streamline and automate the interactions between
             patients, medical doctors and pharmacists
@@ -132,8 +135,8 @@ export default function Pharm() {
             size="5x"
             style={{ color: "#1860dc" }}
           />
-          <h3>Header 2</h3>
           <p>
+            <br></br>
           El7a2ny is a comprehensive healthcare platform that simplifies your healthcare journey. 
           Our platform offers a wide range of services, allowing patients to view available medicines, 
           place orders, and engage in direct chat consultations with experienced doctors and pharmacists. 
@@ -145,8 +148,8 @@ export default function Pharm() {
       </div>
       <div className="footer">
         <div className="headers">
-          <h3>Choose Our Any Services</h3>
-          <h3>What You Need..</h3>
+          <h3>Choose Our Any Services<br>
+          </br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a></h3>
         </div>
         <div className="footer-in row">
           {/* <div className="col-4">
@@ -169,6 +172,7 @@ export default function Pharm() {
               icon={faHandHoldingMedical}
               size="4x"
               style={{ color: "#82d76a" }}
+              bounce
             />
              <a href = "/ViewMedPharm">
             <h3>Medicine</h3>
@@ -177,9 +181,10 @@ export default function Pharm() {
           </div>
           <div className="col-4">
             <FontAwesomeIcon
-              icon={faCalendarCheck}
+              icon={faShoppingCart}
               size="4x"
               style={{ color: "#82d76a" }}
+              bounce
             />
             <h3>View my cart</h3>
             <p>
@@ -202,15 +207,17 @@ export default function Pharm() {
               icon={faPrescriptionBottleMedical}
               size="4x"
               style={{ color: "#82d76a" }}
+              bounce
             />
             <h3>Clinic</h3>
             <p>Chat with a doctor</p>
           </div>
           <div className="col-4">
             <FontAwesomeIcon
-              icon={faPrescriptionBottleMedical}
+              icon={faSyringe}
               size="4x"
               style={{ color: "#82d76a" }}
+              bounce
             />
             <h3>Pharmacy</h3>
             <p>Chat with a pharmacist</p>
@@ -220,6 +227,7 @@ export default function Pharm() {
               icon={faFileCirclePlus}
               size="4x"
               style={{ color: "#82d76a" }}
+              bounce
             />
             <h3>Upload/Remove Documents</h3>
             <p>upload/remove documents for my medical history</p>
