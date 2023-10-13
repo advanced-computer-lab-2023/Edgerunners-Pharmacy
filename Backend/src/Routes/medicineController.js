@@ -7,6 +7,7 @@ const createMedicine = async (req, res) => {
       Picture: req.body.Picture,
       Name: req.body.Name,
       Description: req.body.Description,
+      MedicinalUse: req.body.MedicinalUse,
       Price: req.body.Price,
       Quantity: req.body.Quantity,
       Sales: req.body.Sales,
@@ -19,10 +20,10 @@ const createMedicine = async (req, res) => {
 
 const getMedicines = async (req, res) => {
   try {
-    const {Description, Name} = req.query;
+    const {MedicinalUse, Name} = req.query;
     const filter = {};
-    if(Description){
-      filter.Description = Description;
+    if(MedicinalUse){
+      filter.MedicinalUse = MedicinalUse;
     }
     if(Name){
       filter.Name = Name;
@@ -38,7 +39,7 @@ const updateMedicine = async (req, res) => {
   //update a Medicine in the database
   const medicine = req.body.Name;
   try {
-    await Medicine.updateOne({ Name: medicine }, { $set: { Description: req.body.Description ,Price: req.body.Price} });
+    await Medicine.updateOne({ Name: medicine }, { $set: { Description: req.body.Description ,Price: req.body.Price, MedicinalUse: req.body.MedicinalUse} });
     res.status(200).send("Updated Successfully");
   } catch (e) {
     res.status(400).send("Error could not update Medicine !!");

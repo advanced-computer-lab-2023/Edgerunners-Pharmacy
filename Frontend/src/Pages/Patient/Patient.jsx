@@ -175,7 +175,7 @@ export default function Patient() {
               bounce
             />
              <a href = "/ViewMedPatient">
-            <h3>Medicines</h3>
+            <h3>Medicine</h3>
             </a>
             <p>View all available medicines</p>
           </div>
@@ -209,8 +209,8 @@ export default function Patient() {
               style={{ color: "#82d76a" }}
               bounce
             />
-            <h3>Clinic</h3>
-            <p>Chat with a doctor</p>
+            <h3>View orders</h3>
+            <p>View past/current orders' details</p>
           </div>
           <div className="col-4">
             <FontAwesomeIcon
@@ -232,7 +232,7 @@ export default function Patient() {
             <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles">
             <h3>Upload/Remove Documents</h3>
             </a>
-            <p>upload/remove documents for my medical history</p>
+            <p>Upload/remove documents for my medical history</p>
           </div>
         </div>
       </div>

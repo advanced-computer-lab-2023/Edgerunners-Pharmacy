@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function GetMedicine({ Name, Description}) {
+export default function GetMedicine({ Name, MedicinalUse}) {
     const [Medicine, setMedicine] = useState([]);
   
     useEffect(() => {
@@ -10,12 +10,12 @@ export default function GetMedicine({ Name, Description}) {
         const res = await axios.get(`http://localhost:3001/getMedicine`, {
           params: {
             Name,
-            Description,
+            MedicinalUse,
           },
         });
         setMedicine(res.data);
       }
-    }, [Name, Description]); // Include the filter parameters in the dependency array
+    }, [Name, MedicinalUse]); // Include the filter parameters in the dependency array
   
     return Medicine;
   }

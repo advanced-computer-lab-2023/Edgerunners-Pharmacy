@@ -9,17 +9,20 @@ function AddMedicine(props){
     const medicineNameRef=useRef();
     const medicineIngredientsRef=useRef();
     const medicinePriceRef=useRef();
+    const medicineUseRef=useRef();
     const medicineQuantityRef=useRef();
     function submitHandeler(event){
         event.preventDefault();
         const nameValue= medicineNameRef.current.value;
         const ingredientsValue= medicineIngredientsRef.current.value;
         const priceValue= medicinePriceRef.current.value;
+        const useValue= medicineUseRef.current.value;
         const quatityValue= medicineQuantityRef.current.value;
         const newMedicine={
             Name: nameValue,
             Description: ingredientsValue,
             Price: priceValue,
+            MedicinalUse: useValue,
             Quantity: quatityValue,
         };
         
@@ -34,6 +37,7 @@ function AddMedicine(props){
           medicineNameRef.current.value="";
           medicineIngredientsRef.current.value="";
           medicinePriceRef.current.value="";
+          medicineUseRef.current.value="";
           medicineQuantityRef.current.value="";
 
         })
@@ -46,7 +50,7 @@ return(
     <div className=" justify-center flex mt-20">
 
    
-    <Card width='w-4/12' height=' h-[32rem]'>
+    <Card width='w-4/12' height=' h-[35rem]'>
         <div className=" flex justify-center  mt-6 mb-0 ">
             <Logo height='4rem'/>
            
@@ -75,6 +79,12 @@ return(
             </div>
 
             <div className=" mb-4">
+            <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Medicinal Use : </label>
+            <br />
+            <input type="text" id="medicineuse" name="medicineuse"  ref={medicineUseRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"/>
+            </div>
+
+            <div className=" mb-4">
             <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Quantity : </label>
             <br />
             <input type="text" id="medicinequantity" name="medicinequantity"  ref={medicineQuantityRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"/>
@@ -83,7 +93,7 @@ return(
               <div className=" flex justify-center  mt-6">
                 <br />
                 <br />
-                <button className="  text-sky-600  outline  w-40  h-9  rounded-md   mt-20 shadow"> Confirm </button>
+                <button className="  text-sky-600  outline  w-40  h-9 rounded-md   mt-8 shadow"> Confirm </button>
 
              </div> 
                
