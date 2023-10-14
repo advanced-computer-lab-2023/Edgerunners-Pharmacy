@@ -47,11 +47,11 @@ export default function MedTableAllCopy() {
           </button>
         </div>
 
-        <div className="justify-center flex -mt-40 space-x-6">
+        <div className="grid grid-cols-4 flex -mt-40 ml-20 pb-10">
           {Medicine.map((p, index) => {
             return (
-              <div className="mt-10 mb-2 pb-2 w-3/12 h-[12rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
-                <div key={index} className="justify-center pl-4 mt-2">
+              <div key={index}  className="mt-10 mb-2 pb-2 w-[16rem] h-[16rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
+                <div className="justify-center pl-4 mt-2">
                   <a >{p.Name}</a>
                   <br />
                   <a >{p.Price + "EGP"}</a>
@@ -60,7 +60,7 @@ export default function MedTableAllCopy() {
                   <br />
                   <a >{p.MedicinalUse}</a>
                   <br />
-                  <a >{p.Picture}</a>
+                  {(p.Picture === "")?(<a >{p.Picture}</a>):(<img src={p.Picture} alt={p.Name} className="w-20 h-20"/>)}
                   <br />
                   <button className="justify-end text-sky-600  outline  w-40  h-9  rounded-md mb-2 mt-2 shadow">Select</button>
                 </div>

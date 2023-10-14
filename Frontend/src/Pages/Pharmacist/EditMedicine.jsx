@@ -52,6 +52,7 @@ export default function EditMedicine() {
         Price: p.Price,
         Description: p.Description,
         MedicinalUse: p.MedicinalUse,
+        Picture : p.Picture,
       });
       setEditMode((prevEditMode) => ({
         ...prevEditMode,
@@ -114,14 +115,23 @@ export default function EditMedicine() {
                   return (
                     <tr key={p.Name}>
                       <td className={classes}>
-                        <img src={p.Picture}></img>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-400"
+                          defaultValue={p.Picture}
+                          onChange={(e) => {
+                            p.Picture = e.target.value;
+                          }}
+                        />
+                      ) : (
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
                         >
                           {p.Picture}
-                        </Typography>
+                        </Typography>)}
                       </td>
                       <td className={classes}>
                         <Typography

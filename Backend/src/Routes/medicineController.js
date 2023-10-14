@@ -20,12 +20,12 @@ const createMedicine = async (req, res) => {
 
 const getMedicines = async (req, res) => {
   try {
-    const {MedicinalUse, Name} = req.query;
+    const { MedicinalUse, Name } = req.query;
     const filter = {};
-    if(MedicinalUse){
+    if (MedicinalUse) {
       filter.MedicinalUse = MedicinalUse;
     }
-    if(Name){
+    if (Name) {
       filter.Name = Name;
     }
     const Medicines = await Medicine.find(filter);
@@ -39,13 +39,21 @@ const updateMedicine = async (req, res) => {
   //update a Medicine in the database
   const medicine = req.body.Name;
   try {
-    await Medicine.updateOne({ Name: medicine }, { $set: { Description: req.body.Description , Price: req.body.Price, MedicinalUse: req.body.MedicinalUse} });
+    await Medicine.updateOne(
+      { Name: medicine },
+      {
+        $set: {
+          Description: req.body.Description,
+          Price: req.body.Price,
+          MedicinalUse: req.body.MedicinalUse,
+          Picture: req.body.Picture,
+        },
+      }
+    );
     res.status(200).send("Updated Successfully");
   } catch (e) {
     res.status(400).send("Error could not update Medicine !!");
   }
-  
-  
 };
 const findMedicine = async (req, res) => {
   if ((await Medicine.findOne({ Name: req.body.Name }).length) === 0) {

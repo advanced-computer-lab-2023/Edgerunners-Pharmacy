@@ -22,7 +22,7 @@ export default function Pharm() {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-          <a href="/Pharm"><Logo /></a>
+          <a href="/"><Logo /></a>
             
             <button
               className="navbar-toggler ps-0"

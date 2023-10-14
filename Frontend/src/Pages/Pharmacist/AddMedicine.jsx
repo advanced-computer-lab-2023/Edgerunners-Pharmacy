@@ -11,6 +11,7 @@ function AddMedicine(props) {
     const medicinePriceRef = useRef();
     const medicineUseRef = useRef();
     const medicineQuantityRef = useRef();
+    const pictureRef = useRef();
     function submitHandeler(event) {
         event.preventDefault();
         const nameValue = medicineNameRef.current.value;
@@ -18,16 +19,16 @@ function AddMedicine(props) {
         const priceValue = medicinePriceRef.current.value;
         const useValue = medicineUseRef.current.value;
         const quatityValue = medicineQuantityRef.current.value;
+        const pictureValue = pictureRef.current.value;
         const newMedicine = {
             Name: nameValue,
-            Picture: "",
+            Picture: pictureValue,
             Description: ingredientsValue,
             Price: priceValue,
             MedicinalUse: useValue,
             Quantity: quatityValue,
             Sales: 0,
         };
-
         console.log(newMedicine);
         axios
             .post("http://localhost:3001/addMedicine", newMedicine, {
@@ -41,7 +42,7 @@ function AddMedicine(props) {
                 medicinePriceRef.current.value = "";
                 medicineUseRef.current.value = "";
                 medicineQuantityRef.current.value = "";
-
+                pictureRef.current.value = "";
             })
             .catch((error) => {
                 console.log("Unable to add Medicine");
@@ -52,7 +53,7 @@ function AddMedicine(props) {
         <div className=" justify-center flex mt-20">
 
 
-            <Card width='w-4/12' height=' h-[40rem]'>
+            <Card width='w-4/12' height=' h-[45rem]'>
                 <div className=" flex justify-center  mt-6 mb-0 ">
                     <a href="/ViewMedPharm"><Logo height='4rem' /></a>
                     <h1 className=" text-2xl font-bold  text-center  text-sky-600  ml-0   mt-6 ">  Add Medicine </h1>
@@ -90,7 +91,11 @@ function AddMedicine(props) {
                                 <br />
                                 <input type="text" id="medicinequantity" name="medicinequantity" ref={medicineQuantityRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
                             </div>
-
+                            <div className=" mb-4">
+                                <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Picture : </label>
+                                <br />
+                                <input type="text" id="picture" name="picture" ref={pictureRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                            </div>
                             <div className=" flex justify-center  mt-6">
                                 <br />
                                 <br />

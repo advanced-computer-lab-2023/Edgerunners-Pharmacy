@@ -104,7 +104,7 @@ export default function ViewMedPharmCopy() {
                   <br />
                   <a>{p.Sales}</a>
                   <br />
-                  <a>{p.Picture}</a>
+                  {(p.Picture === "")?(<a >{p.Picture}</a>):(<img src={p.Picture} alt={p.Name} className="w-20 h-20"/>)}
                   <br />
                   <button className="justify-center text-sky-600 outline w-40 h-9 rounded-md -mb-4 mt-8 shadow">
                     Select
