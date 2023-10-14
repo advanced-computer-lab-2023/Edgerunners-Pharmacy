@@ -62,7 +62,7 @@ export default function MedTableAllCopy() {
                   <br />
                   {(p.Picture === "")?(<a >{p.Picture}</a>):(<img src={p.Picture} alt={p.Name} className="w-20 h-20"/>)}
                   <br />
-                  <button className="justify-end text-sky-600  outline  w-40  h-9  rounded-md mb-2 mt-2 shadow">Select</button>
+                  <button className="justify-end text-sky-600  outline  w-40  h-9  rounded-md mb-2 mt-0.5 shadow">Select</button>
                 </div>
               </div>
             );
