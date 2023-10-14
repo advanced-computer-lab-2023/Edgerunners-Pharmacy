@@ -19,8 +19,8 @@ function AddMedicine(props) {
         const useValue = medicineUseRef.current.value;
         const quatityValue = medicineQuantityRef.current.value;
         const newMedicine = {
-            Picture: " ",
             Name: nameValue,
+            Picture: "",
             Description: ingredientsValue,
             Price: priceValue,
             MedicinalUse: useValue,
