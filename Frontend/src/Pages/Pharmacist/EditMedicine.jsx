@@ -5,11 +5,19 @@ import React, { useState, useEffect, useCallback } from "react";
 import { MaterialReactTable } from "material-react-table";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
-import CancelIcon from '@mui/icons-material/Cancel';
-import CheckIcon from '@mui/icons-material/Check';
-import Logo from '../../UI/Logo';
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckIcon from "@mui/icons-material/Check";
+import Logo from "../../UI/Logo";
 
-const TABLE_HEAD = ["Picture", "Name", "Description", "Medicinal Use", "Price", "Quantity", "Sales"];
+const TABLE_HEAD = [
+  "Picture",
+  "Name",
+  "Description",
+  "Medicinal Use",
+  "Price",
+  "Quantity",
+  "Sales",
+];
 
 export default function EditMedicine() {
   const [Medicine, setMedicine] = useState(null);
@@ -77,8 +85,10 @@ export default function EditMedicine() {
     return (
       <div id="outer-container">
         <div id="page-wrap">
-          <div className='flex justify-center'>
-            <Logo height='4rem' className="mt-6 mb-0" />
+          <div className="flex justify-center">
+            <a href="/ViewMedPharm">
+              <Logo height="4rem" className="mt-6 mb-0" />
+            </a>
           </div>
           <Card className="h-full w-full overflow-scroll">
             <table className="w-full min-w-max table-auto text-left">

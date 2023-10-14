@@ -25,36 +25,57 @@ const createPharmacist = async (req, res) => {
 const getPharmacists = async (req, res) => {
   try {
     const Pharmacists = await Pharmacist.find();
-    res.status(200).send( Pharmacists);
+    res.status(200).send(Pharmacists);
   } catch (e) {
     res.status(400).send("Error could not get Pharmacists !!");
   }
 };
 
 const updatePharmacist = async (req, res) => {
-  //update a Pharmacist in the database
-  const user = req.body.Username;
-  if (req.body.Email) {
-    Pharmacist.updateOne({ Username: user }, { $set: { Email: req.body.Email } });
-  }
-  if (req.body.Hourlyrate) {
-    Pharmacist.updateOne(
-      { Username: user },
-      { $set: { Hourlyrate: req.body.Hourlyrate } },
-    );
-  }
-  if (req.body.Affiliation) {
-    Pharmacist.updateOne(
-      { Username: user },
-      { $set: { Affiliation: req.body.Affiliation } },
-    );
+  try {
+    const user = req.body.Username;
+    if (req.body.Email) {
+      await Pharmacist.updateOne(
+        { Username: user },
+        { $set: { Email: req.body.Email } }
+      );
+    }
+    if (req.body.Hourlyrate) {
+      await Pharmacist.updateOne(
+        { Username: user },
+        { $set: { Hourlyrate: req.body.Hourlyrate } }
+      );
+    }
+    if (req.body.Affiliation) {
+      await Pharmacist.updateOne(
+        { Username: user },
+        { $set: { Affiliation: req.body.Affiliation } }
+      );
+    }
+    if (req.body.ReqStatus) {
+      if(req.body.ReqStatus === "Rejected"){
+        await Pharmacist.deleteOne({ Username: req.body.Username });
+      }else{
+        await Pharmacist.updateOne(
+          { Username: user },
+          { $set: { ReqStatus: req.body.ReqStatus } }
+        );
+      }
+    }
+    res.status(200).send("Updated Successfully");
+  } catch (e) {
+    res.status(400).send("Error could not update package !!");
   }
 };
 const findPharmacist = async (req, res) => {
-  if ((await Pharmacist.findOne({ Username: req.body.Username }).length) === 0) {
+  if (
+    (await Pharmacist.findOne({ Username: req.body.Username }).length) === 0
+  ) {
     res.status(300).send("User Not Found");
   } else {
-    const Pharmacist = await Pharmacist.findOne({ Username: req.body.Username });
+    const Pharmacist = await Pharmacist.findOne({
+      Username: req.body.Username,
+    });
     res.status(200).send({ data: Pharmacist });
   }
 };

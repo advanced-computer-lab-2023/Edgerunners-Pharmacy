@@ -47,6 +47,7 @@ const pharmacistSchema = new Schema(
 
     ReqStatus: {
       type: String,
+      enum: ["Pending", "Rejected" ,"Accepted"],
     }
   },
   { timestamps: true }

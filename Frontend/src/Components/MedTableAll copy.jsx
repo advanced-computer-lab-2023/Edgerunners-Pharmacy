@@ -23,9 +23,6 @@ export default function MedTableAllCopy() {
     console.log(Medicine);
     return (
       <div className="">
-        <div className="justify-center flex mt-6 mb-4">
-          <Logo />
-        </div>
         <div className="form-prescription space-x-3 justify-center flex -mb-16">
           <label className="-mb-4 -mt-60">Name</label>
           <input
