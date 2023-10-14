@@ -9,7 +9,8 @@ const hashPassword = async (password) => {
 const createPatient = async (req, res) => {
   //add a new Patient to the database with
   //Name, Email and Age
-  await Patient.create({
+  if(req.body.EmergencyContact){
+    await Patient.create({
     Username: req.body.Username,
     Password: await hashPassword(req.body.Password),
     Gender: req.body.Gender,
@@ -18,11 +19,23 @@ const createPatient = async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     DOB: req.body.DOB,
     EmergencyContact: {
-      FullnameEC: req.body.FullnameEC,
-      phoneNumberEC: req.body.phoneNumberEC,
-      Relations : req.body.Relations
+      FullnameEC: req.body.EmergencyContact.FullnameEC,
+      phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
+      Relations : req.body.EmergencyContact.Relations
     },
   });
+  }else{
+    await Patient.create({
+      Username: req.body.Username,
+      Password: await hashPassword(req.body.Password),
+      Gender: req.body.Gender,
+      Name: req.body.Name,
+      Email: req.body.Email,
+      phoneNumber: req.body.phoneNumber,
+      DOB: req.body.DOB,
+    });
+  }
+  
   res.status(200).send("Created successfully");
 };
 

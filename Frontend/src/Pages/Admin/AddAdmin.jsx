@@ -45,7 +45,7 @@ function AddAdmin(props) {
             <div className=" justify-center flex mt-20">
                 <Card width='w-4/12' height=' h-[32rem]'>
                     <div className=" flex justify-center  mt-6 mb-0 ">
-                        <Logo height='4rem' />
+                        <a href="/Admin"><Logo height='4rem' className="mt-6 mb-0" /></a>
                         <h1 className="text-2xl font-bold text-center text-sky-600 ml-0 mt-6">New Admin</h1>
                     </div >
                     <div className=" flex justify-center mt-7">

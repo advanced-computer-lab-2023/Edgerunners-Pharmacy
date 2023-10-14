@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeRequestTable } from './makeRequestTable'; // Import the data generator
+import { makeRequestTable } from './makeRequestTable'; 
 import axios from 'axios';
 
 const styles = {
@@ -57,36 +57,32 @@ const RequestTable = () => {
     fetchData();
   }, []);
 
-  const handleAccept = async (email) => {
+  const handleAccept = async (username) => {
     try {
-      // Send a PUT request to the server to update the status to 'Accepted'
       await axios.put('http://localhost:3001/updatePharmacist', {
-        email, // Include the email of the request to update
-        status: 'Accepted',
+        Username : username, 
+        ReqStatus: 'Accepted',
       });
-
-      // Update the state to reflect the change
       const updatedRequests = requests.map((request) =>
-        request.email === email ? { ...request, reqStatus: 'Accepted' } : request
+        request.username === username ? { ...request, reqStatus: 'Accepted' } : request
       );
 
       setRequests(updatedRequests);
     } catch (error) {
       console.error('Error updating data:', error);
+      console.error('MongoDB Error:', error.response.data);
     }
   };
 
-  const handleReject = async (email) => {
+  const handleReject = async (username) => {
     try {
-      // Send a PUT request to the server to update the status to 'Rejected'
       await axios.put('http://localhost:3001/updatePharmacist', {
-        email, // Include the email of the request to update
-        status: 'Rejected',
+        Username : username,
+        ReqStatus: 'Rejected',
       });
 
-      // Update the state to reflect the change
       const updatedRequests = requests.map((request) =>
-        request.email === email ? { ...request, reqStatus: 'Rejected' } : request
+        request.username === username ? { ...request, reqStatus: 'Rejected' } : request
       );
 
       setRequests(updatedRequests);
@@ -132,13 +128,13 @@ const RequestTable = () => {
               <td style={styles.tableCell}>
                 <button
                   style={styles.acceptButton}
-                  onClick={() => handleAccept(request.email)}
+                  onClick={() => handleAccept(request.username)}
                 >
                   Accept
                 </button>
                 <button
                   style={styles.rejectButton}
-                  onClick={() => handleReject(request.email)}
+                  onClick={() => handleReject(request.username)}
                 >
                   Reject
                 </button>

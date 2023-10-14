@@ -9,7 +9,7 @@ function ViewPatientInfoAdmin() {
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
         <div id="page-wrap">
           <div className='flex justify-center'>
-            <Logo height='4rem' className="mt-6 mb-0" />
+            <a href="/Admin"><Logo height='4rem' className="mt-6 mb-0" /></a>
           </div>
           <PatientTable />
         </div>
