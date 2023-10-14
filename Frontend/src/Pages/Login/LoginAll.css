@@ -1,0 +1,19 @@
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Center vertically on the page */
+}
+
+.button {
+    width: 200px; /* Set a fixed width for all buttons */
+    height: auto; /* Adjust height to fit the text */
+    margin: 10px; /* Add spacing between buttons if needed */
+    background-color: #0074e4; /* Blue background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove the border */
+    border-radius: 4px;
+    padding: 10px; /* Add padding for button size */
+    cursor: pointer; /* Add a pointer cursor on hover */
+}

@@ -7,10 +7,11 @@ import AddMedicine from "./Pages/Pharmacist/AddMedicine";
 import Patient from "./Pages/Patient/Patient";
 import Admin from "./Pages/Admin/Admin";
 import Pharm from "./Pages/Pharmacist/Pharm";
+import LoginAll from "./Pages/Login/LoginAll";
 
 function App() {
   return (
-    <Patient />
+    <LoginAll />
 
   );
 }

@@ -18,6 +18,7 @@ import ViewMedPharmCopy from './Pages/Pharmacist/ViewMedPharm copy';
 import Patient from './Pages/Patient/Patient';
 import Pharm from './Pages/Pharmacist/Pharm';
 import MedTableAllCopy from './Components/MedTableAll copy';
+import LoginAll from './Pages/Login/LoginAll';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -41,8 +42,8 @@ root.render(
         <Route path="/Patient" element={<Patient />} />
         <Route path="/ViewMedPatient" element={<ViewMedPatient />} />
         
+        <Route path="/LoginAll" element={<LoginAll />} />
         <Route path="/AddPharmacist" element={<AddPharmacist />} />
-
         <Route path="/AddPatient" element={<AddPatient />} />
 
         <Route path="/MedTableAllCopy" element={<MedTableAllCopy />} />
