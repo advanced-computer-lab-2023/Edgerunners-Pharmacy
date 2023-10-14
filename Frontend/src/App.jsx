@@ -10,7 +10,7 @@ import Pharm from "./Pages/Pharmacist/Pharm";
 
 function App() {
   return (
-    <Patient />
+    <ViewMedPharmCopy />
 
   );
 }
