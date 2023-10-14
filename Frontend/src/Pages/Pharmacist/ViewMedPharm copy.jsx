@@ -89,7 +89,7 @@ export default function ViewMedPharmCopy() {
             return (
               <div
                 key={index}
-                className="mt-10 mb-2 pb-2 w-[16rem] h-[16rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4"
+                className="mt-10 mb-2 pb-2 w-[16rem] h-[21rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4"
               >
                 <div className="justify-center pl-4 mt-2">
                   <a>{p.Name}</a>
@@ -106,7 +106,7 @@ export default function ViewMedPharmCopy() {
                   <br />
                   {(p.Picture === "")?(<a >{p.Picture}</a>):(<img src={p.Picture} alt={p.Name} className="w-20 h-20"/>)}
                   <br />
-                  <button className="justify-center text-sky-600 outline w-40 h-9 rounded-md -mb-4 mt-8 shadow">
+                  <button className="justify-center text-sky-600 outline w-40 h-9 rounded-md -mb-4 mt-3 shadow">
                     Select
                   </button>
                 </div>
