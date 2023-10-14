@@ -3,17 +3,20 @@ const Schema = mongoose.Schema;
 
 const medicineSchema = new Schema(
     {
-        Picture: {
-            type: String,
-            // required: true,
-            // unique: true,
-        },
         Name: {
             type: String,
             required: true,
             unique: true,
         },
+        Picture: {
+            type: String,
+            // required: true,
+        },
         Description: {
+            type: String,
+            required: true,
+        },
+        MedicinalUse: {
             type: String,
             required: true,
         },

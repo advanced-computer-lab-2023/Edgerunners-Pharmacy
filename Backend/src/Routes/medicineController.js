@@ -4,8 +4,8 @@ const { default: mongoose } = require("mongoose");
 const createMedicine = async (req, res) => {
   try {
     await Medicine.create({
-      Picture: req.body.Picture,
       Name: req.body.Name,
+      Picture: req.body.Picture,
       Description: req.body.Description,
       MedicinalUse: req.body.MedicinalUse,
       Price: req.body.Price,
@@ -39,7 +39,7 @@ const updateMedicine = async (req, res) => {
   //update a Medicine in the database
   const medicine = req.body.Name;
   try {
-    await Medicine.updateOne({ Name: medicine }, { $set: { Description: req.body.Description ,Price: req.body.Price, MedicinalUse: req.body.MedicinalUse} });
+    await Medicine.updateOne({ Name: medicine }, { $set: { Description: req.body.Description , Price: req.body.Price, MedicinalUse: req.body.MedicinalUse} });
     res.status(200).send("Updated Successfully");
   } catch (e) {
     res.status(400).send("Error could not update Medicine !!");
