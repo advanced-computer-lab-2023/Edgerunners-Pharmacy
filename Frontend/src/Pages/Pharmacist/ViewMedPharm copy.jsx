@@ -19,15 +19,15 @@ export default function ViewMedPharmCopy() {
     });
   };
 
-  let navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    let path = `/AddMedicine`; 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/AddMedicine`;
     navigate(path);
   }
 
-  let navigate2 = useNavigate(); 
-  const routeChange2 = () =>{ 
-    let path2 = `/EditMedicine`; 
+  let navigate2 = useNavigate();
+  const routeChange2 = () => {
+    let path2 = `/EditMedicine`;
     navigate2(path2);
   }
 
@@ -66,26 +66,26 @@ export default function ViewMedPharmCopy() {
           </div>
         </div>
 
-        <div className="justify-center flex -mt-40 space-x-6">
+        <div className="grid grid-cols-4 flex -mt-40 ml-20 pb-10">
           {Medicine.map((p, index) => {
             return (
-              <div className="mt-10 mb-2 pb-2 w-3/12 h-[15rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
-                <div key={index} className="justify-center pl-4 mt-2">
-                  <a >{p.Name}</a>
+              <div key={index} className="mt-10 mb-2 pb-2 w-[16rem] h-[16rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
+                <div className="justify-center pl-4 mt-2">
+                  <a>{p.Name}</a>
                   <br />
-                  <a >{p.Price + "EGP"}</a>
+                  <a>{p.Price + "EGP"}</a>
                   <br />
-                  <a >{p.Description}</a>
+                  <a>{p.Description}</a>
                   <br />
-                  <a >{p.MedicinalUse}</a>
+                  <a>{p.MedicinalUse}</a>
                   <br />
-                  <a >{p.Quantity}</a>
+                  <a>{p.Quantity}</a>
                   <br />
-                  <a >{p.Sales}</a>
+                  <a>{p.Sales}</a>
                   <br />
-                  <a >{p.Picture}</a>
+                  <a>{p.Picture}</a>
                   <br />
-                  <button className="justify-end text-sky-600  outline  w-40  h-9  rounded-md mb-2 mt-2 shadow">Select</button>
+                  <button className="justify-center text-sky-600 outline w-40 h-9 rounded-md -mb-4 mt-8 shadow">Select</button>
                 </div>
               </div>
             );
