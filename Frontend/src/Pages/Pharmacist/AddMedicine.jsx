@@ -49,11 +49,11 @@ function AddMedicine(props) {
     }
 
     return (
-        <div className=" justify-center mt-20">
+        <div className=" justify-center flex mt-20">
 
 
-            <Card width='w-[45rem]' height=' h-[35rem]'>
-                <div className=" justify-center  mt-6 mb-0 ">
+            <Card width='w-4/12' height=' h-[40rem]'>
+                <div className=" flex justify-center  mt-6 mb-0 ">
                     <Logo height='4rem' />
 
                     <h1 className=" text-2xl font-bold  text-center  text-sky-600  ml-0   mt-6 ">  Add Medicine </h1>
@@ -95,7 +95,7 @@ function AddMedicine(props) {
                             <div className=" flex justify-center  mt-6">
                                 <br />
                                 <br />
-                                <button className="  text-sky-600  outline  w-40  h-9 rounded-md   mt-8 shadow"> Confirm </button>
+                                <button className="  text-sky-600  outline  w-40  h-9 rounded-md   mt-2 shadow"> Confirm </button>
 
                             </div>
 
