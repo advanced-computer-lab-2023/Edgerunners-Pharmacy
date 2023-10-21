@@ -229,8 +229,10 @@ export default function Pharm() {
               style={{ color: "#82d76a" }}
               bounce
             />
+            <a href = "/UseDocumentUpload">
             <h3>Upload/Remove Documents</h3>
-            <p>upload/remove documents for my medical history</p>
+            </a>
+            <p>Upload/remove documents for my medical history</p>
           </div>
         </div>
       </div>

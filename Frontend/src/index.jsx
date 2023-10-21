@@ -19,6 +19,7 @@ import Patient from './Pages/Patient/Patient';
 import Pharm from './Pages/Pharmacist/Pharm';
 import MedTableAllCopy from './Components/MedTableAll copy';
 import LoginAll from './Pages/Login/LoginAll';
+import UseDocumentUpload from './Pages/Pharmacist/UseDocumentUpload';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -47,6 +48,7 @@ root.render(
         <Route path="/AddPatient" element={<AddPatient />} />
 
         <Route path="/MedTableAllCopy" element={<MedTableAllCopy />} />
+        <Route path="/UseDocumentUpload" element={<UseDocumentUpload />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
