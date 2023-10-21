@@ -2,6 +2,7 @@ import Card from "../../UI/Card";
 import Logo from "../../UI/Logo";
 import { useRef } from "react";
 import axios from 'axios';
+import UseImageUpload from "./UseImageUpload";
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
 //import {fontAwesomeIcon} from "@fortawesome/fontawesome-svg-core"; 
 
@@ -94,7 +95,8 @@ function AddMedicine(props) {
                             <div className=" mb-4">
                                 <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Picture : </label>
                                 <br />
-                                <input type="text" id="picture" name="picture" ref={pictureRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                <UseImageUpload className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"/>
+                                {/* <input type="text" id="picture" name="picture" ref={pictureRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" /> */}
                             </div>
                             <div className=" flex justify-center  mt-6">
                                 <br />

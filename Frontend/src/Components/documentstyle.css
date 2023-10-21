@@ -1,0 +1,56 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  .progress-container {
+    width: 250px;
+    color: #363a43;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    height: 19px;
+    font-weight: normal;
+    font-size: 14px;
+    color: #363a43;
+  }
+  
+  .file-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+  }
+  .upload-list {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: #f0f0f0;
+    border: 0.1rem solid #cfdbde;
+    border-radius: 0.2rem;
+    padding: 10px;
+    width: 550px;
+  }
+  .file-size {
+    color: #7eb631;
+  }
+  
+  .upload-button {
+    background-color: #0074d9; /* Change the background color to your preferred color */
+    color: #fff; /* Text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* Remove the border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Add a pointer cursor on hover */
+    font-size: 16px; /* Text size */
+    margin: 10px 0; /* Margin between buttons */
+  }
+  
+  .upload-button:hover {
+    background-color: #0056a7; /* Change the background color on hover */
+  }

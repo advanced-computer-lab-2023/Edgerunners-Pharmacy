@@ -24,3 +24,8 @@ code {
   padding-bottom: 10px;
   padding-top: 10px;
 }
+
+.ant-upload,
+.ant-upload-list-item {
+  width: 480px !important;
+}

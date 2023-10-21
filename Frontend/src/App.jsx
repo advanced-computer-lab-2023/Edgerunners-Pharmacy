@@ -1,8 +1,8 @@
-import LoginAll from "./Pages/Login/LoginAll";
+import UseDocumentUpload from "./Pages/Pharmacist/UseDocumentUpload";
 
 function App() {
   return (
-      <LoginAll />
+      <UseDocumentUpload />
   );
 }
 
