@@ -20,6 +20,8 @@ import Pharm from './Pages/Pharmacist/Pharm';
 import MedTableAllCopy from './Components/MedTableAll copy';
 import LoginAll from './Pages/Login/LoginAll';
 import UseDocumentUpload from './Pages/Pharmacist/UseDocumentUpload';
+import UseImageUpload from './Pages/Pharmacist/UseImageUpload';
+import Cart from './Pages/Patient/Cart';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -42,6 +44,7 @@ root.render(
         
         <Route path="/Patient" element={<Patient />} />
         <Route path="/ViewMedPatient" element={<ViewMedPatient />} />
+        <Route path="/Cart" element={<Cart />} />
         
         <Route path="/LoginAll" element={<LoginAll />} />
         <Route path="/AddPharmacist" element={<AddPharmacist />} />
@@ -49,6 +52,7 @@ root.render(
 
         <Route path="/MedTableAllCopy" element={<MedTableAllCopy />} />
         <Route path="/UseDocumentUpload" element={<UseDocumentUpload />} />
+        <Route path="/UseImageUpload" element={<UseImageUpload />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -40,47 +40,49 @@ export default function ViewMedPharmCopy() {
             <Logo />
           </a>
         </div>
-        <div className="form-prescription space-x-3 justify-center flex -mb-16">
-          <label className="-mb-4 -mt-60">Name</label>
-          <input
-            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
-            type="text"
-            name=""
-            id=""
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <label className="-mb-4 -mt-60">Medicinal Use</label>
-          <input
-            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
-            type="text"
-            onChange={(e) => {
-              setMedicinalUse(e.target.value);
-            }}
-          />
-          <button
-            className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
-            type="submit"
-            onSubmit={handleSubmit}
-          >
-            Submit
-          </button>
-          <div className="space-x-2 -mt-60">
+        <div >
+          <div className="form-prescription space-x-3 justify-center flex -mb-16 ">
+            <label className="-mt-60">Name</label>
+            <input
+              className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
+              type="text"
+              name=""
+              id=""
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+            <label className="-mt-60">Medicinal Use</label>
+            <input
+              className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
+              type="text"
+              onChange={(e) => {
+                setMedicinalUse(e.target.value);
+              }}
+            />
             <button
-              className="  text-sky-600  outline  w-40  h-9  rounded-md shadow"
-              onClick={routeChange}
+              className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
+              type="submit"
+              onSubmit={handleSubmit}
             >
-              {" "}
-              Add medicine{" "}
+              Submit
             </button>
-            <button
-              className=" text-sky-600  outline  w-40  h-9  rounded-md shadow"
-              onClick={routeChange2}
-            >
-              {" "}
-              Edit medicine{" "}
-            </button>
+            <div className="space-x-3 -mt-60">
+              <button
+                className="  text-sky-600  outline  w-40  h-9  rounded-md shadow"
+                onClick={routeChange}
+              >
+                {" "}
+                Add medicine{" "}
+              </button>
+              <button
+                className=" text-sky-600  outline  w-40  h-9  rounded-md shadow"
+                onClick={routeChange2}
+              >
+                {" "}
+                Edit medicine{" "}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -104,7 +106,7 @@ export default function ViewMedPharmCopy() {
                   <br />
                   <a>{p.Sales}</a>
                   <br />
-                  {(p.Picture === "")?(<a >{p.Picture}</a>):(<img src={p.Picture} alt={p.Name} className="w-20 h-20"/>)}
+                  {(p.Picture === "") ? (<a >{p.Picture}</a>) : (<img src={p.Picture} alt={p.Name} className="w-20 h-20" />)}
                   <br />
                   <button className="justify-center text-sky-600 outline w-40 h-9 rounded-md -mb-4 mt-3 shadow">
                     Select
