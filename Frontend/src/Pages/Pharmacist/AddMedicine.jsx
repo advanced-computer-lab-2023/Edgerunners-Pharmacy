@@ -51,7 +51,7 @@ function AddMedicine(props) {
     }
 
     return (
-        <div className=" justify-center flex mt-20">
+        <div className=" justify-center flex mt-20 mb-20">
 
 
             <Card width='w-4/12' height=' h-[45rem]'>
@@ -95,7 +95,7 @@ function AddMedicine(props) {
                             <div className=" mb-4">
                                 <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Picture : </label>
                                 <br />
-                                <UseImageUpload className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"/>
+                                {/*<UseImageUpload className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"/>}
                                 {/* <input type="text" id="picture" name="picture" ref={pictureRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" /> */}
                             </div>
                             <div className=" flex justify-center  mt-6">

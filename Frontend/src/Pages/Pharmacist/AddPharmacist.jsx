@@ -49,19 +49,19 @@ function AddPharmacist(props) {
   return (
     <div className="flex justify-center mt-10 pb-10">
       <Card width="w-4/12" height="h-[50rem]">
-        <div className="flex justify-center mt-10 mb-0">
+        <div className="flex justify-center mt-6 mb-0">
           <div className="justify-center flex mt-6 mb-4">
             <a href="/">
               <Logo height="3rem" className="mr-9" />
             </a>
           </div>
-          <h1 className="text-xl font-bold text-center text-sky-600 mr-8 mt-3">
+          <h1 className="text-xl font-bold text-center text-sky-600 mr-8 mt-9">
             Register as pharmacist
           </h1>
         </div>
         <div className="flex justify-center mt-4 mb-0">
           <form onSubmit={submitHandeler}>
-            <div className=" mt-3">
+            <div className="">
               <div>
                 <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2">
                   {" "}

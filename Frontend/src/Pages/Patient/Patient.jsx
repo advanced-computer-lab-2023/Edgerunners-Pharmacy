@@ -22,8 +22,7 @@ export default function Patient() {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-          <a href="/"><Logo /></a>
-            
+            <a><Logo /></a>
             <button
               className="navbar-toggler ps-0"
               type="button"
@@ -137,12 +136,12 @@ export default function Patient() {
           />
           <p>
             <br></br>
-          El7a2ny is a comprehensive healthcare platform that simplifies your healthcare journey. 
-          Our platform offers a wide range of services, allowing patients to view available medicines, 
-          place orders, and engage in direct chat consultations with experienced doctors and pharmacists. 
-          Whether you're seeking medication, professional medical advice, or seamless prescription fulfillment, 
-          our virtual pharmacy provides an all-in-one solution.
-          Experience a seamless healthcare experience that puts you in control of your wellness journey
+            El7a2ny is a comprehensive healthcare platform that simplifies your healthcare journey.
+            Our platform offers a wide range of services, allowing patients to view available medicines,
+            place orders, and engage in direct chat consultations with experienced doctors and pharmacists.
+            Whether you're seeking medication, professional medical advice, or seamless prescription fulfillment,
+            our virtual pharmacy provides an all-in-one solution.
+            Experience a seamless healthcare experience that puts you in control of your wellness journey
           </p>
         </div>
       </div>
@@ -174,8 +173,8 @@ export default function Patient() {
               style={{ color: "#82d76a" }}
               bounce
             />
-             <a href = "/ViewMedPatient">
-            <h3>Medicine</h3>
+            <a href="/ViewMedPatient">
+              <h3>Medicine</h3>
             </a>
             <p>View all available medicines</p>
           </div>
@@ -186,7 +185,9 @@ export default function Patient() {
               style={{ color: "#82d76a" }}
               bounce
             />
-            <h3>View my cart</h3>
+            <a href="/Cart">
+              <h3>View my cart</h3>
+            </a>
             <p>
               view all the medicines added to your cart
             </p>
@@ -230,7 +231,7 @@ export default function Patient() {
               bounce
             />
             <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles">
-            <h3>Upload/Remove Documents</h3>
+              <h3>Upload/Remove Documents</h3>
             </a>
             <p>Upload/remove documents for my medical history</p>
           </div>
