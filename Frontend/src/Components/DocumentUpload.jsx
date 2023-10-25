@@ -30,6 +30,7 @@ export default function DocumentUpload() {
       onError,
       onProgress,
     }) {
+      console.log('customRequest started');
       const formData = new FormData();
       formData.append("file", file);
 
