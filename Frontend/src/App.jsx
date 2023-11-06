@@ -5,10 +5,12 @@ import UseDocumentUpload from "./Pages/Pharmacist/UseDocumentUpload";
 import LoginAll from "./Pages/Login/LoginAll";
 import UseImageUpload from "./Pages/Pharmacist/UseImageUpload";
 import Cart from "./Pages/Patient/Cart";
+import Checkout from "./Pages/Patient/Checkout";
+import OrderDetails from "./Components/OrderDetails";
 
 function App() {
   return (
-      <LoginAll />
+      <OrderDetails />
   );
 }
 
