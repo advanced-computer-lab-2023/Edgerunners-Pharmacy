@@ -1,7 +1,7 @@
 import Card from "../../UI/Card";
 import Logo from "../../UI/Logo";
 import { useRef } from "react";
-import Sidebar from "../../Components/Sidebar";
+import Sidebar from "../../Components/SidebarAdmin";
 import axios from "axios";
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
 //import {fontAwesomeIcon} from "@fortawesome/fontawesome-svg-core"; 

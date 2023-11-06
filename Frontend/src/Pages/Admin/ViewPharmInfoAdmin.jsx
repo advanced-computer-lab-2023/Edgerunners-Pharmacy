@@ -1,4 +1,4 @@
-import Sidebar from "../../Components/Sidebar";
+import Sidebar from "../../Components/SidebarAdmin";
 import PharmTable from "../../Components/PharmTable";
 import Logo from "../../UI/Logo";
 

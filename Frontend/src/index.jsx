@@ -22,6 +22,7 @@ import LoginAll from './Pages/Login/LoginAll';
 import UseDocumentUpload from './Pages/Pharmacist/UseDocumentUpload';
 import UseImageUpload from './Pages/Pharmacist/UseImageUpload';
 import Cart from './Pages/Patient/Cart';
+import ViewOrders from './Pages/Patient/ViewOrders';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -41,18 +42,20 @@ root.render(
         <Route path="/AddMedicine" element={<AddMedicine />} />
         <Route path="/EditMedicine" element={<EditMedicine />} />
         <Route path="/ViewMedPharm" element={<ViewMedPharmCopy />} />
+        <Route path="/UseDocumentUpload" element={<UseDocumentUpload />} />
+        <Route path="/UseImageUpload" element={<UseImageUpload />} />
         
         <Route path="/Patient" element={<Patient />} />
         <Route path="/ViewMedPatient" element={<ViewMedPatient />} />
         <Route path="/Cart" element={<Cart />} />
+        <Route path="/ViewOrders" element={<ViewOrders />} />
         
         <Route path="/LoginAll" element={<LoginAll />} />
         <Route path="/AddPharmacist" element={<AddPharmacist />} />
         <Route path="/AddPatient" element={<AddPatient />} />
 
         <Route path="/MedTableAllCopy" element={<MedTableAllCopy />} />
-        <Route path="/UseDocumentUpload" element={<UseDocumentUpload />} />
-        <Route path="/UseImageUpload" element={<UseImageUpload />} />
+        
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

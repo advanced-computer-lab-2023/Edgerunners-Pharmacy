@@ -3,6 +3,7 @@ import Logo from "../../UI/Logo";
 import GetMedicine from "../getMedicine";
 import { Card } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../../Components/SidebarPharm";
 
 export default function ViewMedPharmCopy() {
   const [name, setName] = useState();
@@ -35,6 +36,7 @@ export default function ViewMedPharmCopy() {
     console.log(Medicine);
     return (
       <div className="">
+        <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
         <div className="justify-center flex mt-6 mb-4" href="/Pharm">
           <a href="/Pharm">
             <Logo />

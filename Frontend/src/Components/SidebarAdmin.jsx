@@ -23,6 +23,12 @@ const Sidebar = () => {
       <a className="menu-item" href="/ViewMedAdmin">
         View medicines
       </a>
+      <a className="menu-item">
+        Change my password
+      </a>
+      <a className="menu-item">
+        Logout
+      </a>
     </Menu>
   );
 };
