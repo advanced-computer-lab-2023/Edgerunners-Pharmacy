@@ -8,6 +8,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import Logo from "../../UI/Logo";
+import Sidebar from "../../Components/SidebarPharm";
 
 const TABLE_HEAD = [
   "Picture",
@@ -52,7 +53,7 @@ export default function EditMedicine() {
         Price: p.Price,
         Description: p.Description,
         MedicinalUse: p.MedicinalUse,
-        Picture : p.Picture,
+        Picture: p.Picture,
       });
       setEditMode((prevEditMode) => ({
         ...prevEditMode,
@@ -86,6 +87,7 @@ export default function EditMedicine() {
     return (
       <div id="outer-container">
         <div id="page-wrap">
+          <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
           <div className="flex justify-center">
             <a href="/ViewMedPharm">
               <Logo height="4rem" className="mt-6 mb-0" />
@@ -115,23 +117,23 @@ export default function EditMedicine() {
                   return (
                     <tr key={p.Name}>
                       <td className={classes}>
-                      {isEditing ? (
-                        <input
-                          type="text"
-                          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-400"
-                          defaultValue={p.Picture}
-                          onChange={(e) => {
-                            p.Picture = e.target.value;
-                          }}
-                        />
-                      ) : (
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {p.Picture}
-                        </Typography>)}
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-400"
+                            defaultValue={p.Picture}
+                            onChange={(e) => {
+                              p.Picture = e.target.value;
+                            }}
+                          />
+                        ) : (
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {p.Picture}
+                          </Typography>)}
                       </td>
                       <td className={classes}>
                         <Typography

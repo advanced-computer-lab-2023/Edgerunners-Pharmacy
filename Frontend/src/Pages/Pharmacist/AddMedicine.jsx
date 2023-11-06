@@ -2,6 +2,7 @@ import Card from "../../UI/Card";
 import Logo from "../../UI/Logo";
 import { useRef } from "react";
 import axios from 'axios';
+import Sidebar from "../../Components/SidebarPharm";
 import UseImageUpload from "./UseImageUpload";
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
 //import {fontAwesomeIcon} from "@fortawesome/fontawesome-svg-core"; 
@@ -51,64 +52,66 @@ function AddMedicine(props) {
     }
 
     return (
-        <div className=" justify-center flex mt-20 mb-20">
+        <div>
+            <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
 
+            <div className=" justify-center flex mt-20 mb-20">
+                <Card width='w-4/12' height=' h-[45rem]'>
+                    <div className=" flex justify-center  mt-6 mb-0 ">
+                        <a href="/ViewMedPharm"><Logo height='4rem' /></a>
+                        <h1 className=" text-2xl font-bold  text-center  text-sky-600  ml-0   mt-6 ">  Add Medicine </h1>
+                    </div >
+                    <div className=" flex justify-center mt-7">
 
-            <Card width='w-4/12' height=' h-[45rem]'>
-                <div className=" flex justify-center  mt-6 mb-0 ">
-                    <a href="/ViewMedPharm"><Logo height='4rem' /></a>
-                    <h1 className=" text-2xl font-bold  text-center  text-sky-600  ml-0   mt-6 ">  Add Medicine </h1>
-                </div >
-                <div className=" flex justify-center mt-7">
+                        <form onSubmit={submitHandeler}>
+                            <div className=" mt-3">
+                                <div className=" mb-4">
+                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Medicine name : </label>
+                                    <br />
+                                    <input type="text" id="medicinename" name="medicinename" ref={medicineNameRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                </div>
 
-                    <form onSubmit={submitHandeler}>
-                        <div className=" mt-3">
-                            <div className=" mb-4">
-                                <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Medicine name : </label>
-                                <br />
-                                <input type="text" id="medicinename" name="medicinename" ref={medicineNameRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-                            </div>
+                                <div className=" mb-4">
+                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Description : </label>
+                                    <br />
+                                    <input type="text" id="medicineingredients" name="medicineingredients" ref={medicineIngredientsRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                </div>
 
-                            <div className=" mb-4">
-                                <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Description : </label>
-                                <br />
-                                <input type="text" id="medicineingredients" name="medicineingredients" ref={medicineIngredientsRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-                            </div>
+                                <div className=" mb-4">
+                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Price : </label>
+                                    <br />
+                                    <input type="text" id="medicineprice" name="medicineprice" ref={medicinePriceRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                </div>
 
-                            <div className=" mb-4">
-                                <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Price : </label>
-                                <br />
-                                <input type="text" id="medicineprice" name="medicineprice" ref={medicinePriceRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-                            </div>
+                                <div className=" mb-4">
+                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Medicinal Use : </label>
+                                    <br />
+                                    <input type="text" id="medicineuse" name="medicineuse" ref={medicineUseRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                </div>
 
-                            <div className=" mb-4">
-                                <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Medicinal Use : </label>
-                                <br />
-                                <input type="text" id="medicineuse" name="medicineuse" ref={medicineUseRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-                            </div>
-
-                            <div className=" mb-4">
-                                <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Quantity : </label>
-                                <br />
-                                <input type="text" id="medicinequantity" name="medicinequantity" ref={medicineQuantityRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-                            </div>
-                            <div className=" mb-4">
-                                <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Picture : </label>
-                                <br />
-                                {/*<UseImageUpload className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"/>
+                                <div className=" mb-4">
+                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Quantity : </label>
+                                    <br />
+                                    <input type="text" id="medicinequantity" name="medicinequantity" ref={medicineQuantityRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                </div>
+                                <div className=" mb-4">
+                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Picture : </label>
+                                    <br />
+                                    {/*<UseImageUpload className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"/>
                                 {/* <input type="text" id="picture" name="picture" ref={pictureRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" /> */}
-                            </div>
-                            <div className=" flex justify-center  mt-6">
-                                <br />
-                                <br />
-                                <button className="  text-sky-600  outline  w-40  h-9 rounded-md   mt-2 shadow"> Confirm </button>
+                                </div>
+                                <div className=" flex justify-center  mt-6">
+                                    <br />
+                                    <br />
+                                    <button className="  text-sky-600  outline  w-40  h-9 rounded-md   mt-2 shadow"> Confirm </button>
+
+                                </div>
 
                             </div>
-
-                        </div>
-                    </form>
-                </div>
-            </Card>
+                        </form>
+                    </div>
+                </Card>
+            </div>
         </div>
     )
 }

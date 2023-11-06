@@ -210,7 +210,9 @@ export default function Patient() {
               style={{ color: "#82d76a" }}
               bounce
             />
-            <h3>View orders</h3>
+            <a href="ViewOrders">
+              <h3>View orders</h3>
+            </a>
             <p>View past/current orders' details</p>
           </div>
           <div className="col-4">

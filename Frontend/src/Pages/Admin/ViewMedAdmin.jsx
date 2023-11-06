@@ -1,5 +1,5 @@
 import MedTableAllCopy from '../../Components/MedTableAll copy';
-import Sidebar from '../../Components/Sidebar';
+import Sidebar from '../../Components/SidebarAdmin';
 import Logo from "../../UI/Logo";
 
 function ViewMedAdmin() {

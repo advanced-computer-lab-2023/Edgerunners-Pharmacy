@@ -1,4 +1,4 @@
-import Sidebar from '../../Components/Sidebar';
+import Sidebar from '../../Components/SidebarAdmin';
 import PatientTable from '../../Components/PatientTable';
 import Logo from '../../UI/Logo';
 
