@@ -10,7 +10,7 @@ import OrderDetails from "./Components/OrderDetails";
 
 function App() {
   return (
-      <OrderDetails />
+      <Cart />
   );
 }
 
