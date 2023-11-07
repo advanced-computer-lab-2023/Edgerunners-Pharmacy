@@ -1,4 +1,3 @@
-import MedTableAllCopy from "../../Components/MedTableAll copy";
 import Logo from "../../UI/Logo";
 import React, { useState, useEffect } from 'react';
 import Sidebar from "../../Components/SidebarPatient";
@@ -29,6 +28,29 @@ const makeOrderDetails = async () => {
   }
   return cartitems;
 };
+
+function generateRandomOptions() {
+  const numberOfOptions = getRandomInt(1, 5); // Generate a random number between 1 and 5 (you can adjust this range as needed)
+  const options = [];
+
+  for (let i = 0; i < numberOfOptions; i++) {
+    options.push(
+      <option key={i} value={`Option ${i + 1}`}>
+        Option {i + 1}
+      </option>
+    );
+  }
+
+  return options;
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const randomPointsInWallet = getRandomInt(0, 1000); // Generate a random value for "Points in wallet"
+const randomPointsTakenAway = getRandomInt(0, randomPointsInWallet); // Generate a random value for "Points taken away" (less than or equal to "Points in wallet")
+const pointsRemaining = randomPointsInWallet - randomPointsTakenAway; // Calculate "Points remaining"
 
 function Cart() {
   const [paymentMethod, setPaymentMethod] = useState('cashOnDelivery');
@@ -133,12 +155,32 @@ function Cart() {
         </div>
 
         <div className="ml-4 mt-6 w-[30rem] h-[60rem] rounded-md shadow-md justify-center space-y-4">
+          <div className="flex flex-col items-center">
+            <select className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5">
+              <option>Select delivery address</option>
+              {generateRandomOptions()}
+            </select>
+            <a href="/Address">
+              <button className="bg-sky-600 text-white w-60 h-11 rounded-md mb-2 mt-0.5">
+                Add delivery address
+              </button>
+            </a>
+          </div>
+
           <form className="ml-4 pt-4">
+
             <label className="text-gray-500">
               <input
                 type="radio" name="paymentMethod"
                 value="cashOnDelivery" checked={paymentMethod === 'cashOnDelivery'} onChange={handlePaymentMethodChange}
               /> Cash on delivery
+            </label>
+            <br></br>
+            <label className="text-gray-500">
+              <input
+                type="radio" name="paymentMethod"
+                value="payWithWallet" checked={paymentMethod === 'payWithWallet'} onChange={handlePaymentMethodChange}
+              /> Pay with Wallet
             </label>
             <br></br>
             <label className="mt-2 text-gray-500">
@@ -147,7 +189,13 @@ function Cart() {
                 value="payWithVisa" checked={paymentMethod === 'payWithVisa'} onChange={handlePaymentMethodChange}
               /> Pay with Visa
             </label>
-
+            {paymentMethod === 'payWithWallet' && (
+              <div className="mt-4">
+                <label htmlFor="walletValue">Points in wallet: {randomPointsInWallet}</label><br />
+                <label htmlFor="walletValue">Points taken away: {randomPointsTakenAway}</label><br />
+                <label htmlFor="walletValue">Points remaining: {pointsRemaining}</label><br />
+              </div>
+            )}
             {paymentMethod === 'payWithVisa' && (
               <div className="mt-4">
                 <label htmlFor="cardNumber">Card Number:</label> <br />
@@ -175,6 +223,7 @@ function Cart() {
 
               </div>
             )}
+
           </form>
           <div className="pt-4">
             <label className="text-gray-500 ml-4"> Shipping cost </label><label className="text-gray-500 ml-72"> TBD </label>
@@ -191,7 +240,7 @@ function Cart() {
             </a>
             <a>
               <button className="justify-end bg-sky-600 text-white w-60 h-10 rounded-md mb-2 mt-0.5 mr-14">
-                <FontAwesomeIcon icon={faBasketShopping} /><label>  checkout</label>
+                <FontAwesomeIcon icon={faBasketShopping} /><label>  Checkout</label>
               </button>
             </a>
           </div>
