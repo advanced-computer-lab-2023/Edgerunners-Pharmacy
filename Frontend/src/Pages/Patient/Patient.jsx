@@ -222,7 +222,9 @@ export default function Patient() {
               style={{ color: "#82d76a" }}
               bounce
             />
+            <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles">
             <h3>Pharmacy</h3>
+            </a>
             <p>Chat with a pharmacist</p>
           </div>
           <div className="col-4">
@@ -232,8 +234,8 @@ export default function Patient() {
               style={{ color: "#82d76a" }}
               bounce
             />
-            <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles">
-              <h3>Upload/Remove Documents</h3>
+            <a href="/Address">
+              <h3>Add delivery address</h3>
             </a>
             <p>Upload/remove documents for my medical history</p>
           </div>

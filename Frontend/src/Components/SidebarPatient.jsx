@@ -18,7 +18,7 @@ const SidebarPatient = () => {
         View orders
       </a>
       {/* add href */}
-      <a className="menu-item">
+      <a className="menu-item" href="/Address">
         Add delivery address
       </a>
       <a className="menu-item">
