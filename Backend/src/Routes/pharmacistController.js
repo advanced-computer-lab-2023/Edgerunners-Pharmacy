@@ -93,10 +93,30 @@ const deletePharmacist = async (req, res) => {
   }
 };
 
+const uploadDocument = async (req, res) => {
+  const username = req.body.Username;
+  console.log(username);
+  const filter = {};
+  filter.Username = username;
+  const pharm = await Pharmacist.findOne({ Username: username });
+  console.log(pharm);
+  const size = pharm.FileNames.length + 1;
+  const filename = username + "-" + size + ".pdf";
+  const file = req.files.file;
+  var filePath = "./uploadPharmacist/" + filename;
+  file.mv(filePath);
+  await Pharmacist.updateOne(
+    { Username: username },
+    { $push: { FileNames: filename } },
+  );
+  res.status(200);
+};
+
 module.exports = {
   createPharmacist,
   getPharmacists,
   updatePharmacist,
   deletePharmacist,
   findPharmacist,
+  uploadDocument,
 };
