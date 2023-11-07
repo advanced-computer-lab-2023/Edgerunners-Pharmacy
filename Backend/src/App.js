@@ -2,6 +2,7 @@
 const express = require("express");
 var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+var fileUpload = require("express-fileupload");
 mongoose.set("strictQuery", false);
 require("dotenv").config();
 
@@ -31,6 +32,7 @@ const {
   getPharmacists,
   updatePharmacist,
   deletePharmacist,
+  uploadDocument,
 } = require("./Routes/pharmacistController");
 
 const MongoURI =
@@ -72,7 +74,16 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const cors = require("cors");
+const { protectA, protectPH, protectP, signin } = require("./Models/auth");
+
 app.use(cors());
+app.use(
+  fileUpload({
+    createParentPath: true,
+    defCharset: "utf8",
+    defParamCharset: "utf8",
+  }),
+);
 
 app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
@@ -83,6 +94,7 @@ app.post("/addPharmacist", createPharmacist);
 app.get("/getPharmacist", getPharmacists);
 app.put("/updatePharmacist", updatePharmacist);
 app.delete("/deletePharmacist", deletePharmacist);
+app.post("/uploadDocument", uploadDocument);
 
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);
