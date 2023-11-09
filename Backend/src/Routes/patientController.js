@@ -1,10 +1,9 @@
 // #Task route solution
 const Patient = require("../Models/Patient.js");
-var bcrypt = require("bcrypt");
 const { default: mongoose } = require("mongoose");
-const hashPassword = async (password) => {
-  return bcrypt.hash(password, 5);
-};
+const express = require("express");
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
 const createPatient = async (req, res) => {
   //add a new Patient to the database with
@@ -24,7 +23,7 @@ const createPatient = async (req, res) => {
       Relations : req.body.EmergencyContact.Relations
     },
   });
-  }else{
+  } else{
     await Patient.create({
       Username: req.body.Username,
       Password: await hashPassword(req.body.Password),
@@ -38,6 +37,78 @@ const createPatient = async (req, res) => {
   
   res.status(200).send("Created successfully");
 };
+
+const createPatient1 = async (req, res) => {
+  const Password = req.body.Password;
+  try {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(Password, salt);
+    if(req.body.EmergencyContact){
+      const user = await Patient.create({
+      Username: req.body.Username,
+      Password: hashedPassword,
+      Gender: req.body.Gender,
+      Name: req.body.Name,
+      Email: req.body.Email,
+      phoneNumber: req.body.phoneNumber,
+      DOB: req.body.DOB,
+      EmergencyContact: {
+        FullnameEC: req.body.EmergencyContact.FullnameEC,
+        phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
+        Relations : req.body.EmergencyContact.Relations
+      },
+    });
+    } else{
+      const user = await Patient.create({
+        Username: req.body.Username,
+        Password: hashedPassword,
+        Gender: req.body.Gender,
+        Name: req.body.Name,
+        Email: req.body.Email,
+        phoneNumber: req.body.phoneNumber,
+        DOB: req.body.DOB,
+      });
+    }
+    const token = createToken(user.Username);
+
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(200).send("Created successfully");
+  } catch (e) {
+    res.status(400).send("Error could not create Patient !!");
+  }
+};
+
+const loginPatient = async (req, res) => {
+  const { Username, Password } = req.body;
+  try {
+    // Check if the user with the given username exists in the database
+    const user = await Patient.findOne({ Username });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Compare the provided password with the hashed password in the database
+    const passwordMatch = await bcrypt.compare(Password, user.Password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // If credentials are valid, create and send a new token
+    const token = createToken(user.Username);
+
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+const logoutPatient = async (req, res) => {
+  res.clearCookie('jwt');
+  res.status(200).json({ message: 'Logged out successfully' });
+}
 
 const getPatients = async (req, res) => {
   try {
@@ -67,3 +138,4 @@ const deletePatient = async (req, res) => {
 };
 
 module.exports = { createPatient, getPatients, updatePatient, deletePatient };
+// module.exports = { createPatient1, loginPatient, logoutPatient, getPatients, updatePatient, deletePatient };

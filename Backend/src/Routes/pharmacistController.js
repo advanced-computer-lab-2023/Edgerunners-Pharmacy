@@ -1,5 +1,8 @@
 const Pharmacist = require("../Models/Pharmacist");
 const { default: mongoose } = require("mongoose");
+const express = require("express");
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
 const createPharmacist = async (req, res) => {
   //add a new Doctor to the database with
@@ -21,6 +24,63 @@ const createPharmacist = async (req, res) => {
     res.status(400).send("Failed to Create Pharmacist");
   }
 };
+
+const createPharm1 = async (req, res) => {
+  const Password = req.body.Password;
+  try {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(Password, salt);
+    const user = await Pharmacist.create({
+      Username: req.body.Username,
+      Password: hashedPassword,
+      DOB: req.body.DOB,
+      Name: req.body.Name,
+      Email: req.body.Email,
+      Hourlyrate: req.body.Hourlyrate,
+      Affiliation: req.body.Affiliation,
+      Education: req.body.Education,
+      ReqStatus: "Pending",
+    });
+    const token = createToken(user.Username);
+
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(200).send("Created successfully");
+  } catch (e) {
+    res.status(400).send("Error could not create Patient !!");
+  }
+};
+
+const loginPharm = async (req, res) => {
+  const { Username, Password } = req.body;
+  try {
+    // Check if the user with the given username exists in the database
+    const user = await Pharmacist.findOne({ Username });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Compare the provided password with the hashed password in the database
+    const passwordMatch = await bcrypt.compare(Password, user.Password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // If credentials are valid, create and send a new token
+    const token = createToken(user.Username);
+
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+const logoutPharm = async (req, res) => {
+  res.clearCookie('jwt');
+  res.status(200).json({ message: 'Logged out successfully' });
+}
 
 const getPharmacists = async (req, res) => {
   try {
@@ -118,5 +178,6 @@ module.exports = {
   updatePharmacist,
   deletePharmacist,
   findPharmacist,
-  // uploadDocument,
 };
+
+// module.exports = { createPharm1, loginPharm, logoutPharm, getPharmacists, updatePharmacist, deletePharmacist, findPharmacist, uploadDocument };

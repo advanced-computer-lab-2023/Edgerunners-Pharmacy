@@ -14,7 +14,7 @@ const SidebarPharm = () => {
       <a className="menu-item">
         Change my password
       </a>
-      <a className="menu-item">
+      <a className="menu-item" href="/LoginAll">
         Logout
       </a>
     </Menu>
