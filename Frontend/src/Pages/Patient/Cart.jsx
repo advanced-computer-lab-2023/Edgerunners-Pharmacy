@@ -9,8 +9,62 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Input } from "postcss";
 
-//Dummy data
+//(Add to cart) button 
+const handleUpdate = async (p) => {
+  // try {
+  //   console.log("hereeee");
+  //   console.log(p);
+  //   await axios.put("http://localhost/updatePatient", {
+  //     Cart: {
+  //       medicineName: p.medicineName,
+  //       count: 1,
+  //     }
+  //   });
+  //   console.log("Update request sent successfully");
+  //   setForceEffect(true);
+  // }
+  // catch {
+  //   console.error("Error updating data:", error);
+  // }
+};
 
+const handleIncrement = async (p) => {
+  // try {
+  //   console.log("hereeee");
+  //   console.log(p);
+  //   await axios.put("http://localhost/updatePatient", {
+  //     Cart: {
+  //       medicineName: p.medicineName,
+  //       count: 1,
+  //     }
+  //   });
+  //   console.log("Update request sent successfully");
+  //   setForceEffect(true);
+  // }
+  // catch {
+  //   console.error("Error updating data:", error);
+  // }
+};
+
+const handleDecrement = async (p) => {
+  // try {
+  //   console.log("hereeee");
+  //   console.log(p);
+  //   await axios.put("http://localhost/updatePatient", {
+  //     Cart: {
+  //       medicineName: p.medicineName,
+  //       count: 1,
+  //     }
+  //   });
+  //   console.log("Update request sent successfully");
+  //   setForceEffect(true);
+  // }
+  // catch {
+  //   console.error("Error updating data:", error);
+  // }
+};
+
+//Dummy data 
 const makeOrderDetails = async () => {
   const getRandomStatus = () => {
     const uses = ['headache', 'cold', 'stomachache'];
@@ -113,7 +167,7 @@ function Cart() {
           <Logo />
         </a>
       </div>
-      <div className="flex">
+      <div className="flex mb-14">
         <div className="ml-10">
           {cartitems.map((p, index) => {
             return (
@@ -154,14 +208,14 @@ function Cart() {
           )}
         </div>
 
-        <div className="ml-4 mt-6 w-[30rem] h-[60rem] rounded-md shadow-md justify-center space-y-4">
-          <div className="flex flex-col items-center">
-            <select className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5">
+        <div className="ml-4 mt-6 w-[30rem] h-[30rem] bg-gray-50 rounded-md shadow-md justify-center space-y-4">
+          <div className="flex items-center mt-4 ml-4">
+            <select className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5">
               <option>Select delivery address</option>
               {generateRandomOptions()}
             </select>
             <a href="/Address">
-              <button className="bg-sky-600 text-white w-60 h-11 rounded-md mb-2 mt-0.5">
+              <button className="text-sky-600 outline w-60 h-10 rounded-md mb-2 ml-3 mt-2">
                 Add delivery address
               </button>
             </a>
@@ -194,33 +248,6 @@ function Cart() {
                 <label htmlFor="walletValue">Points in wallet: {randomPointsInWallet}</label><br />
                 <label htmlFor="walletValue">Points taken away: {randomPointsTakenAway}</label><br />
                 <label htmlFor="walletValue">Points remaining: {pointsRemaining}</label><br />
-              </div>
-            )}
-            {paymentMethod === 'payWithVisa' && (
-              <div className="mt-4">
-                <label htmlFor="cardNumber">Card Number:</label> <br />
-                <input type="text" id="cardNumber" name="cardNumber" value={cardNumber}
-                  onChange={handleCardNumberChange} placeholder="XXXX XXXX XXXX XXXX"
-                  className="w-80 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-                <br />
-
-                <label>Cardholder's name:</label> <br />
-                <input className="mb-4 w-80 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                  label="Cardholder's Name" type="text" size="lg" placeholder="Name" />
-                <br />
-
-                <label htmlFor="expirationDate">Expiration Date:</label>
-                <br />
-                <input type="text" id="expirationDate" name="expirationDate" value={expirationDate}
-                  onChange={handleExpirationDateChange} placeholder="MM/YY"
-                  className="mb-4 w-80 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                />
-                <br />
-
-                <label htmlFor="CCV" maxLength="4">CVV:</label><br />
-                <input type="text" className="mb-4 w-80 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                  id="CVV" name="CVV" maxLength="3" placeholder="***" />
-
               </div>
             )}
 

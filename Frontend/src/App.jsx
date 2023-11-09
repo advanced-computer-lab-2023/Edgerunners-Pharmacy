@@ -7,10 +7,13 @@ import UseImageUpload from "./Pages/Pharmacist/UseImageUpload";
 import Cart from "./Pages/Patient/Cart";
 import Checkout from "./Pages/Patient/Checkout";
 import OrderDetails from "./Components/OrderDetails";
+import ViewMedPatient from "./Pages/Patient/ViewMedPatient";
+import PaymentSuccess from "./Pages/Patient/PaymentSuccess";
+import PaymentCanceled from "./Pages/Patient/PaymentCanceled";
 
 function App() {
   return (
-      <Cart />
+      <PaymentCanceled />
   );
 }
 

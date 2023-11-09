@@ -24,6 +24,8 @@ import UseImageUpload from './Pages/Pharmacist/UseImageUpload';
 import Cart from './Pages/Patient/Cart';
 import ViewOrders from './Pages/Patient/ViewOrders';
 import AddDeliveryAddress from './Pages/Patient/AddDeliveryAddress';
+import PaymentSuccess from './Pages/Patient/PaymentSuccess';
+import PaymentCanceled from './Pages/Patient/PaymentCanceled';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -51,6 +53,8 @@ root.render(
         <Route path="/Cart" element={<Cart />} />
         <Route path="/ViewOrders" element={<ViewOrders />} />
         <Route path="/Address" element={<AddDeliveryAddress />} />
+        <Route path="/PaymentSuccess" element={<PaymentSuccess />} />
+        <Route path="/PaymentCanceled" element={<PaymentCanceled />} />
         
         <Route path="/LoginAll" element={<LoginAll />} />
         <Route path="/AddPharmacist" element={<AddPharmacist />} />
