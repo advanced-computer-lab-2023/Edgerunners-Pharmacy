@@ -2,9 +2,12 @@
 const express = require("express");
 var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cookieParser = require('cookie-parser');
 //var fileUpload = require("express-fileupload");
 mongoose.set("strictQuery", false);
 require("dotenv").config();
+const { requireAuth } = require('./Middleware/authMiddleware');
+
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const {
@@ -86,10 +89,20 @@ app.use(cors());
 //   }),
 // );
 
+// app.post('/loginAdmin', loginAdmin)
+// app.post('/loginPharm', loginPharm)
+// app.post('/loginPatient', loginPatient)
+// app.get('/logoutAdmin', logoutAdmin);
+// app.get('/logoutPharm', logoutPharm);
+// app.get('/logoutPatient', logoutPatient);
+
 app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
 app.put("/updatePatient", updatePatient);
 app.delete("/deletePatient", deletePatient);
+
+// app.get("/getPatient", requireAuth, getPatients);
+// app.delete("/deletePatient", requireAuth, deletePatient);
 
 app.post("/addPharmacist", createPharmacist);
 app.get("/getPharmacist", getPharmacists);
@@ -97,15 +110,28 @@ app.put("/updatePharmacist", updatePharmacist);
 app.delete("/deletePharmacist", deletePharmacist);
 //app.post("/uploadDocument", uploadDocument);
 
+// app.get("/getPharmacist", requireAuth, getPharmacists);
+// app.delete("/deletePharmacist", requireAuth, deletePharmacist);
+//app.post("/uploadDocument", requireAuth, uploadDocument);
+
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);
 app.put("/updateMedicine", updateMedicine);
 app.delete("/deleteMedicine", deleteMedicine);
 
+// app.post("/addMedicine", requireAuth, createMedicine);
+// app.get("/getMedicine", requireAuth, getMedicines);
+// app.put("/updateMedicine", requireAuth, updateMedicine);
+// app.delete("/deleteMedicine", requireAuth, deleteMedicine);
+
 app.post("/addAdmin", createAdmin);
 app.get("/getAdmin", getAdmins);
 app.put("/updateAdmin", updateAdmin);
 app.delete("/deleteAdmin", deleteAdmin);
+
+// app.post("/addAdmin", requireAuth, createAdmin);
+// app.get("/getAdmin", requireAuth, getAdmins);
+// app.delete("/deleteAdmin", requireAuth, deleteAdmin);
 
 //STRIPE ------------------------------------------------------------------------
 
