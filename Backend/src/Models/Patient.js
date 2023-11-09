@@ -52,6 +52,23 @@ const patientSchemaP = new Schema(
         type: String,
       },
     },
+    Cart: {
+      type: Array,
+      CartItems: {
+        medicineName: String,
+        count: Number,
+      },
+    },
+    Orders: {
+      type: Array,
+      Status: {
+        type: String,
+        enum: ["Shipped", "Delievered", "Processing", "Pending"],
+      },
+      Cart: {
+        type: Array,
+      }
+    }
   },
   { timestamps: true }
 );
