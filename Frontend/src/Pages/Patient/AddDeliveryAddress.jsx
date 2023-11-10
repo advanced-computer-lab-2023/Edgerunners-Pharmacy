@@ -9,39 +9,40 @@ function AddDeliveryAddress() {
     const apartmentRef = useRef();
     const streetAddressRef = useRef();
     const cityRef = useRef();
-    const countryRef = useRef();
+    const stateRef = useRef();
     function submitHandeler(event) {
         event.preventDefault();
         const nameValue = nameRef.current.value;
         const apartmentValue = apartmentRef.current.value;
+        const streetValue = streetAddressRef.current.value;
         const cityValue = cityRef.current.value;
-        const countryValue = countryRef.current.value;
+        const stateValue = stateRef.current.value;
         const newAddress = {
-            Name:  nameValue,
+            Name: nameValue,
             Apartment: apartmentValue,
+            Street: streetValue,
             City: cityValue,
-            Country: countryValue,
+            State: stateValue,
         };
         console.log(newAddress);
         axios
-        .post("http://localhost:3001/addAddress", newAddress, {
+            .post("http://localhost:3001/addAddress", newAddress, {
 
-        })
-        .then((res) => {
-         
-          console.log("Address added");
-          nameRef.current.value="";
-          apartmentRef.current.value="";
-          cityRef.current.value="";
-          countryRef.current.value="";
-         
+            })
+            .then((res) => {
 
-        })
-        .catch((error) => {
-         
-            console.log("Unable to add address");
-          
-        });
+                console.log("Address added");
+                nameRef.current.value = "";
+                apartmentRef.current.value = "";
+                cityRef.current.value = "";
+
+
+            })
+            .catch((error) => {
+
+                console.log("Unable to add address");
+
+            });
     }
     return (
         <div>
@@ -73,9 +74,9 @@ function AddDeliveryAddress() {
                                     <input type="text" id="city" ref={cityRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
                                 </div>
                                 <div className=" mb-4">
-                                    <label className=" text-xl font-bold    font-SourceSansPro   text-gray-500 ml-2"> Country : </label>
+                                    <label className=" text-xl font-bold    font-SourceSansPro   text-gray-500 ml-2"> State : </label>
                                     <br />
-                                    <input type="text" id="country" ref={countryRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                    <input type="text" id="country" ref={stateRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
                                 </div>
                                 <div className=" flex justify-center  mt-6">
                                     <br />
