@@ -1,7 +1,6 @@
 import Logo from "../../UI/Logo";
 import React, { useState, useEffect } from 'react';
 import Sidebar from "../../Components/SidebarPatient";
-import Patient from "./Patient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashCan,
