@@ -1,29 +1,31 @@
-// #Task route solution
 const Patient = require("../Models/Patient.js");
 const { default: mongoose } = require("mongoose");
 const express = require("express");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const hashPassword = async (password) => {
+  return bcrypt.hash(password, 5);
+};
 
 const createPatient = async (req, res) => {
   //add a new Patient to the database with
   //Name, Email and Age
-  if(req.body.EmergencyContact){
+  if (req.body.EmergencyContact) {
     await Patient.create({
-    Username: req.body.Username,
-    Password: await hashPassword(req.body.Password),
-    Gender: req.body.Gender,
-    Name: req.body.Name,
-    Email: req.body.Email,
-    phoneNumber: req.body.phoneNumber,
-    DOB: req.body.DOB,
-    EmergencyContact: {
-      FullnameEC: req.body.EmergencyContact.FullnameEC,
-      phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
-      Relations : req.body.EmergencyContact.Relations
-    },
-  });
-  } else{
+      Username: req.body.Username,
+      Password: await hashPassword(req.body.Password),
+      Gender: req.body.Gender,
+      Name: req.body.Name,
+      Email: req.body.Email,
+      phoneNumber: req.body.phoneNumber,
+      DOB: req.body.DOB,
+      EmergencyContact: {
+        FullnameEC: req.body.EmergencyContact.FullnameEC,
+        phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
+        Relations: req.body.EmergencyContact.Relations
+      },
+    });
+  } else {
     await Patient.create({
       Username: req.body.Username,
       Password: await hashPassword(req.body.Password),
@@ -34,7 +36,7 @@ const createPatient = async (req, res) => {
       DOB: req.body.DOB,
     });
   }
-  
+
   res.status(200).send("Created successfully");
 };
 
@@ -43,22 +45,22 @@ const createPatient1 = async (req, res) => {
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(Password, salt);
-    if(req.body.EmergencyContact){
+    if (req.body.EmergencyContact) {
       const user = await Patient.create({
-      Username: req.body.Username,
-      Password: hashedPassword,
-      Gender: req.body.Gender,
-      Name: req.body.Name,
-      Email: req.body.Email,
-      phoneNumber: req.body.phoneNumber,
-      DOB: req.body.DOB,
-      EmergencyContact: {
-        FullnameEC: req.body.EmergencyContact.FullnameEC,
-        phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
-        Relations : req.body.EmergencyContact.Relations
-      },
-    });
-    } else{
+        Username: req.body.Username,
+        Password: hashedPassword,
+        Gender: req.body.Gender,
+        Name: req.body.Name,
+        Email: req.body.Email,
+        phoneNumber: req.body.phoneNumber,
+        DOB: req.body.DOB,
+        EmergencyContact: {
+          FullnameEC: req.body.EmergencyContact.FullnameEC,
+          phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
+          Relations: req.body.EmergencyContact.Relations
+        },
+      });
+    } else {
       const user = await Patient.create({
         Username: req.body.Username,
         Password: hashedPassword,
@@ -113,7 +115,7 @@ const logoutPatient = async (req, res) => {
 const getPatients = async (req, res) => {
   try {
     const Patients = await Patient.find();
-    res.status(200).send( Patients );
+    res.status(200).send(Patients);
   } catch (e) {
     res.status(400).send("Error could not get Patients !!");
   }
@@ -137,5 +139,15 @@ const deletePatient = async (req, res) => {
   }
 };
 
-module.exports = { createPatient, getPatients, updatePatient, deletePatient };
+const ResetPass = async (req, res) => {
+  const newPassword = req.query.Password;
+  const email = req.params.Email;
+  await Patient.updateOne(
+    { Email: email },
+    { $set: { Password: newPassword } },
+  ).catch("An error occured");
+  res.status(200).send("Password updated");
+};
+
+module.exports = { createPatient, getPatients, updatePatient, deletePatient, ResetPass };
 // module.exports = { createPatient1, loginPatient, logoutPatient, getPatients, updatePatient, deletePatient };

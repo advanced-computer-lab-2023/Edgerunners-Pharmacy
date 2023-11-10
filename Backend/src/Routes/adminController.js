@@ -3,12 +3,15 @@ const { default: mongoose } = require("mongoose");
 const express = require("express");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const hashPassword = async (password) => {
+  return bcrypt.hash(password, 5);
+};
 
 const createAdmin = async (req, res) => {
   try {
     await Admin.create({
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: await hashPassword(req.body.Password),
       Role: "Admin",
     });
     res.status(200).send("Created successfully");

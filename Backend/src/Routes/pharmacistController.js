@@ -3,6 +3,9 @@ const { default: mongoose } = require("mongoose");
 const express = require("express");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const hashPassword = async (password) => {
+  return bcrypt.hash(password, 5);
+};
 
 const createPharmacist = async (req, res) => {
   //add a new Doctor to the database with
@@ -10,7 +13,7 @@ const createPharmacist = async (req, res) => {
   try {
     await Pharmacist.create({
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: await hashPassword(req.body.Password),
       DOB: req.body.DOB,
       Name: req.body.Name,
       Email: req.body.Email,

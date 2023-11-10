@@ -30,12 +30,7 @@ function LoginPage(props) {
                     if (sessionStorage.getItem("type") === "Patient") {
                         window.location.replace("/Patient");
                     } else if (sessionStorage.getItem("type") === "Pharmacist") {
-                        if (sessionStorage.getItem("ReqStatus") === "Accepted") {
-                            window.location.replace("/Pharmacist");
-                        }
-                        // else if(sessionStorage.getItem("Status") == "Waiting"){
-                        //   window.location.replace("/Contract");
-                        // }              
+                        window.location.replace("/Pharm");     
                     } else {
                         window.location.replace("/Admin");
                     }
