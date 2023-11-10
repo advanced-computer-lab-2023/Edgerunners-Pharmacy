@@ -13,7 +13,7 @@ import PaymentCanceled from "./Pages/Patient/PaymentCanceled";
 
 function App() {
   return (
-      <PaymentCanceled />
+      <Cart />
   );
 }
 
