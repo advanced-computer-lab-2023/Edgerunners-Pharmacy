@@ -53,13 +53,16 @@ const patientSchemaP = new Schema(
       },
     },
     Cart: {
-      type: Array
+      type: Array,
+      required: false
     },
     Orders: {
-      type: Array
+      type: Array,
+      required: false
     },
     Address: {
-      type: Array
+      type: Array,
+      required: false
     }
   },
   { timestamps: true }

@@ -30,7 +30,7 @@ export default function MedTableAllCopy() {
         medicinename: name,
         quantity: 1,
         price: price,
-        username: "abdo", // Replace with the actual username
+        username: sessionStorage.getItem("Username"), // Replace with the actual username
       });
       console.log("Update request sent successfully");
     } catch (error) {

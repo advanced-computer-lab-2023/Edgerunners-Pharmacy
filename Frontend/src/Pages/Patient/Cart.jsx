@@ -63,7 +63,7 @@ function Cart() {
       await axios.put("http://localhost:3001/incrementQuantity", {
         medicinename: name,
         price: price,
-        username: "abdo", // Replace with the actual username
+        username:  sessionStorage.getItem("Username"), // Replace with the actual username
       });
       console.log("Update request sent successfully");
       setCount(count + 1);
@@ -79,7 +79,7 @@ function Cart() {
       await axios.put("http://localhost:3001/decrementQuantity", {
         medicinename: name,
         price: price,
-        username: "abdo", // Replace with the actual username
+        username: sessionStorage.getItem("Username"), // Replace with the actual username
       });
       console.log("Update request sent successfully");
       setCount(count - 1);
@@ -95,7 +95,7 @@ function Cart() {
     try {
       await axios.put("http://localhost:3001/removeFromCart", {
         medicinename: name,
-        username: "abdo", // Replace with the actual username
+        username: sessionStorage.getItem("Username"), // Replace with the actual username
       });
       setCount(0);
       console.log("Update request sent successfully");
@@ -103,7 +103,18 @@ function Cart() {
       console.error("Error updating data:", error);
     }
   };
-
+  const handlePayment = async () =>{
+    try{
+      if(paymentMethod === "payWithVisa" ){
+        let user = sessionStorage.getItem("Username")
+        await axios.post("http://localhost:3001/create-checkout-session" , {Username : user}).then((res)=>{
+          window.location = res.data.url
+        }).catch((err) => console.log(err.message));
+      }
+    }catch(error){
+      console.error("Error updating data:", error);
+    }
+  }
   if (CartData) {
     console.log(CartData);
     console.log(options);
@@ -224,7 +235,7 @@ function Cart() {
                 </button>
               </a>
               <a>
-                <button className="justify-end bg-sky-600 text-white w-60 h-10 rounded-md mb-2 mt-0.5 mr-14">
+                <button className="justify-end bg-sky-600 text-white w-60 h-10 rounded-md mb-2 mt-0.5 mr-14" onClick={handlePayment}>
                   <FontAwesomeIcon icon={faBasketShopping} /> Checkout
                 </button>
               </a>

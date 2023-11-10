@@ -39,10 +39,22 @@ const createPatient = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
-  const username = "abdo";
-  const user = await Patient.findOne({ Username: username });
-  const cart = user.Cart;
-  res.status(200).send(cart);
+  //const username = "abdo";
+  //console.log(req.query.username);
+  //console.log(req.body);
+
+  const user = await Patient.findOne({ Username: req.query.username });
+  
+  let cart = [];
+  if(user.Cart){
+    cart = user.Cart;
+    let total = 0;
+    for (let i = 0; i < cart.length; i++) {
+      total += cart[i].price;
+    }
+  }
+  console.log(user.Cart);
+  res.status(200).send({cart});
 }
 
 const getPatients = async (req, res) => {
@@ -59,7 +71,7 @@ const updatePatient = async (req, res) => {
     const orderName = req.body.medicinename;
     const orderQuantity = req.body.quantity;
     const orderPrice = req.body.price;
-    const username = "abdo"; // Replace with the actual username
+    const username = req.body.username; // Replace with the actual username
     const user = await Patient.findOne({ Username: username });
     if (!user) {
       return res.status(404).send("User not found");
@@ -87,7 +99,7 @@ const incrementQuantity = async (req, res) => {
   try {
     const orderName = req.body.medicinename;
     const orderPrice = req.body.price;
-    const username = "abdo";
+    const username = req.body.username;
     const user = await Patient.findOne({ Username: username });
     if (!user) {
       return res.status(404).send("User not found");
@@ -114,7 +126,7 @@ const decrementQuantity = async (req, res) => {
   try {
     const orderName = req.body.medicinename;
     const orderPrice = req.body.price;
-    const username = "abdo"; // Assuming you pass the username in the request
+    const username = req.body.username; // Assuming you pass the username in the request
     const user = await Patient.findOne({ Username: username });
 
     if (!user) {
@@ -150,7 +162,7 @@ const decrementQuantity = async (req, res) => {
 const removeFromCart = async (req, res) => {
   try {
     const orderName = req.body.medicinename;
-    const username = "abdo"; // Assuming you pass the username in the request
+    const username = req.body.username; // Assuming you pass the username in the request
     const user = await Patient.findOne({ Username: username });
 
     if (!user) {
