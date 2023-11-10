@@ -18,6 +18,8 @@ const {
   incrementQuantity,
   decrementQuantity,
   removeFromCart,
+  updateAddress,
+  getAddress,
   deletePatient,
   ResetPass,
   getCart,
@@ -112,6 +114,8 @@ app.put("/incrementQuantity", incrementQuantity);
 app.put("/removeFromCart", removeFromCart);
 app.get("/getcart", getCart);
 app.put('/decrementQuantity', decrementQuantity);
+app.put('/updateAddress', updateAddress);
+app.get('/getAddress', getAddress);
 app.delete("/deletePatient", deletePatient);
 
 // app.get("/getPatient", requireAuth, getPatients);

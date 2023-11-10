@@ -188,11 +188,30 @@ const removeFromCart = async (req, res) => {
 
 const updateAddress = async (req, res) => {
   try {
-    // const 
-  } catch (e) { 
+    const username = "abdo"; // Assuming you pass the username in the request
+    const state = req.body.state;
+    const city = req.body.city;
+    const street = req.body.street;
+    const apartment = req.body.apartment;
+    const user = await Patient.findOne({ Username: username });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    let address = user.Address;
+    address.push({ state: state, city: city, street: street, apartment: apartment });
+    await Patient.updateOne({ Username: username }, { $set: { Address: address } });
+    res.status(200).send("Updated address successfully!");
+  } catch (e) {
     console.log(e);
     res.status(400).send("Error could not update Patient's address!!");
   }
+}
+
+const getAddress = async (req ,res) => {
+  const username = 'abdo';
+  const user = await Patient.findOne({ Username: username });
+  const address = user.Address;
+  res.status(200).send(address);
 }
 
 const deletePatient = async (req, res) => {
@@ -219,4 +238,4 @@ const ResetPass = async (req, res) => {
   res.status(200).send("Password updated");
 };
 
-module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, deletePatient, ResetPass };
+module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, updateAddress, getAddress, deletePatient, ResetPass };
