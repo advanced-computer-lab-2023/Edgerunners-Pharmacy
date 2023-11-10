@@ -16,6 +16,7 @@ const {
   updatePatient,
   incrementQuantity,
   decrementQuantity,
+  removeFromCart,
   deletePatient,
   ResetPass,
   getCart,
@@ -107,6 +108,7 @@ app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
 app.put("/updatePatient", updatePatient);
 app.put("/incrementQuantity", incrementQuantity);
+app.put("/removeFromCart", removeFromCart);
 app.get("/getcart", getCart);
 app.put('/decrementQuantity', decrementQuantity);
 app.delete("/deletePatient", deletePatient);
