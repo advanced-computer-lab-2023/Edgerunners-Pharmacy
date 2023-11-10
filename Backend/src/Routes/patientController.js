@@ -40,11 +40,13 @@ const createPatient = async (req, res) => {
 
 const getCart = async (req, res) => {
   const username = "abdo";
-  const user = await Patient.findOne({Username:username});
+  const user = await Patient.findOne({ Username: username });
   const cart = user.Cart;
-  // for(let i=0; i<cart.length; i++){
-  // }
-  res.status(200).json({total:200,cart:cart});
+  let total = 0;
+  for (let i = 0; i < cart.length; i++) {
+    total += cart[i].price;
+  }
+  res.status(200).send(cart);
 }
 
 const getPatients = async (req, res) => {
@@ -71,10 +73,11 @@ const updatePatient = async (req, res) => {
     if (existingCartItemIndex !== -1) {
       // If the medicine is already in the cart, update the quantity and price
       cart[existingCartItemIndex].count += orderQuantity;
-      cart[existingCartItemIndex].price = orderPrice * cart[existingCartItemIndex].count;
+      cart[existingCartItemIndex].price = orderPrice ;
+      cart[existingCartItemIndex].totalprice = orderPrice * cart[existingCartItemIndex].count;
     } else {
       // If the medicine is not in the cart, add a new entry
-      cart.push({ medicineName: orderName, count: orderQuantity, price: orderPrice * orderQuantity });
+      cart.push({ medicineName: orderName, count: orderQuantity, price: orderPrice, totalprice: orderPrice });
     }
     await Patient.updateOne({ Username: username }, { $set: { Cart: cart } });
     res.status(200).send("Updated cart successfully!");
@@ -87,6 +90,7 @@ const updatePatient = async (req, res) => {
 const incrementQuantity = async (req, res) => {
   try {
     const orderName = req.body.medicinename;
+    const orderPrice = req.body.price;
     const username = "abdo";
     const user = await Patient.findOne({ Username: username });
     if (!user) {
@@ -97,7 +101,7 @@ const incrementQuantity = async (req, res) => {
 
     if (existingMedicineIndex !== -1) {
       cart[existingMedicineIndex].count += 1;
-      cart[existingCartItemIndex].price = orderPrice * cart[existingCartItemIndex].count;
+      cart[existingMedicineIndex].totalprice += orderPrice;
     } else {
       return res.status(404).send("Medicine not found in the cart");
     }
@@ -113,8 +117,8 @@ const incrementQuantity = async (req, res) => {
 const decrementQuantity = async (req, res) => {
   try {
     const orderName = req.body.medicinename;
-    const username = req.body.username; // Assuming you pass the username in the request
-
+    const orderPrice = req.body.price;
+    const username = "abdo"; // Assuming you pass the username in the request
     const user = await Patient.findOne({ Username: username });
 
     if (!user) {
@@ -129,7 +133,7 @@ const decrementQuantity = async (req, res) => {
       if (cart[existingMedicineIndex].count > 1) {
         // If the count is greater than 1, decrement the quantity
         cart[existingMedicineIndex].count -= 1;
-        cart[existingCartItemIndex].price = orderPrice * cart[existingCartItemIndex].count;
+        cart[existingMedicineIndex].totalprice -= orderPrice;
       } else {
         // If the count is 1, remove the medicine from the cart
         cart.splice(existingMedicineIndex, 1);
@@ -146,6 +150,33 @@ const decrementQuantity = async (req, res) => {
     res.status(400).send("Error could not decrement quantity");
   }
 };
+
+const removeFromCart = async (req, res) => {
+  try {
+    const orderName = req.body.medicinename;
+    const username = "abdo"; // Assuming you pass the username in the request
+    const user = await Patient.findOne({ Username: username });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    let cart = user.Cart || [];
+    const existingMedicineIndex = cart.findIndex(item => item.medicineName === orderName);
+
+    if (existingMedicineIndex !== -1) {
+      cart.splice(existingMedicineIndex, 1);
+    }
+    else {
+      // If the medicine is not in the cart
+      return res.status(404).send("Medicine not found in the cart");
+    }
+    await Patient.updateOne({ Username: username }, { $set: { Cart: cart } });
+    res.status(200).send("Decremented quantity successfully!");
+  } catch (e) {
+    console.log(e);
+    res.status(400).send("Error could not remove medicine");
+  }
+}
 
 
 const deletePatient = async (req, res) => {
@@ -172,4 +203,4 @@ const ResetPass = async (req, res) => {
   res.status(200).send("Password updated");
 };
 
-module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, deletePatient, ResetPass };
+module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, deletePatient, ResetPass };

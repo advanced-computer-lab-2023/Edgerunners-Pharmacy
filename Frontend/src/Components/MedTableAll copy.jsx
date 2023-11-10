@@ -38,6 +38,8 @@ export default function MedTableAllCopy() {
     }
   };
 
+
+
   if (Medicine) {
     console.log(Medicine);
     return (
@@ -89,8 +91,7 @@ export default function MedTableAllCopy() {
                   </div>
                   <div className="space-x-3 mt-11">
                     <button className="justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 " onClick={() => handleaddcart(p.Name, p.Price)}>
-                      <FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" />
-                      Add to cart
+                      <FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" /> Add to cart
                     </button>
                   </div>
                 </div>
