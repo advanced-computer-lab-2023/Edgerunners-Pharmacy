@@ -43,10 +43,8 @@ const getCart = async (req, res) => {
   const user = await Patient.findOne({Username:username});
   const cart = user.Cart;
   // for(let i=0; i<cart.length; i++){
-    
   // }
   res.status(200).json({total:200,cart:cart});
-
 }
 
 const getPatients = async (req, res) => {
