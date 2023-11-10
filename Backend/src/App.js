@@ -17,6 +17,7 @@ const {
   incrementQuantity,
   decrementQuantity,
   deletePatient,
+  getCart,
 } = require("./Routes/patientController");
 
 const {
@@ -102,6 +103,7 @@ app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
 app.put("/updatePatient", updatePatient);
 app.put("/incrementQuantity", incrementQuantity);
+app.get("/getcart", getCart);
 app.put('/decrementQuantity', decrementQuantity);
 app.delete("/deletePatient", deletePatient);
 

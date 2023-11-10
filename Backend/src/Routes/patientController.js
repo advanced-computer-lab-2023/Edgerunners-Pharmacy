@@ -38,6 +38,17 @@ const createPatient = async (req, res) => {
   res.status(200).send("Created successfully");
 };
 
+const getCart = async (req, res) => {
+  const username = "abdo";
+  const user = await Patient.findOne({Username:username});
+  const cart = user.Cart;
+  // for(let i=0; i<cart.length; i++){
+    
+  // }
+  res.status(200).json({total:200,cart:cart});
+
+}
+
 const getPatients = async (req, res) => {
   try {
     const Patients = await Patient.find();
@@ -153,5 +164,5 @@ const deletePatient = async (req, res) => {
   }
 };
 
-module.exports = { createPatient, getPatients, updatePatient, incrementQuantity, decrementQuantity, deletePatient };
+module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, deletePatient };
 // module.exports = { createPatient1, loginPatient, logoutPatient, getPatients, updatePatient, deletePatient };
