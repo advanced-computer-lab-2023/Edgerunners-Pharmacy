@@ -8,7 +8,8 @@ mongoose.set("strictQuery", false);
 require("dotenv").config();
 const { requireAuth } = require('./Middleware/authMiddleware');
 
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+//const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57NmZ58DTz0O2ljqL8P42WLklVXPUZGPvmUD4hlxEkbit9nfpSPCWEB00UWnsTWUw');
 
 const {
   createPatient,
@@ -154,29 +155,81 @@ const storeItems = new Map([
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
+    const user = await Patient.findOne({ Username: req.body.Username });
+    console.log(user);
+    const storeItems = user.Cart;
+    const products = await stripe.products.list({
+      active: true,
+    });
+    
+    let myPrices = [];
+    for(let i =0; i< products.data.length ; i++ ){
+      for(let j = 0 ; j < storeItems.length; j++){
+        if(products.data[i].name === storeItems[j].medicineName){
+          myPrices.push({Price :products.data[i].default_price , quantity : storeItems[j].count});
+          break;
+        }
+      }
+    }
+    line_items = myPrices.map(item => {
+      //const storeItem = storeItems.get(item.id)
+      return {
+        price :item.Price,
+        quantity: item.quantity
+      }
+    });
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: req.body.items.map(item => {
-        const storeItem = storeItems.get(item.id)
-        return {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: storeItem.name,
-            },
-            unit_amount: storeItem.priceInCents,
-          },
-          quantity: item.quantity,
-        }
-      }),
-      success_url: `${process.env.SERVER_URL}/PaymentSuccess`,
-      cancel_url: `${process.env.SERVER_URL}/PaymentCanceled`,
+      // line_items: //req.body.items.map(item => {
+      //   storeItems.map(item => {
+      //   //const storeItem = storeItems.get(item.id)
+      //   return {
+      //     price_data: {
+      //       currency: "usd",
+      //       product_data: {
+      //         name: item.name,
+      //       },
+      //       unit_amount: item.priceInCents,
+      //     },
+      //     quantity: item.quantity,
+      //   }
+      // })
+      line_items : line_items ,
+      success_url: 'http://localhost:3000/PaymentSuccess',
+      cancel_url: 'http://localhost:3000/PaymentCanceled',
     })
-    res.json({ url: session.url })
+    res.send({ url: session.url })
   } catch (e) {
-    res.status(500).json({ error: e.message })
+    console.log(e);
   }
+
+
+  // const products = await stripe.products.list({
+  //   active: true,
+  // });
+  // //console.log(products.data);
+  // let price = null;
+  // for(let i =0; i< products.data.length ; i++ ){
+  //   //console.log(products.data[i]);
+  //   console.log(req.body.name.name)
+  //   if(products.data[i].name === req.body.name.name ){
+  //     price = products.data[i].default_price; 
+  //     break;
+  //   }
+  // }
+  //   console.log(price);
+  //   const session = await stripe.checkout.sessions.create({
+  //     payment_method_types:["card"],
+  //     mode: "payment",
+  //     line_items:[{
+  //       price :price,
+  //       quantity: 1,
+  //   }],
+  //     success_url: 'http://localhost:5173/Success',
+  //     cancel_url: 'http://localhost:5173/Cancel',
+  //   });
+  //   res.send({url: session.url})
 });
 
 /*

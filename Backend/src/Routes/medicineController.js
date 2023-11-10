@@ -1,5 +1,6 @@
 const Medicine = require("../Models/Medicine");
 const { default: mongoose } = require("mongoose");
+const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57NmZ58DTz0O2ljqL8P42WLklVXPUZGPvmUD4hlxEkbit9nfpSPCWEB00UWnsTWUw');
 
 const createMedicine = async (req, res) => {
   try {
@@ -12,6 +13,15 @@ const createMedicine = async (req, res) => {
       Quantity: req.body.Quantity,
       Sales: req.body.Sales,
     });
+    const price = parseInt(req.body.Price * 100);
+    await stripe.products.create({
+      name: req.body.Name,
+      default_price_data:{
+        currency: 'egp',
+        unit_amount: price
+      }
+      ,description: "Medicine"
+    })
     res.status(200).send("Created successfully");
   } catch (e) {
     res.status(400).send("Failed to Create Medicine");
