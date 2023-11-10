@@ -8,6 +8,7 @@ import {
   faBasketShopping
 } from "@fortawesome/free-solid-svg-icons";
 import GetCart from "../getCart";
+import GetAddress from "../getAddress";
 import axios from "axios";
 import { Input } from "postcss";
 
@@ -16,36 +17,38 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateRandomOptions() {
-  const numberOfOptions = getRandomInt(1, 5); // Generate a random number between 1 and 5 (you can adjust this range as needed)
-  const options = [];
-
-  for (let i = 0; i < numberOfOptions; i++) {
-    options.push(
-      <option key={i} value={`Option ${i + 1}`}>
-        Option {i + 1}
-      </option>
-    );
-  }
-
-  return options;
-}
-
 const randomPointsInWallet = getRandomInt(0, 1000); // Generate a random value for "Points in wallet"
 const randomPointsTakenAway = getRandomInt(0, randomPointsInWallet); // Generate a random value for "Points taken away" (less than or equal to "Points in wallet")
 const pointsRemaining = randomPointsInWallet - randomPointsTakenAway; // Calculate "Points remaining"
 
 function Cart() {
   const [paymentMethod, setPaymentMethod] = useState('cashOnDelivery');
-  const [medicineName, setmedicineName] = useState();
+  const [medicineName] = useState();
   const [count, setCount] = useState(0);
   const [totalprice, setTotalPrice] = useState(0);
   const [price, setprice] = useState(0);
-  const [cart, setCart] = useState([]);
+  const [state] = useState();
+  const [city] = useState();
+  const [street] = useState();
+  const [apartment] = useState();
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   const handlePaymentMethodChange = (event) => {
     setPaymentMethod(event.target.value);
   };
+
+  let addressData = GetAddress({
+    state: state,
+    city: city,
+    street: street,
+    apartment: apartment,
+  })
+
+  const options = addressData;
 
   let CartData = GetCart({
     medicineName: medicineName,
@@ -54,14 +57,6 @@ function Cart() {
   });
 
   let total = CartData.reduce((acc, item) => acc + item.totalprice, 0);
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   Cart = await getCart({
-  //     medicineName: medicineName,
-  //     count: count,
-  //     price: price,
-  //   })
-  // }
 
   const handleincrement = async (name, price) => {
     try {
@@ -87,9 +82,9 @@ function Cart() {
         username: "abdo", // Replace with the actual username
       });
       console.log("Update request sent successfully");
-        setCount(count - 1);
-        setTotalPrice(totalprice - price);
-      
+      setCount(count - 1);
+      setTotalPrice(totalprice - price);
+
       // Update the state to trigger a re-render
     } catch (error) {
       console.error("Error updating data:", error);
@@ -111,6 +106,7 @@ function Cart() {
 
   if (CartData) {
     console.log(CartData);
+    console.log(options);
     return (
       <div>
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
@@ -168,9 +164,13 @@ function Cart() {
 
           <div className="ml-4 mt-6 w-[30rem] h-[30rem] bg-gray-50 rounded-md shadow-md justify-center space-y-4">
             <div className="flex items-center mt-4 ml-4">
-              <select className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5">
-                <option>Select delivery address</option>
-                {generateRandomOptions()}
+              <select id="dropdown" value={selectedOption} onChange={handleSelectChange} className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5">
+                <option value="" disabled>Select delivery address</option>
+                {options.map((p, index) => (
+                  <option key={index} value={p}>
+                    {p}
+                  </option>
+                ))}
               </select>
               <a href="/Address">
                 <button className="text-sky-600 outline w-60 h-10 rounded-md mb-2 ml-3 mt-2">

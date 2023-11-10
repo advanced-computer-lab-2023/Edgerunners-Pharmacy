@@ -5,44 +5,29 @@ import axios from "axios";
 import { useRef } from "react";
 
 function AddDeliveryAddress() {
-    const nameRef = useRef();
     const apartmentRef = useRef();
     const streetAddressRef = useRef();
     const cityRef = useRef();
     const stateRef = useRef();
+
     function submitHandeler(event) {
         event.preventDefault();
-        const nameValue = nameRef.current.value;
         const apartmentValue = apartmentRef.current.value;
         const streetValue = streetAddressRef.current.value;
         const cityValue = cityRef.current.value;
         const stateValue = stateRef.current.value;
-        const newAddress = {
-            Name: nameValue,
-            Apartment: apartmentValue,
-            Street: streetValue,
-            City: cityValue,
-            State: stateValue,
-        };
-        console.log(newAddress);
-        axios
-            .post("http://localhost:3001/addAddress", newAddress, {
-
-            })
-            .then((res) => {
-
-                console.log("Address added");
-                nameRef.current.value = "";
-                apartmentRef.current.value = "";
-                cityRef.current.value = "";
-
-
-            })
-            .catch((error) => {
-
-                console.log("Unable to add address");
-
+        try {
+            axios.put("http://localhost:3001/updateAddress", {
+                state: stateValue,
+                city: cityValue,
+                street: streetValue,
+                apartment: apartmentValue,
+                username: "abdo"
             });
+            console.log("Update request sent successfully");
+        } catch (error) {
+            console.error("Error updating data:", error);
+        }
     }
     return (
         <div>
@@ -58,26 +43,27 @@ function AddDeliveryAddress() {
                         <form onSubmit={submitHandeler}>
                             <div className=" mt-3">
                                 <div className=" mb-4">
-                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Name : </label>
+                                    <label className=" text-xl font-bold    font-SourceSansPro   text-gray-500 ml-2"> State : </label>
                                     <br />
-                                    <input type="text" id="fullname" name="fullname" ref={nameRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-                                </div>
-
-                                <div className=" mb-4">
-                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500  ml-2"> Apartment/building/house number : </label>
-                                    <br />
-                                    <input type="text" id="apartment" ref={apartmentRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                    <input type="text" id="country" ref={stateRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" placeholder="e.g, Cairo" />
                                 </div>
                                 <div className=" mb-4">
                                     <label className=" text-xl font-bold    font-SourceSansPro   text-gray-500 ml-2"> City : </label>
                                     <br />
-                                    <input type="text" id="city" ref={cityRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                    <input type="text" id="city" ref={cityRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" placeholder="e.g, New Cairo" />
                                 </div>
                                 <div className=" mb-4">
-                                    <label className=" text-xl font-bold    font-SourceSansPro   text-gray-500 ml-2"> State : </label>
+                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500  ml-2"> Street : </label>
                                     <br />
-                                    <input type="text" id="country" ref={stateRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                    <input type="text" id="apartment" ref={streetAddressRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" placeholder="e.g, 123 Palm St." />
                                 </div>
+                                <div className=" mb-4">
+                                    <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500  ml-2"> Apartment/building/house number : </label>
+                                    <br />
+                                    <input type="text" id="apartment" ref={apartmentRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" placeholder="e.g, Building 2" />
+                                </div>
+
+
                                 <div className=" flex justify-center  mt-6">
                                     <br />
                                     <br />
