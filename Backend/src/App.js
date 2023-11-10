@@ -17,6 +17,7 @@ const {
   incrementQuantity,
   decrementQuantity,
   deletePatient,
+  ResetPass,
   getCart,
 } = require("./Routes/patientController");
 
@@ -81,7 +82,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const cors = require("cors");
-//const { protectA, protectPH, protectP, signin } = require("./Models/auth");
+const { protectA, protectPH, protectP, signin } = require("./Models/auth");
 
 app.use(cors());
 // app.use(
@@ -98,6 +99,9 @@ app.use(cors());
 // app.get('/logoutAdmin', logoutAdmin);
 // app.get('/logoutPharm', logoutPharm);
 // app.get('/logoutPatient', logoutPatient);
+
+app.post("/signin", signin);
+app.put("/ResetPass", ResetPass);
 
 app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);

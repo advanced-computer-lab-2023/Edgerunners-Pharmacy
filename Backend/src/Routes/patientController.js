@@ -1,13 +1,13 @@
-// #Task route solution
 const Patient = require("../Models/Patient.js");
 const { default: mongoose } = require("mongoose");
 const express = require("express");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const hashPassword = async (password) => {
+  return bcrypt.hash(password, 5);
+};
 
 const createPatient = async (req, res) => {
-  //add a new Patient to the database with
-  //Name, Email and Age
   if (req.body.EmergencyContact) {
     await Patient.create({
       Username: req.body.Username,
@@ -162,5 +162,14 @@ const deletePatient = async (req, res) => {
   }
 };
 
-module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, deletePatient };
-// module.exports = { createPatient1, loginPatient, logoutPatient, getPatients, updatePatient, deletePatient };
+const ResetPass = async (req, res) => {
+  const newPassword = req.query.Password;
+  const email = req.params.Email;
+  await Patient.updateOne(
+    { Email: email },
+    { $set: { Password: newPassword } },
+  ).catch("An error occured");
+  res.status(200).send("Password updated");
+};
+
+module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, deletePatient, ResetPass };
