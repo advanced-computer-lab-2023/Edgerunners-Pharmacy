@@ -38,9 +38,10 @@ const pointsRemaining = randomPointsInWallet - randomPointsTakenAway; // Calcula
 function Cart() {
   const [paymentMethod, setPaymentMethod] = useState('cashOnDelivery');
   const [medicineName, setmedicineName] = useState();
-  const [count, setcount] = useState();
-  const [price, setprice] = useState();
-  const [cartData, setCartData] = useState([]);
+  const [count, setCount] = useState(0);
+  const [totalprice, setTotalPrice] = useState(0);
+  const [price, setprice] = useState(0);
+  const [cart, setCart] = useState([]);
 
   const handlePaymentMethodChange = (event) => {
     setPaymentMethod(event.target.value);
@@ -70,14 +71,8 @@ function Cart() {
         username: "abdo", // Replace with the actual username
       });
       console.log("Update request sent successfully");
-
-      // After successfully incrementing, fetch the updated cart data
-      const updatedCartData = await GetCart({
-        medicineName: medicineName,
-        count: count,
-        price: price,
-      });
-
+      setCount(count + 1);
+      setTotalPrice(totalprice + price);
       // Update the state to trigger a re-render
     } catch (error) {
       console.error("Error updating data:", error);
@@ -92,14 +87,9 @@ function Cart() {
         username: "abdo", // Replace with the actual username
       });
       console.log("Update request sent successfully");
-
-      // After successfully incrementing, fetch the updated cart data
-      const updatedCartData = await GetCart({
-        medicineName: medicineName,
-        count: count,
-        price: price,
-      });
-
+        setCount(count - 1);
+        setTotalPrice(totalprice - price);
+      
       // Update the state to trigger a re-render
     } catch (error) {
       console.error("Error updating data:", error);
@@ -112,12 +102,8 @@ function Cart() {
         medicinename: name,
         username: "abdo", // Replace with the actual username
       });
+      setCount(0);
       console.log("Update request sent successfully");
-      const updatedCartData = await GetCart({
-        medicineName: medicineName,
-        count: count,
-        price: price,
-      });
     } catch (error) {
       console.error("Error updating data:", error);
     }

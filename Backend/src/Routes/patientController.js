@@ -73,7 +73,7 @@ const updatePatient = async (req, res) => {
     if (existingCartItemIndex !== -1) {
       // If the medicine is already in the cart, update the quantity and price
       cart[existingCartItemIndex].count += orderQuantity;
-      cart[existingCartItemIndex].price = orderPrice ;
+      cart[existingCartItemIndex].price = orderPrice;
       cart[existingCartItemIndex].totalprice = orderPrice * cart[existingCartItemIndex].count;
     } else {
       // If the medicine is not in the cart, add a new entry
@@ -178,6 +178,14 @@ const removeFromCart = async (req, res) => {
   }
 }
 
+const updateAddress = async (req, res) => {
+  try {
+    // const 
+  } catch (e) { 
+    console.log(e);
+    res.status(400).send("Error could not update Patient's address!!");
+  }
+}
 
 const deletePatient = async (req, res) => {
   //delete a Patient from the database
