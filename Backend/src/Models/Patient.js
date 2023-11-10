@@ -53,11 +53,7 @@ const patientSchemaP = new Schema(
       },
     },
     Cart: {
-      type: Array,
-      CartItems: {
-        medicineName: String,
-        count: Number,
-      },
+      type: Array
     },
     Orders: {
       type: Array,

@@ -1,6 +1,7 @@
 import Logo from "../../UI/Logo";
 import React, { useState, useEffect } from 'react';
 import Sidebar from "../../Components/SidebarPatient";
+import Patient from "./Patient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashCan,
@@ -8,61 +9,6 @@ import {
   faBasketShopping
 } from "@fortawesome/free-solid-svg-icons";
 import { Input } from "postcss";
-
-//(Add to cart) button 
-const handleUpdate = async (p) => {
-  // try {
-  //   console.log("hereeee");
-  //   console.log(p);
-  //   await axios.put("http://localhost/updatePatient", {
-  //     Cart: {
-  //       medicineName: p.medicineName,
-  //       count: 1,
-  //     }
-  //   });
-  //   console.log("Update request sent successfully");
-  //   setForceEffect(true);
-  // }
-  // catch {
-  //   console.error("Error updating data:", error);
-  // }
-};
-
-const handleIncrement = async (p) => {
-  // try {
-  //   console.log("hereeee");
-  //   console.log(p);
-  //   await axios.put("http://localhost/updatePatient", {
-  //     Cart: {
-  //       medicineName: p.medicineName,
-  //       count: 1,
-  //     }
-  //   });
-  //   console.log("Update request sent successfully");
-  //   setForceEffect(true);
-  // }
-  // catch {
-  //   console.error("Error updating data:", error);
-  // }
-};
-
-const handleDecrement = async (p) => {
-  // try {
-  //   console.log("hereeee");
-  //   console.log(p);
-  //   await axios.put("http://localhost/updatePatient", {
-  //     Cart: {
-  //       medicineName: p.medicineName,
-  //       count: 1,
-  //     }
-  //   });
-  //   console.log("Update request sent successfully");
-  //   setForceEffect(true);
-  // }
-  // catch {
-  //   console.error("Error updating data:", error);
-  // }
-};
 
 //Dummy data 
 const makeOrderDetails = async () => {
@@ -109,31 +55,7 @@ const pointsRemaining = randomPointsInWallet - randomPointsTakenAway; // Calcula
 function Cart() {
   const [paymentMethod, setPaymentMethod] = useState('cashOnDelivery');
   const [cartitems, setcartitems] = useState([]);
-  const [cardNumber, setCardNumber] = useState('');
-  const [expirationDate, setExpirationDate] = useState('');
-
-  const handleCardNumberChange = (event) => {
-    // Remove non-numeric characters from the input
-    const formattedInput = event.target.value.replace(/\D/g, '');
-    // Add a space after every 4 digits
-    const formattedNumber = formattedInput.replace(/(\d{4})(?=\d)/g, '$1 ');
-    // Limit the input to a maximum of 19 characters (16 digits + 3 spaces)
-    if (formattedNumber.length <= 19) {
-      setCardNumber(formattedNumber);
-    }
-  };
-
-  const handleExpirationDateChange = (event) => {
-    // Remove non-numeric and non-slash characters from the input
-    const formattedInput = event.target.value.replace(/\D/g, '');
-    // Automatically insert a slash after the 2nd digit
-    const formattedNumber = formattedInput.replace(/(\d{2})(?=\d)/g, '$1/');
-    // Limit the input to a maximum of 5 characters (MM/YY format)
-    if (formattedInput.length <= 4) {
-      setExpirationDate(formattedNumber);
-
-    }
-  };
+  const [Patient, setPatient] = useState(null);
 
   useEffect(() => {
     async function fetchData() {

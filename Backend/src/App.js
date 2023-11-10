@@ -14,6 +14,8 @@ const {
   createPatient,
   getPatients,
   updatePatient,
+  incrementQuantity,
+  decrementQuantity,
   deletePatient,
 } = require("./Routes/patientController");
 
@@ -99,6 +101,8 @@ app.use(cors());
 app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
 app.put("/updatePatient", updatePatient);
+app.put("/incrementQuantity", incrementQuantity);
+app.put('/decrementQuantity', decrementQuantity);
 app.delete("/deletePatient", deletePatient);
 
 // app.get("/getPatient", requireAuth, getPatients);

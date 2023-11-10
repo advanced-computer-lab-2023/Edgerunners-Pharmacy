@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "../UI/Logo";
 import GetMedicine from "../Pages/getMedicine";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { Card } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 export default function MedTableAllCopy() {
   const [name, setName] = useState();
   const [medicinaluse, setMedicinalUse] = useState();
+  const [forceEffect, setForceEffect] = useState(false);
+
   let Medicine = GetMedicine({
     Name: name,
     MedicinalUse: medicinaluse,
@@ -19,6 +22,20 @@ export default function MedTableAllCopy() {
       Name: name,
       MedicinalUse: medicinaluse,
     });
+  };
+
+  const handleaddcart = async (name, price) => {
+    try {
+      axios.put("http://localhost:3001/updatePatient", {
+        medicinename: name,
+        quantity: 1,
+        price: price,
+        username: "abdo", // Replace with the actual username
+      });
+      console.log("Update request sent successfully");
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
   };
 
   if (Medicine) {
@@ -71,16 +88,9 @@ export default function MedTableAllCopy() {
                     </div>
                   </div>
                   <div className="space-x-3 mt-11">
-                    <button className="justify-end text-sky-600 outline w-40 h-9 rounded-md mb-2 mt-0.5 ">
+                    <button className="justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 " onClick={() => handleaddcart(p.Name, p.Price)}>
                       <FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" />
                       Add to cart
-                    </button>
-                    <button className="justify-end text-red-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ">
-                      -
-                    </button>
-                    <label className="text-grey"> 2 </label>
-                    <button className="justify-end text-sky-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ">
-                      +
                     </button>
                   </div>
                 </div>

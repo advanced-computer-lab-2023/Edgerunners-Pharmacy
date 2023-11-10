@@ -8,22 +8,22 @@ const jwt = require('jsonwebtoken');
 const createPatient = async (req, res) => {
   //add a new Patient to the database with
   //Name, Email and Age
-  if(req.body.EmergencyContact){
+  if (req.body.EmergencyContact) {
     await Patient.create({
-    Username: req.body.Username,
-    Password: await hashPassword(req.body.Password),
-    Gender: req.body.Gender,
-    Name: req.body.Name,
-    Email: req.body.Email,
-    phoneNumber: req.body.phoneNumber,
-    DOB: req.body.DOB,
-    EmergencyContact: {
-      FullnameEC: req.body.EmergencyContact.FullnameEC,
-      phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
-      Relations : req.body.EmergencyContact.Relations
-    },
-  });
-  } else{
+      Username: req.body.Username,
+      Password: await hashPassword(req.body.Password),
+      Gender: req.body.Gender,
+      Name: req.body.Name,
+      Email: req.body.Email,
+      phoneNumber: req.body.phoneNumber,
+      DOB: req.body.DOB,
+      EmergencyContact: {
+        FullnameEC: req.body.EmergencyContact.FullnameEC,
+        phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
+        Relations: req.body.EmergencyContact.Relations
+      },
+    });
+  } else {
     await Patient.create({
       Username: req.body.Username,
       Password: await hashPassword(req.body.Password),
@@ -34,94 +34,110 @@ const createPatient = async (req, res) => {
       DOB: req.body.DOB,
     });
   }
-  
+
   res.status(200).send("Created successfully");
 };
-
-const createPatient1 = async (req, res) => {
-  const Password = req.body.Password;
-  try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(Password, salt);
-    if(req.body.EmergencyContact){
-      const user = await Patient.create({
-      Username: req.body.Username,
-      Password: hashedPassword,
-      Gender: req.body.Gender,
-      Name: req.body.Name,
-      Email: req.body.Email,
-      phoneNumber: req.body.phoneNumber,
-      DOB: req.body.DOB,
-      EmergencyContact: {
-        FullnameEC: req.body.EmergencyContact.FullnameEC,
-        phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
-        Relations : req.body.EmergencyContact.Relations
-      },
-    });
-    } else{
-      const user = await Patient.create({
-        Username: req.body.Username,
-        Password: hashedPassword,
-        Gender: req.body.Gender,
-        Name: req.body.Name,
-        Email: req.body.Email,
-        phoneNumber: req.body.phoneNumber,
-        DOB: req.body.DOB,
-      });
-    }
-    const token = createToken(user.Username);
-
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).send("Created successfully");
-  } catch (e) {
-    res.status(400).send("Error could not create Patient !!");
-  }
-};
-
-const loginPatient = async (req, res) => {
-  const { Username, Password } = req.body;
-  try {
-    // Check if the user with the given username exists in the database
-    const user = await Patient.findOne({ Username });
-
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    // Compare the provided password with the hashed password in the database
-    const passwordMatch = await bcrypt.compare(Password, user.Password);
-
-    if (!passwordMatch) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    // If credentials are valid, create and send a new token
-    const token = createToken(user.Username);
-
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-const logoutPatient = async (req, res) => {
-  res.clearCookie('jwt');
-  res.status(200).json({ message: 'Logged out successfully' });
-}
 
 const getPatients = async (req, res) => {
   try {
     const Patients = await Patient.find();
-    res.status(200).send( Patients );
+    res.status(200).send(Patients);
   } catch (e) {
     res.status(400).send("Error could not get Patients !!");
   }
 };
 
 const updatePatient = async (req, res) => {
-  //update a Patient in the database
+  try {
+    const orderName = req.body.medicinename;
+    const orderQuantity = req.body.quantity;
+    const orderPrice = req.body.price;
+    const username = "abdo"; // Replace with the actual username
+    const user = await Patient.findOne({ Username: username });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    let cart = user.Cart || [];
+    const existingCartItemIndex = cart.findIndex(item => item.medicineName === orderName);
+    if (existingCartItemIndex !== -1) {
+      // If the medicine is already in the cart, update the quantity and price
+      cart[existingCartItemIndex].count += orderQuantity;
+      cart[existingCartItemIndex].price = orderPrice * cart[existingCartItemIndex].count;
+    } else {
+      // If the medicine is not in the cart, add a new entry
+      cart.push({ medicineName: orderName, count: orderQuantity, price: orderPrice * orderQuantity });
+    }
+    await Patient.updateOne({ Username: username }, { $set: { Cart: cart } });
+    res.status(200).send("Updated cart successfully!");
+  } catch (e) {
+    console.log(e);
+    res.status(400).send("Error could not update Patient!!");
+  }
 };
+
+const incrementQuantity = async (req, res) => {
+  try {
+    const orderName = req.body.medicinename;
+    const username = "abdo";
+    const user = await Patient.findOne({ Username: username });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    let cart = user.Cart || [];
+    const existingMedicineIndex = cart.findIndex(item => item.medicineName === orderName);
+
+    if (existingMedicineIndex !== -1) {
+      cart[existingMedicineIndex].count += 1;
+      cart[existingCartItemIndex].price = orderPrice * cart[existingCartItemIndex].count;
+    } else {
+      return res.status(404).send("Medicine not found in the cart");
+    }
+
+    await Patient.updateOne({ Username: username }, { $set: { Cart: cart } });
+    res.status(200).send("Incremented quantity successfully!");
+  } catch (e) {
+    console.log(e);
+    res.status(400).send("Error could not increment quantity");
+  }
+};
+
+const decrementQuantity = async (req, res) => {
+  try {
+    const orderName = req.body.medicinename;
+    const username = req.body.username; // Assuming you pass the username in the request
+
+    const user = await Patient.findOne({ Username: username });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    let cart = user.Cart || [];
+    const existingMedicineIndex = cart.findIndex(item => item.medicineName === orderName);
+
+    if (existingMedicineIndex !== -1) {
+      // If the medicine is found in the cart
+      if (cart[existingMedicineIndex].count > 1) {
+        // If the count is greater than 1, decrement the quantity
+        cart[existingMedicineIndex].count -= 1;
+        cart[existingCartItemIndex].price = orderPrice * cart[existingCartItemIndex].count;
+      } else {
+        // If the count is 1, remove the medicine from the cart
+        cart.splice(existingMedicineIndex, 1);
+      }
+    } else {
+      // If the medicine is not in the cart, you may want to handle this case
+      return res.status(404).send("Medicine not found in the cart");
+    }
+
+    await Patient.updateOne({ Username: username }, { $set: { Cart: cart } });
+    res.status(200).send("Decremented quantity successfully!");
+  } catch (e) {
+    console.log(e);
+    res.status(400).send("Error could not decrement quantity");
+  }
+};
+
 
 const deletePatient = async (req, res) => {
   //delete a Patient from the database
@@ -137,5 +153,5 @@ const deletePatient = async (req, res) => {
   }
 };
 
-module.exports = { createPatient, getPatients, updatePatient, deletePatient };
+module.exports = { createPatient, getPatients, updatePatient, incrementQuantity, decrementQuantity, deletePatient };
 // module.exports = { createPatient1, loginPatient, logoutPatient, getPatients, updatePatient, deletePatient };
