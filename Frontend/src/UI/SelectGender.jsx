@@ -9,12 +9,12 @@ const SelectGender = () => {
   };
 
   const radioOptions = [
-    { id: 1, label: 'female' },{ id: 2, label: 'Male' },
+    { id: 1, label: 'female' }, { id: 2, label: 'Male' },
   ];
 
   return (
     <div className="container mx-auto  mt-4 flex  mr-5">
-      
+
       {radioOptions.map((option) => (
         <RadioButton
           key={option.id}
@@ -29,3 +29,13 @@ const SelectGender = () => {
 };
 
 export default SelectGender;
+
+
+// import React from 'react';
+// const SelectGender = (props) =>
+//   <select {...props} class="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+//     <option>Select gender</option>
+//     <option value="Male">Male</option>
+//     <option value="Female">Female</option>
+//   </select>
+// export default SelectGender;

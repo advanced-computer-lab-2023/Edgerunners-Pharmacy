@@ -14,7 +14,13 @@ const SidebarPharm = () => {
       <a className="menu-item">
         Change my password
       </a>
-      <a className="menu-item" href="/LoginAll">
+      <a className="menu-item">
+        onClick={() => {
+          sessionStorage.removeItem("Username");
+          sessionStorage.removeItem("type");
+          sessionStorage.removeItem("token");
+          window.location.replace("/");
+        }}
         Logout
       </a>
     </Menu>

@@ -18,6 +18,7 @@
     "autoprefixer": "^10.4.16",
     "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
+    "emailjs-com": "^3.2.0",
     "material-react-table": "^1.15.0",
     "mdb-react-ui-kit": "^6.3.0",
     "postcss": "^8.4.31",
