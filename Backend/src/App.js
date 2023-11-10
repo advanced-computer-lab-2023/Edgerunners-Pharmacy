@@ -14,8 +14,11 @@ const {
   createPatient,
   getPatients,
   updatePatient,
+  incrementQuantity,
+  decrementQuantity,
   deletePatient,
   ResetPass,
+  getCart,
 } = require("./Routes/patientController");
 
 const {
@@ -103,6 +106,9 @@ app.put("/ResetPass", ResetPass);
 app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
 app.put("/updatePatient", updatePatient);
+app.put("/incrementQuantity", incrementQuantity);
+app.get("/getcart", getCart);
+app.put('/decrementQuantity', decrementQuantity);
 app.delete("/deletePatient", deletePatient);
 
 // app.get("/getPatient", requireAuth, getPatients);
