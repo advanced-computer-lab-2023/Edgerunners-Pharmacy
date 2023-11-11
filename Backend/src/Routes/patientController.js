@@ -44,9 +44,9 @@ const getCart = async (req, res) => {
   //console.log(req.body);
 
   const user = await Patient.findOne({ Username: req.query.username });
-  
+
   let cart = [];
-  if(user.Cart){
+  if (user.Cart) {
     cart = user.Cart;
     let total = 0;
     for (let i = 0; i < cart.length; i++) {
@@ -54,7 +54,7 @@ const getCart = async (req, res) => {
     }
   }
   console.log(user.Cart);
-  res.status(200).send({cart});
+  res.status(200).send({ cart });
 }
 
 const getPatients = async (req, res) => {
@@ -188,7 +188,7 @@ const removeFromCart = async (req, res) => {
 
 const updateAddress = async (req, res) => {
   try {
-    const username = "abdo"; // Assuming you pass the username in the request
+    const username = req.body.username; // Assuming you pass the username in the request
     const state = req.body.state;
     const city = req.body.city;
     const street = req.body.street;
@@ -207,10 +207,15 @@ const updateAddress = async (req, res) => {
   }
 }
 
-const getAddress = async (req ,res) => {
-  const username = 'abdo';
+const getAddress = async (req, res) => {
+  const username = req.query.username;
   const user = await Patient.findOne({ Username: username });
-  const address = user.Address;
+  //const address = user.Address;
+  console.log(user);
+  let address = [];
+  if (user.Address) {
+    address = user.Address;
+  }
   res.status(200).send(address);
 }
 
@@ -227,6 +232,23 @@ const deletePatient = async (req, res) => {
     res.status(400).send("Error could not delete patient !!");
   }
 };
+
+const addOrder = async (req, res) => {
+  try {
+
+    res.status(200).send("Added order successfully!");
+  } catch (e) {
+    res.status(400).send("Error could not add order !!");
+  }
+}
+const changeOrderStatus = async (req, res) => {
+  try {
+
+    res.status(200).send("Order status changed successfully!");
+  } catch (e) {
+    res.status(400).send("Error could not change order status !!");
+  }
+}
 
 const ResetPass = async (req, res) => {
   const newPassword = req.query.Password;

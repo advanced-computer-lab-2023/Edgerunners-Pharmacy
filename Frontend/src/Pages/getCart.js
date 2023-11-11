@@ -8,19 +8,19 @@ function GetCart({ medicineName, count, price }) {
         async function fetchData() {
             try {
                 let username = sessionStorage.getItem("Username");
-                
+
                 const res = await axios.get("http://localhost:3001/getcart", {
-                    params : {username}
+                    params: { username }
                 }).then(res => {
                     console.log(res);
-                if (Array.isArray(res.data.cart)) {
-                    setCart(res.data.cart);
-                    //onUpdateCart(res.data); // Notify the parent component about the updated cart
-                } else {
-                    console.error('Invalid data format received:', res.data.cart);
-                }
+                    if (Array.isArray(res.data.cart)) {
+                        setCart(res.data.cart);
+                        //onUpdateCart(res.data); // Notify the parent component about the updated cart
+                    } else {
+                        console.error('Invalid data format received:', res.data.cart);
+                    }
                 });
-                
+
             } catch (error) {
                 console.error('Error fetching cart data:', error);
             }
