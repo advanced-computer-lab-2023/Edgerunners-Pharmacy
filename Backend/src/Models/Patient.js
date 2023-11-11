@@ -63,6 +63,10 @@ const patientSchemaP = new Schema(
     Address: {
       type: Array,
       required: false
+    },
+    WalletValue: {
+      type: Number,
+      required: false
     }
   },
   { timestamps: true }

@@ -104,6 +104,24 @@ function Cart() {
     }
   };
   const handlePayment = async () => {
+    let pay = null;
+    if (paymentMethod === "payWithVisa") {
+      pay = "Visa";
+    } else if (paymentMethod === "payWithWallet") {
+      pay = "Wallet";
+    } else {
+      pay = "Cash on delivery";
+    }
+    try {
+      await axios.put("http://localhost:3001/addOrder", {
+        orderaddress: selectedOption,
+        paymentmethod: pay,
+        username: sessionStorage.getItem("Username"), // Replace with the actual username
+      });
+      console.log("Order request sent successfully");
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
     try {
       if (paymentMethod === "payWithVisa") {
         let user = sessionStorage.getItem("Username")

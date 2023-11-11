@@ -47,23 +47,22 @@ const OrderDetails = () => {
 
         fetchData();
     }, []);
-    //will be added back when we add backend
-    //   const handleCancel = async (username) => {
-    //     try {
-    //       await axios.put('http://localhost:3001/updateOrder', {
-    //         id : id,
-    //         status: 'Cancelled',
-    //       });
+      const handleCancel = async (id) => {
+        try {
+          await axios.put('http://localhost:3001/cancelOrder', {
+           username: sessionStorage.getItem("Username"),
+            orderid : id,
+          });
 
     //       const updatedOrders = orders.map((order) =>
     //         order.id === id ? { ...order, status: 'Cancelled' } : order
     //       );
 
     //       setOrders(updatedOrders);
-    //     } catch (error) {
-    //       console.error('Error updating data:', error);
-    //     }
-    //   };
+        } catch (error) {
+          console.error('Error updating data:', error);
+        }
+      };
 
     return (
         <div style={styles.tableContainer}>
@@ -93,8 +92,7 @@ const OrderDetails = () => {
                             <td style={styles.tableCell}>
                                 <button
                                     style={styles.cancelButton}
-                                    //will be added back when we add backend
-                                    //onClick={() => handleCancel(order.id)}
+                                    onClick={() => handleCancel(order.id)}
                                 >
                                     Cancel Order
                                 </button>

@@ -23,6 +23,9 @@ const {
   deletePatient,
   ResetPass,
   getCart,
+  getOrder,
+  addOrder,
+  cancelOrder,
 } = require("./Routes/patientController");
 
 const {
@@ -97,13 +100,6 @@ app.use(cors());
 //   }),
 // );
 
-// app.post('/loginAdmin', loginAdmin)
-// app.post('/loginPharm', loginPharm)
-// app.post('/loginPatient', loginPatient)
-// app.get('/logoutAdmin', logoutAdmin);
-// app.get('/logoutPharm', logoutPharm);
-// app.get('/logoutPatient', logoutPatient);
-
 app.post("/signin", signin);
 app.put("/ResetPass", ResetPass);
 
@@ -117,6 +113,9 @@ app.put('/decrementQuantity', decrementQuantity);
 app.put('/updateAddress', updateAddress);
 app.get('/getAddress', getAddress);
 app.delete("/deletePatient", deletePatient);
+app.get("/getOrder", getOrder);
+app.put("/addOrder", addOrder);
+app.put("/cancelOrder", cancelOrder);
 
 // app.get("/getPatient", requireAuth, getPatients);
 // app.delete("/deletePatient", requireAuth, deletePatient);
