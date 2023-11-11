@@ -235,7 +235,7 @@ const deletePatient = async (req, res) => {
   }
 };
 
-const getOrder = async (req,res) => {
+const getOrder = async (req, res) => {
   const username = req.query.username;
   const user = await Patient.findOne({ Username: username });
   console.log(user);
@@ -259,8 +259,8 @@ const addOrder = async (req, res) => {
     }
     let order = user.Orders || [];
     let orderid = order.length;
-    order.push({ 
-      orderid, cartItems: [...user.Cart], orderAddress, paymentMethod, orderStatus 
+    order.push({
+      orderid, cartItems: [...user.Cart], orderAddress, paymentMethod, orderStatus
     });
     user.Cart = [];
     await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: [] } });
@@ -279,10 +279,10 @@ const cancelOrder = async (req, res) => {
     }
     let order = user.Orders || [];
     const existingOrderIndex = order.findIndex(item => item.orderid === orderid);
-    if(existingOrderIndex !== -1){
+    if (existingOrderIndex !== -1) {
       order[existingOrderIndex].orderStatus = "Cancelled";
       await Patient.updateOne({ Username: username }, { $set: { Orders: order } });
-    } else{
+    } else {
       res.status(400).send("Order not found");
     }
     res.status(200).send("Order status changed successfully!");
@@ -290,6 +290,24 @@ const cancelOrder = async (req, res) => {
     res.status(400).send("Error could not change order status !!");
   }
 }
+
+const popOrder = async (req, res) => {
+  try {
+    const username = req.body.username;
+    const user = await Patient.findOne({ Username: username });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    let order = user.Orders || [];
+    const existingOrderIndex = order.length-1;
+    const cart = order[existingOrderIndex].cartItems;
+    order.pop();
+    await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: cart } });
+    res.status(200).send("Order status changed successfully!");
+  } catch (e) {
+    res.status(400).send("Error could not change order status !!");
+  }
+};
 
 const ResetPass = async (req, res) => {
   const newPassword = req.query.Password;
@@ -301,4 +319,4 @@ const ResetPass = async (req, res) => {
   res.status(200).send("Password updated");
 };
 
-module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, updateAddress, getAddress, deletePatient, getOrder, addOrder, cancelOrder, ResetPass };
+module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, updateAddress, getAddress, deletePatient, getOrder, addOrder, cancelOrder, popOrder, ResetPass };

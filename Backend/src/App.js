@@ -26,6 +26,7 @@ const {
   getOrder,
   addOrder,
   cancelOrder,
+  popOrder,
 } = require("./Routes/patientController");
 
 const {
@@ -116,6 +117,7 @@ app.delete("/deletePatient", deletePatient);
 app.get("/getOrder", getOrder);
 app.put("/addOrder", addOrder);
 app.put("/cancelOrder", cancelOrder);
+app.put("/popOrder", popOrder);
 
 // app.get("/getPatient", requireAuth, getPatients);
 // app.delete("/deletePatient", requireAuth, deletePatient);

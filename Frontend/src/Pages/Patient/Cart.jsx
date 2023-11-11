@@ -95,7 +95,7 @@ function Cart() {
     try {
       await axios.put("http://localhost:3001/removeFromCart", {
         medicinename: name,
-        username: sessionStorage.getItem("Username"), // Replace with the actual username
+        username: sessionStorage.getItem("Username"),
       });
       setCount(0);
       console.log("Update request sent successfully");
@@ -104,6 +104,24 @@ function Cart() {
     }
   };
   const handlePayment = async () => {
+    try {
+      if (paymentMethod === "payWithVisa") {
+        let user = sessionStorage.getItem("Username")
+        await axios.post("http://localhost:3001/create-checkout-session", { Username: user }).then((res) => {
+          window.location = res.data.url
+        }).catch((err) => console.log(err.message));
+      } else if (paymentMethod === "payWithWallet") {
+        window.location = "/PaymentSuccess"
+      } else {
+        window.location = "/PaymentCashSuccess"
+      }
+      handleOrder();
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  }
+
+  const handleOrder = async () => {
     let pay = null;
     if (paymentMethod === "payWithVisa") {
       pay = "Visa";
@@ -116,23 +134,9 @@ function Cart() {
       await axios.put("http://localhost:3001/addOrder", {
         orderaddress: selectedOption,
         paymentmethod: pay,
-        username: sessionStorage.getItem("Username"), // Replace with the actual username
+        username: sessionStorage.getItem("Username"),
       });
       console.log("Order request sent successfully");
-    } catch (error) {
-      console.error("Error updating data:", error);
-    }
-    try {
-      if (paymentMethod === "payWithVisa") {
-        let user = sessionStorage.getItem("Username")
-        await axios.post("http://localhost:3001/create-checkout-session", { Username: user }).then((res) => {
-          window.location = res.data.url
-        }).catch((err) => console.log(err.message));
-      } else if (paymentMethod === "payWithWallet") {
-        window.location = "/ViewMedPatient"
-      } else {
-        window.location = "/ViewMedPatient"
-      }
     } catch (error) {
       console.error("Error updating data:", error);
     }
