@@ -22,7 +22,7 @@ function AddDeliveryAddress() {
                 city: cityValue,
                 street: streetValue,
                 apartment: apartmentValue,
-                username: "abdo"
+                username: sessionStorage.getItem("Username"),
             });
             console.log("Update request sent successfully");
         } catch (error) {

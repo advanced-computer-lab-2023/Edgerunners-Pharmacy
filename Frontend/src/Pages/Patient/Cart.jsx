@@ -63,7 +63,7 @@ function Cart() {
       await axios.put("http://localhost:3001/incrementQuantity", {
         medicinename: name,
         price: price,
-        username:  sessionStorage.getItem("Username"), // Replace with the actual username
+        username: sessionStorage.getItem("Username"), // Replace with the actual username
       });
       console.log("Update request sent successfully");
       setCount(count + 1);
@@ -103,15 +103,19 @@ function Cart() {
       console.error("Error updating data:", error);
     }
   };
-  const handlePayment = async () =>{
-    try{
-      if(paymentMethod === "payWithVisa" ){
+  const handlePayment = async () => {
+    try {
+      if (paymentMethod === "payWithVisa") {
         let user = sessionStorage.getItem("Username")
-        await axios.post("http://localhost:3001/create-checkout-session" , {Username : user}).then((res)=>{
+        await axios.post("http://localhost:3001/create-checkout-session", { Username: user }).then((res) => {
           window.location = res.data.url
         }).catch((err) => console.log(err.message));
+      } else if (paymentMethod === "payWithWallet") {
+        window.location = "/ViewMedPatient"
+      } else {
+        window.location = "/ViewMedPatient"
       }
-    }catch(error){
+    } catch (error) {
       console.error("Error updating data:", error);
     }
   }
