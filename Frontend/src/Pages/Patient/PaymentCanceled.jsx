@@ -1,8 +1,43 @@
 import React from 'react'
 import Logo from "../../UI/Logo";
 import Sidebar from "../../Components/SidebarPatient";
+import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function PaymentCanceled() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                let username = sessionStorage.getItem("Username");
+
+                const res = await axios.put("http://localhost:3001/popOrder", { username });
+
+                // Assuming you want to handle the response data
+                console.log('Data fetched successfully:', res.data);
+
+            } catch (error) {
+                // Log the error details
+                console.error('Error fetching cart data:', error);
+
+                // If you want to handle the 404 error specifically
+                if (error.response && error.response.status === 404) {
+                    console.error('User not found');
+                    // Redirect to an error page or handle appropriately
+                }
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    const goToPaymentCanceled = () => {
+        navigate('/PaymentCanceled');
+    };
+
+
     return (
         <div>
             <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />

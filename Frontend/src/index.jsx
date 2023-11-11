@@ -25,6 +25,7 @@ import Cart from './Pages/Patient/Cart';
 import ViewOrders from './Pages/Patient/ViewOrders';
 import AddDeliveryAddress from './Pages/Patient/AddDeliveryAddress';
 import PaymentSuccess from './Pages/Patient/PaymentSuccess';
+import PaymentCashSuccess from './Pages/Patient/PaymentCashSuccess';
 import PaymentCanceled from './Pages/Patient/PaymentCanceled';
 import ResetPass from './Pages/Login/ResetPass';
 import LoginPage from './Pages/Login/LoginPage';
@@ -56,7 +57,9 @@ root.render(
         <Route path="/ViewOrders" element={<ViewOrders />} />
         <Route path="/Address" element={<AddDeliveryAddress />} />
         <Route path="/PaymentSuccess" element={<PaymentSuccess />} />
-        <Route path="/PaymentCanceled" element={<PaymentCanceled />} />
+        <Route path="/PaymentCanceled" element={<PaymentCanceled />} Component={PaymentCanceled} />
+        <Route path="/PaymentCashSuccess" element={<PaymentCashSuccess />} />
+          
         
         <Route path="/LoginAll" element={<LoginAll />} />
         <Route path="/LoginPage" element={<LoginPage />} />
