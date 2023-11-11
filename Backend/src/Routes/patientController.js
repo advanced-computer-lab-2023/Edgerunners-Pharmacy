@@ -8,6 +8,7 @@ const hashPassword = async (password) => {
 };
 
 const createPatient = async (req, res) => {
+  const wallet = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
   if (req.body.EmergencyContact) {
     await Patient.create({
       Username: req.body.Username,
@@ -17,6 +18,7 @@ const createPatient = async (req, res) => {
       Email: req.body.Email,
       phoneNumber: req.body.phoneNumber,
       DOB: req.body.DOB,
+      WalletValue: wallet,
       EmergencyContact: {
         FullnameEC: req.body.EmergencyContact.FullnameEC,
         phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
@@ -32,6 +34,7 @@ const createPatient = async (req, res) => {
       Email: req.body.Email,
       phoneNumber: req.body.phoneNumber,
       DOB: req.body.DOB,
+      WalletValue: wallet,
     });
   }
 
@@ -42,7 +45,6 @@ const getCart = async (req, res) => {
   //const username = "abdo";
   //console.log(req.query.username);
   //console.log(req.body);
-
   const user = await Patient.findOne({ Username: req.query.username });
 
   let cart = [];
@@ -233,17 +235,53 @@ const deletePatient = async (req, res) => {
   }
 };
 
+const getOrder = async (req,res) => {
+  const username = req.query.username;
+  const user = await Patient.findOne({ Username: username });
+  let orders = [];
+  if (user.Orders) {
+    orders = user.Orders;
+  }
+  res.status(200).send(orders);
+}
 const addOrder = async (req, res) => {
   try {
-
+    const orderAddress = req.body.orderaddress;
+    const paymentMethod = req.body.paymentmethod;
+    const orderStatus = "Accepted";
+    const username = req.body.username; // Replace with the actual username
+    const user = await Patient.findOne({ Username: username });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    let order = user.Orders || [];
+    let orderid = order.length;
+    order.push({ 
+      orderid, cartItems: [...user.Cart], orderAddress, paymentMethod, orderStatus 
+    });
+    user.Cart = [];
+    await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: [] } });
     res.status(200).send("Added order successfully!");
   } catch (e) {
     res.status(400).send("Error could not add order !!");
   }
 }
-const changeOrderStatus = async (req, res) => {
+const cancelOrder = async (req, res) => {
   try {
-
+    const username = req.body.username;
+    const orderid = req.body.orderid;
+    const user = await Patient.findOne({ Username: username });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    let order = user.Orders || [];
+    const existingOrderIndex = order.findIndex(item => item.orderid === orderid);
+    if(existingOrderIndex !== -1){
+      order[existingOrderIndex].orderStatus = "Cancelled";
+      await Patient.updateOne({ Username: username }, { $set: { Orders: order } });
+    } else{
+      res.status(400).send("Order not found");
+    }
     res.status(200).send("Order status changed successfully!");
   } catch (e) {
     res.status(400).send("Error could not change order status !!");
@@ -260,4 +298,4 @@ const ResetPass = async (req, res) => {
   res.status(200).send("Password updated");
 };
 
-module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, updateAddress, getAddress, deletePatient, ResetPass };
+module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, updateAddress, getAddress, deletePatient, getOrder, addOrder, cancelOrder, ResetPass };
