@@ -34,7 +34,9 @@ const styles = {
 
 const OrderDetails = () => {
     const [orders, setOrders] = useState([]);
-
+    let address = null;
+    //incomplete
+    
     useEffect(() => {
         async function fetchData() {
             try {
@@ -47,22 +49,22 @@ const OrderDetails = () => {
 
         fetchData();
     }, []);
-      const handleCancel = async (id) => {
+    const handleCancel = async (id) => {
         try {
-          await axios.put('http://localhost:3001/cancelOrder', {
-           username: sessionStorage.getItem("Username"),
-            orderid : id,
-          });
+            await axios.put('http://localhost:3001/cancelOrder', {
+                username: sessionStorage.getItem("Username"),
+                orderid: id,
+            });
 
-    //       const updatedOrders = orders.map((order) =>
-    //         order.id === id ? { ...order, status: 'Cancelled' } : order
-    //       );
+            //       const updatedOrders = orders.map((order) =>
+            //         order.id === id ? { ...order, status: 'Cancelled' } : order
+            //       );
 
-    //       setOrders(updatedOrders);
+            //       setOrders(updatedOrders);
         } catch (error) {
-          console.error('Error updating data:', error);
+            console.error('Error updating data:', error);
         }
-      };
+    };
 
     return (
         <div style={styles.tableContainer}>
@@ -70,7 +72,7 @@ const OrderDetails = () => {
                 <thead>
                     <tr style={styles.tableHeader}>
                         <th style={styles.tableCell}>Order Number</th>
-                        <th style={styles.tableCell}>Cart Items</th>
+                        {/* <th style={styles.tableCell}>Cart Items</th> */}
                         <th style={styles.tableCell}>Delivery Address</th>
                         <th style={styles.tableCell}>Payment Method</th>
                         <th style={styles.tableCell}>Order Status</th>
@@ -85,8 +87,12 @@ const OrderDetails = () => {
                             style={index % 2 === 0 ? styles.evenRow : {}}
                         >
                             <td style={styles.tableCell}>{order.id}</td>
-                            <td style={styles.tableCell}>{order.items}</td>
-                            <td style={styles.tableCell}>{order.address}</td>
+                            {/* <td style={styles.tableCell}>{order.items}</td> */}
+                            <td style={styles.tableCell}>
+                                {console.log('order.address:', order.address)}
+                                {order.address ? order.address.join(', ') : 'N/A'}
+                            </td>
+
                             <td style={styles.tableCell}>{order.payment}</td>
                             <td style={styles.tableCell}>{order.status}</td>
                             <td style={styles.tableCell}>

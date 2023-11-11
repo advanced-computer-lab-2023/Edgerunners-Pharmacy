@@ -238,12 +238,15 @@ const deletePatient = async (req, res) => {
 const getOrder = async (req,res) => {
   const username = req.query.username;
   const user = await Patient.findOne({ Username: username });
+  console.log(user);
   let orders = [];
   if (user.Orders) {
     orders = user.Orders;
   }
+  // console.log(orders);
   res.status(200).send(orders);
 }
+
 const addOrder = async (req, res) => {
   try {
     const orderAddress = req.body.orderaddress;
