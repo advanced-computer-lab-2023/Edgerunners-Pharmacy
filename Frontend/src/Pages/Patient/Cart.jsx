@@ -17,10 +17,6 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const randomPointsInWallet = getRandomInt(0, 1000); // Generate a random value for "Points in wallet"
-const randomPointsTakenAway = getRandomInt(0, randomPointsInWallet); // Generate a random value for "Points taken away" (less than or equal to "Points in wallet")
-const pointsRemaining = randomPointsInWallet - randomPointsTakenAway; // Calculate "Points remaining"
-
 function Cart() {
   const [paymentMethod, setPaymentMethod] = useState('cashOnDelivery');
   const [medicineName] = useState();
@@ -32,6 +28,10 @@ function Cart() {
   const [street] = useState();
   const [apartment] = useState();
   const [selectedOption, setSelectedOption] = useState('');
+
+  const randomPointsInWallet = 0;
+  const pointsTakenAway = 0;
+  const pointsRemaining = 0;
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -57,6 +57,22 @@ function Cart() {
   });
 
   let total = CartData.reduce((acc, item) => acc + item.totalprice, 0);
+
+  const getWalletValue = async () => {
+    try {
+      let username = sessionStorage.getItem("Username");
+      const res = await axios.get("http://localhost:3001/getcart", {
+        params: { username }
+      }).then(res => {
+        randomPointsInWallet = res;
+      });
+      pointsTakenAway = total;
+      pointsRemaining = randomPointsInWallet - pointsTakenAway;
+
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  }
 
   const handleincrement = async (name, price) => {
     try {
@@ -111,7 +127,12 @@ function Cart() {
           window.location = res.data.url
         }).catch((err) => console.log(err.message));
       } else if (paymentMethod === "payWithWallet") {
-        window.location = "/PaymentSuccess"
+        getWalletValue();
+        if (pointsRemaining >= 0) {
+          window.location = "/PaymentSuccess"
+        } else {
+          window.location = "/PaymentCanceled"
+        }
       } else {
         window.location = "/PaymentCashSuccess"
       }
@@ -241,7 +262,7 @@ function Cart() {
               {paymentMethod === 'payWithWallet' && (
                 <div className="mt-4">
                   <label htmlFor="walletValue">Points in wallet: {randomPointsInWallet}</label><br />
-                  <label htmlFor="walletValue">Points taken away: {randomPointsTakenAway}</label><br />
+                  <label htmlFor="walletValue">Total: {pointsTakenAway}</label><br />
                   <label htmlFor="walletValue">Points remaining: {pointsRemaining}</label><br />
                 </div>
               )}

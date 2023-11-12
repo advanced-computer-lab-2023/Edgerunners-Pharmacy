@@ -12,43 +12,89 @@ function AddPharmacist(props) {
   const hourlyrateRef = useRef();
   const affiliationRef = useRef();
   const educationRef = useRef();
+  // const fileRef = useRef();
+  const idFileRef = useRef();
+  const degreeFileRef = useRef();
+  const licenseFileRef = useRef();
+
+  // const handleFileChange = (e) => {
+  const handleFileChange = (fileRef) => (e) => {
+    if (e.target.files) {
+      //You can perform additional checks or validations if needed
+      //console.log("Selected file:", e.target.files[0]);
+      console.log(`Selected file for ${fileRef.current.name}:`, e.target.files[0]);
+    }
+  }
+
+  const handleUpload = async () => {
+    // const file = fileRef.current.files[0];
+    const idFile = idFileRef.current.files[0];
+    const degreeFile = degreeFileRef.current.files[0];
+    const licenseFile = licenseFileRef.current.files[0];
+
+    // if (file) {
+    if (idFile && degreeFile && licenseFile) {
+      const formData = new FormData();
+      formData.append("Username", usernameRef.current.value);
+      formData.append("Name", nameRef.current.value);
+      formData.append("Email", emailRef.current.value);
+      formData.append("Password", passwordRef.current.value);
+      formData.append("DOB", dobRef.current.value);
+      formData.append("Hourlyrate", hourlyrateRef.current.value);
+      formData.append("Affiliation", affiliationRef.current.value);
+      formData.append("Education", educationRef.current.value);
+      // formData.append("file", file);
+      formData.append("idFile", idFile);
+      formData.append("degreeFile", degreeFile);
+      formData.append("licenseFile", licenseFile);
+
+      try {
+        const result = await axios.post("http://localhost:3001/uploadFile", formData);
+        console.log(result.data);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    }
+  };
 
   function submitHandeler(event) {
     event.preventDefault();
-    const usernameValue = usernameRef.current.value;
-    const nameValue = nameRef.current.value;
-    const emailValue = emailRef.current.value;
-    const passwordValue = passwordRef.current.value;
-    const dateofbirthValue = dobRef.current.value;
-    const hourlyrateValue = hourlyrateRef.current.value;
-    const affiliationValue = affiliationRef.current.value;
-    const educationValue = educationRef.current.value;
-    const AddPharmacist = {
-      Username: usernameValue,
-      Name: nameValue,
-      Email: emailValue,
-      Password: passwordValue,
-      DOB: dateofbirthValue,
-      Hourlyrate: hourlyrateValue,
-      Affiliation: affiliationValue,
-      Education: educationValue,
-    };
-    console.log(AddPharmacist);
-    axios
-      .post("http://localhost:3001/addPharmacist", AddPharmacist, {})
-      .then((res) => {
-        console.log("Pharmacist added");
-        usernameRef.current.value = "";
-        passwordRef.current.value = "";
-      })
-      .catch((error) => {
-        console.log("Unable to add Pharmacist");
-      });
+    // const usernameValue = usernameRef.current.value;
+    // const nameValue = nameRef.current.value;
+    // const emailValue = emailRef.current.value;
+    // const passwordValue = passwordRef.current.value;
+    // const dateofbirthValue = dobRef.current.value;
+    // const hourlyrateValue = hourlyrateRef.current.value;
+    // const affiliationValue = affiliationRef.current.value;
+    // const educationValue = educationRef.current.value;
+    // const fileValue = fileRef.current.value;
+    // const AddPharmacist = {
+    //   Username: usernameValue,
+    //   Name: nameValue,
+    //   Email: emailValue,
+    //   Password: passwordValue,
+    //   DOB: dateofbirthValue,
+    //   Hourlyrate: hourlyrateValue,
+    //   Affiliation: affiliationValue,
+    //   Education: educationValue,
+    // };
+    // console.log(AddPharmacist);
+    // axios
+    //   .post("http://localhost:3001/addPharmacist", AddPharmacist, {})
+    //   .then((res) => {
+    //     console.log("Pharmacist added");
+    //     usernameRef.current.value = "";
+    //     passwordRef.current.value = "";
+    //   })
+    //   .catch((error) => {
+    //     console.log("Unable to add Pharmacist");
+    //   });
+    handleUpload();
   }
 
   return (
     <div className="flex justify-center mt-10 pb-10">
-      <Card width="w-4/12" height="h-[50rem]">
+      <Card width="w-4/12" height="h-[65rem]">
         <div className="flex justify-center mt-6 mb-0">
           <div className="justify-center flex mt-6 mb-4">
             <a href="/">
@@ -165,7 +211,71 @@ function AddPharmacist(props) {
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                 />
               </div>
-              <button className="  text-sky-600  outline  w-40  h-9  rounded-md   mt-5 shadow  ml-20 ">
+              {/* <div>
+                <label className="text-xl font-bold font-SourceSansPro text-gray-500 ml-2">
+                  {" "}
+                  Upload File :{" "}
+                </label>
+                <br />
+                <input
+                  type="file"
+                  name="file"
+                  ref={fileRef}
+                  onChange={handleFileChange}
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                />
+              </div> */}
+
+              <div>
+                <label className="text-xl font-bold font-SourceSansPro text-gray-500 ml-2">
+                  {" "}
+                  ID Document :{" "}
+                </label>
+                <br />
+                <input
+                  type="file"
+                  name="idFile"
+                  ref={idFileRef}
+                  onChange={handleFileChange(idFileRef)}
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                  multiple
+                />
+              </div>
+              <div>
+                <label className="text-xl font-bold font-SourceSansPro text-gray-500 ml-2">
+                  {" "}
+                  Pharmacy Degree :{" "}
+                </label>
+                <br />
+                <input
+                  type="file"
+                  name="degreeFile"
+                  ref={degreeFileRef}
+                  onChange={handleFileChange(degreeFileRef)}
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                  multiple
+                />
+              </div>
+              <div>
+                <label className="text-xl font-bold font-SourceSansPro text-gray-500 ml-2">
+                  {" "}
+                  Working License :{" "}
+                </label>
+                <br />
+                <input
+                  type="file"
+                  name="licenseFile"
+                  ref={licenseFileRef}
+                  onChange={handleFileChange(licenseFileRef)}
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                  multiple
+                />
+              </div>
+
+              <button
+                className="text-sky-600 outline w-40 h-9 rounded-md mt-5 shadow ml-20"
+                type="submit"
+              >
                 {" "}
                 Submit Request{" "}
               </button>
