@@ -48,6 +48,11 @@ const pharmacistSchema = new Schema(
     ReqStatus: {
       type: String,
       enum: ["Pending", "Rejected" ,"Accepted"],
+    },
+
+    FileNames:{
+      type: Array,
+      required: false,
     }
   },
   { timestamps: true }

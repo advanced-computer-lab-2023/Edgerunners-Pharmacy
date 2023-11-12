@@ -8,7 +8,7 @@ const hashPassword = async (password) => {
 };
 
 const createPatient = async (req, res) => {
-  const wallet = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+  const wallet = 1000;
   if (req.body.EmergencyContact) {
     await Patient.create({
       Username: req.body.Username,
@@ -73,7 +73,7 @@ const updatePatient = async (req, res) => {
     const orderName = req.body.medicinename;
     const orderQuantity = req.body.quantity;
     const orderPrice = req.body.price;
-    const username = req.body.username; // Replace with the actual username
+    const username = req.body.username;
     const user = await Patient.findOne({ Username: username });
     if (!user) {
       return res.status(404).send("User not found");
@@ -254,6 +254,7 @@ const addOrder = async (req, res) => {
     const orderStatus = "Accepted";
     const username = req.body.username; // Replace with the actual username
     const user = await Patient.findOne({ Username: username });
+    const wallet = user.WalletValue;
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -262,8 +263,12 @@ const addOrder = async (req, res) => {
     order.push({
       orderid, cartItems: [...user.Cart], orderAddress, paymentMethod, orderStatus
     });
+    const totalpricepaid = user.Cart.totalprice;
+    if (wallet >= totalpricepaid) {
+      wallet = wallet - totalpricepaid;
+    }
     user.Cart = [];
-    await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: [] } });
+    await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: [], WalletValue: wallet } });
     res.status(200).send("Added order successfully!");
   } catch (e) {
     res.status(400).send("Error could not add order !!");
@@ -299,7 +304,7 @@ const popOrder = async (req, res) => {
       return res.status(404).send("User not found");
     }
     let order = user.Orders || [];
-    const existingOrderIndex = order.length-1;
+    const existingOrderIndex = order.length - 1;
     const cart = order[existingOrderIndex].cartItems;
     order.pop();
     await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: cart } });
@@ -308,6 +313,14 @@ const popOrder = async (req, res) => {
     res.status(400).send("Error could not change order status !!");
   }
 };
+
+const getWallet = async (req, res) => {
+  const username = req.query.username;
+  const user = await Patient.findOne({ Username: username });
+  console.log(user);
+  wallet = user.WalletValue;
+  res.status(200).json(wallet);
+}
 
 const ResetPass = async (req, res) => {
   const newPassword = req.query.Password;
@@ -319,4 +332,4 @@ const ResetPass = async (req, res) => {
   res.status(200).send("Password updated");
 };
 
-module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, updateAddress, getAddress, deletePatient, getOrder, addOrder, cancelOrder, popOrder, ResetPass };
+module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, updateAddress, getAddress, deletePatient, getOrder, addOrder, cancelOrder, popOrder, getWallet, ResetPass };

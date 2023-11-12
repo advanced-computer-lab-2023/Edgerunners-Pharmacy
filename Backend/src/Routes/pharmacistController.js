@@ -28,14 +28,49 @@ const createPharmacist = async (req, res) => {
   }
 };
 
-const createPharm1 = async (req, res) => {
-  const Password = req.body.Password;
+// const uploadFile = async (req, res) => {
+//   const filename = req.body.Username + "-" + ".pdf";
+//   const file = req.files.file;
+//   var filePath = "./uploadPharmacist/" + filename;
+//   file.mv(filePath);
+
+//   await Pharmacist.create({
+//     Username: req.body.Username,
+//     Password: await hashPassword(req.body.Password),
+//     DOB: req.body.DOB,
+//     Name: req.body.Name,
+//     Email: req.body.Email,
+//     Hourlyrate: req.body.Hourlyrate,
+//     Affiliation: req.body.Affiliation,
+//     Education: req.body.Education,
+//     ReqStatus: "Pending",
+//     FileNames: [filename],
+//   });
+//   res.status(200).send("Created successfully");
+// };
+
+const uploadFile = async (req, res) => {
   try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(Password, salt);
-    const user = await Pharmacist.create({
-      Username: req.body.Username,
-      Password: hashedPassword,
+    const username = req.body.Username;
+    const idFile = req.files.idFile;
+    const degreeFile = req.files.degreeFile;
+    const licenseFile = req.files.licenseFile;
+
+    const idFilename = `${username}-ID.pdf`;
+    const degreeFilename = `${username}-Degree.pdf`;
+    const licenseFilename = `${username}-License.pdf`;
+
+    const idFilePath = `./uploadPharmacist/${idFilename}`;
+    const degreeFilePath = `./uploadPharmacist/${degreeFilename}`;
+    const licenseFilePath = `./uploadPharmacist/${licenseFilename}`;
+
+    idFile.mv(idFilePath);
+    degreeFile.mv(degreeFilePath);
+    licenseFile.mv(licenseFilePath);
+
+    await Pharmacist.create({
+      Username: username,
+      Password: await hashPassword(req.body.Password),
       DOB: req.body.DOB,
       Name: req.body.Name,
       Email: req.body.Email,
@@ -43,47 +78,15 @@ const createPharm1 = async (req, res) => {
       Affiliation: req.body.Affiliation,
       Education: req.body.Education,
       ReqStatus: "Pending",
+      FileNames: [idFilename, degreeFilename, licenseFilename],
     });
-    const token = createToken(user.Username);
 
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).send("Created successfully");
-  } catch (e) {
-    res.status(400).send("Error could not create Patient !!");
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).send("Internal Server Error");
   }
 };
-
-const loginPharm = async (req, res) => {
-  const { Username, Password } = req.body;
-  try {
-    // Check if the user with the given username exists in the database
-    const user = await Pharmacist.findOne({ Username });
-
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    // Compare the provided password with the hashed password in the database
-    const passwordMatch = await bcrypt.compare(Password, user.Password);
-
-    if (!passwordMatch) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    // If credentials are valid, create and send a new token
-    const token = createToken(user.Username);
-
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-const logoutPharm = async (req, res) => {
-  res.clearCookie('jwt');
-  res.status(200).json({ message: 'Logged out successfully' });
-}
 
 const getPharmacists = async (req, res) => {
   try {
@@ -116,9 +119,9 @@ const updatePharmacist = async (req, res) => {
       );
     }
     if (req.body.ReqStatus) {
-      if(req.body.ReqStatus === "Rejected"){
+      if (req.body.ReqStatus === "Rejected") {
         await Pharmacist.deleteOne({ Username: req.body.Username });
-      }else{
+      } else {
         await Pharmacist.updateOne(
           { Username: user },
           { $set: { ReqStatus: req.body.ReqStatus } }
@@ -130,6 +133,7 @@ const updatePharmacist = async (req, res) => {
     res.status(400).send("Error could not update package !!");
   }
 };
+
 const findPharmacist = async (req, res) => {
   if (
     (await Pharmacist.findOne({ Username: req.body.Username }).length) === 0
@@ -142,6 +146,7 @@ const findPharmacist = async (req, res) => {
     res.status(200).send({ data: Pharmacist });
   }
 };
+
 const deletePharmacist = async (req, res) => {
   //delete a Doctor from the database
   try {
@@ -156,24 +161,35 @@ const deletePharmacist = async (req, res) => {
   }
 };
 
-// const uploadDocument = async (req, res) => {
-//   const username = req.body.Username;
-//   console.log(username);
-//   const filter = {};
-//   filter.Username = username;
-//   const pharm = await Pharmacist.findOne({ Username: username });
-//   console.log(pharm);
-//   const size = pharm.FileNames.length + 1;
-//   const filename = username + "-" + size + ".pdf";
-//   const file = req.files.file;
-//   var filePath = "./uploadPharmacist/" + filename;
-//   file.mv(filePath);
-//   await Pharmacist.updateOne(
-//     { Username: username },
-//     { $push: { FileNames: filename } },
-//   );
-//   res.status(200);
-// };
+const uploadDocument = async (req, res) => {
+  const username = req.body.Username;
+  console.log(username);
+  const filter = {};
+  filter.Username = username;
+  const pharm = await Pharmacist.findOne({ Username: username });
+  console.log(pharm);
+  const size = pharm.FileNames.length + 1;
+  const filename = username + "-" + size + ".pdf";
+  const file = req.files.file;
+  var filePath = "./uploadPharmacist/" + filename;
+  file.mv(filePath);
+  await Pharmacist.updateOne(
+    { Username: username },
+    { $push: { FileNames: filename } },
+  );
+  res.status(200);
+};
+
+const viewFiles = async (req, res) => {
+  try {
+    const filename = req.params.filename;
+    // Read the contents of the uploadDirectory
+    res.status(200).download("./uploadPatient/" + filename);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 module.exports = {
   createPharmacist,
@@ -181,6 +197,7 @@ module.exports = {
   updatePharmacist,
   deletePharmacist,
   findPharmacist,
+  uploadDocument,
+  viewFiles,
+  uploadFile,
 };
-
-// module.exports = { createPharm1, loginPharm, logoutPharm, getPharmacists, updatePharmacist, deletePharmacist, findPharmacist, uploadDocument };

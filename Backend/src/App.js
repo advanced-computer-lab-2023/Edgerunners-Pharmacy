@@ -2,11 +2,10 @@
 const express = require("express");
 var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cookieParser = require('cookie-parser');
-//var fileUpload = require("express-fileupload");
+var fileUpload = require("express-fileupload");
 mongoose.set("strictQuery", false);
 require("dotenv").config();
-const { requireAuth } = require('./Middleware/authMiddleware');
+// const { requireAuth } = require('./Middleware/authMiddleware');
 
 //const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57NmZ58DTz0O2ljqL8P42WLklVXPUZGPvmUD4hlxEkbit9nfpSPCWEB00UWnsTWUw');
@@ -26,6 +25,7 @@ const {
   getOrder,
   addOrder,
   cancelOrder,
+  getWallet,
   popOrder,
 } = require("./Routes/patientController");
 
@@ -48,7 +48,9 @@ const {
   getPharmacists,
   updatePharmacist,
   deletePharmacist,
-  //uploadDocument,
+  uploadDocument,
+  viewFiles,
+  uploadFile,
 } = require("./Routes/pharmacistController");
 
 const MongoURI =
@@ -93,13 +95,13 @@ const cors = require("cors");
 const { protectA, protectPH, protectP, signin } = require("./Models/auth");
 
 app.use(cors());
-// app.use(
-//   fileUpload({
-//     createParentPath: true,
-//     defCharset: "utf8",
-//     defParamCharset: "utf8",
-//   }),
-// );
+app.use(
+  fileUpload({
+    createParentPath: true,
+    defCharset: "utf8",
+    defParamCharset: "utf8",
+  }),
+);
 
 app.post("/signin", signin);
 app.put("/ResetPass", ResetPass);
@@ -117,16 +119,19 @@ app.delete("/deletePatient", deletePatient);
 app.get("/getOrder", getOrder);
 app.put("/addOrder", addOrder);
 app.put("/cancelOrder", cancelOrder);
+app.get("/getWallet", getWallet);
 app.put("/popOrder", popOrder);
 
 // app.get("/getPatient", requireAuth, getPatients);
 // app.delete("/deletePatient", requireAuth, deletePatient);
 
 app.post("/addPharmacist", createPharmacist);
+app.post("/uploadFile", uploadFile);
 app.get("/getPharmacist", getPharmacists);
 app.put("/updatePharmacist", updatePharmacist);
 app.delete("/deletePharmacist", deletePharmacist);
-//app.post("/uploadDocument", uploadDocument);
+app.post("/uploadDocument", uploadDocument);
+app.get("/viewFiles/:filename", viewFiles);
 
 // app.get("/getPharmacist", requireAuth, getPharmacists);
 // app.delete("/deletePharmacist", requireAuth, deletePharmacist);
@@ -166,12 +171,12 @@ app.post("/create-checkout-session", async (req, res) => {
     const products = await stripe.products.list({
       active: true,
     });
-    
+
     let myPrices = [];
-    for(let i =0; i< products.data.length ; i++ ){
-      for(let j = 0 ; j < storeItems.length; j++){
-        if(products.data[i].name === storeItems[j].medicineName){
-          myPrices.push({Price :products.data[i].default_price , quantity : storeItems[j].count});
+    for (let i = 0; i < products.data.length; i++) {
+      for (let j = 0; j < storeItems.length; j++) {
+        if (products.data[i].name === storeItems[j].medicineName) {
+          myPrices.push({ Price: products.data[i].default_price, quantity: storeItems[j].count });
           break;
         }
       }
@@ -179,7 +184,7 @@ app.post("/create-checkout-session", async (req, res) => {
     line_items = myPrices.map(item => {
       //const storeItem = storeItems.get(item.id)
       return {
-        price :item.Price,
+        price: item.Price,
         quantity: item.quantity
       }
     });
@@ -200,7 +205,7 @@ app.post("/create-checkout-session", async (req, res) => {
       //     quantity: item.quantity,
       //   }
       // })
-      line_items : line_items ,
+      line_items: line_items,
       success_url: 'http://localhost:3000/PaymentSuccess',
       cancel_url: 'http://localhost:3000/PaymentCanceled',
     })
