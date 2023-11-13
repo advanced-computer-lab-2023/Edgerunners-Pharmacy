@@ -19,8 +19,6 @@ import Patient from './Pages/Patient/Patient';
 import Pharm from './Pages/Pharmacist/Pharm';
 import MedTableAllCopy from './Components/MedTableAll copy';
 import LoginAll from './Pages/Login/LoginAll';
-import UseDocumentUpload from './Pages/Pharmacist/UseDocumentUpload';
-import UseImageUpload from './Pages/Pharmacist/UseImageUpload';
 import Cart from './Pages/Patient/Cart';
 import ViewOrders from './Pages/Patient/ViewOrders';
 import AddDeliveryAddress from './Pages/Patient/AddDeliveryAddress';
@@ -29,7 +27,6 @@ import PaymentCashSuccess from './Pages/Patient/PaymentCashSuccess';
 import PaymentCanceled from './Pages/Patient/PaymentCanceled';
 import ResetPass from './Pages/Login/ResetPass';
 import LoginPage from './Pages/Login/LoginPage';
-import Login from './Pages/Login/Login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -49,8 +46,6 @@ root.render(
         <Route path="/AddMedicine" element={<AddMedicine />} />
         <Route path="/EditMedicine" element={<EditMedicine />} />
         <Route path="/ViewMedPharm" element={<ViewMedPharmCopy />} />
-        <Route path="/UseDocumentUpload" element={<UseDocumentUpload />} />
-        <Route path="/UseImageUpload" element={<UseImageUpload />} />
         
         <Route path="/Patient" element={<Patient />} />
         <Route path="/ViewMedPatient" element={<ViewMedPatient />} />
@@ -63,7 +58,6 @@ root.render(
           
         
         <Route path="/LoginAll" element={<LoginAll />} />
-        <Route path="/Login" element={<Login />} />
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/AddPharmacist" element={<AddPharmacist />} />
         <Route path="/AddPatient" element={<AddPatient />} />

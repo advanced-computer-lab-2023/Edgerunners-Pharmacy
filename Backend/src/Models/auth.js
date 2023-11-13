@@ -134,11 +134,18 @@ const signin = async (req, res) => {
         if (user) {
             isValid = comparePassword(password, user.Password);
             if (isValid) {
-                res.status(200).send({
-                    token: createJWTPH(username),
-                    type: "Pharmacist",
-                    Username: username,
-                });
+                if (user.ReqStatus == "Accepted") {
+                    res.status(200).send({
+                        token: createJWTPH(username),
+                        type: "Pharmacist",
+                        Username: username,
+                    });
+                } else {
+                    res.status(200).send({
+                        type: "PendingPharmacist",
+                        Username: username,
+                    });
+                }
             } else {
                 res.status(401).send("invalid password");
             }

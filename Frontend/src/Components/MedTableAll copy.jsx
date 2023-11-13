@@ -25,20 +25,20 @@ export default function MedTableAllCopy() {
   };
 
   const handleaddcart = async (name, price) => {
-    try {
-      axios.put("http://localhost:3001/updatePatient", {
-        medicinename: name,
-        quantity: 1,
-        price: price,
-        username: sessionStorage.getItem("Username"), // Replace with the actual username
-      });
-      console.log("Update request sent successfully");
-    } catch (error) {
-      console.error("Error updating data:", error);
+    if (sessionStorage.getItem("type") === "Patient") {
+      try {
+        axios.put("http://localhost:3001/updatePatient", {
+          medicinename: name,
+          quantity: 1,
+          price: price,
+          username: sessionStorage.getItem("Username"),
+        });
+        console.log("Update request sent successfully");
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
     }
   };
-
-
 
   if (Medicine) {
     console.log(Medicine);
@@ -74,7 +74,15 @@ export default function MedTableAllCopy() {
               <div key={index} className="mt-10 mb-2 pb-2 w-[20rem] h-[16rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
                 <div className="justify-center pl-4 mt-6">
                   {p.Picture ? (
-                    <img src={p.Picture} alt={p.Name} className="w-20 h-20" />
+                    <img
+                      src={
+                        p.Picture.startsWith("http")
+                          ? p.Picture // External URL
+                          : `http://localhost:3001/uploads/${p.Picture.substring(p.Picture.lastIndexOf('/') + 1, p.Picture.lastIndexOf('-Picture'))}-Picture.jpg` // Local image
+                      }
+                      alt={p.Name}
+                      className="w-20 h-20"
+                    />
                   ) : (<div className="rounded-md shadow-md w-20 h-20 bg-gray-300"><br></br>no image</div>)}
                   <br />
                   <div className="-mt-24 ml-24 mb-4">

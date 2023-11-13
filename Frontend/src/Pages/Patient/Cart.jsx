@@ -28,10 +28,9 @@ function Cart() {
   const [street] = useState();
   const [apartment] = useState();
   const [selectedOption, setSelectedOption] = useState('');
-
-  const randomPointsInWallet = 0;
-  const pointsTakenAway = 0;
-  const pointsRemaining = 0;
+  const [randomPointsInWallet, setRandomPointsInWallet] = useState(0);
+  const [pointsTakenAway, setPointsTakenAway] = useState(0);
+  const [pointsRemaining, setPointsRemaining] = useState(0);
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -58,21 +57,24 @@ function Cart() {
 
   let total = CartData.reduce((acc, item) => acc + item.totalprice, 0);
 
+  useEffect(() => {
+    getWalletValue();
+  }, [randomPointsInWallet, total]);
+
   const getWalletValue = async () => {
     try {
       let username = sessionStorage.getItem("Username");
-      const res = await axios.get("http://localhost:3001/getcart", {
+      const res = await axios.get("http://localhost:3001/getWallet", {
         params: { username }
-      }).then(res => {
-        randomPointsInWallet = res;
       });
-      pointsTakenAway = total;
-      pointsRemaining = randomPointsInWallet - pointsTakenAway;
-
+      console.log("Wallet data from the server:", res.data);
+      setRandomPointsInWallet(res.data);
+      setPointsTakenAway(total);
+      setPointsRemaining(res.data - total);
     } catch (error) {
       console.error("Error updating data:", error);
     }
-  }
+  };
 
   const handleincrement = async (name, price) => {
     try {
@@ -125,22 +127,19 @@ function Cart() {
         let user = sessionStorage.getItem("Username")
         await axios.post("http://localhost:3001/create-checkout-session", { Username: user }).then((res) => {
           window.location = res.data.url
+          handleOrder();
         }).catch((err) => console.log(err.message));
-      } else if (paymentMethod === "payWithWallet") {
-        getWalletValue();
-        if (pointsRemaining >= 0) {
-          window.location = "/PaymentSuccess"
-        } else {
-          window.location = "/PaymentCanceled"
-        }
+      } else if (paymentMethod === "payWithWallet" && pointsRemaining >= 0) {
+        await handleOrder();
+        window.location = "/PaymentSuccess";
       } else {
-        window.location = "/PaymentCashSuccess"
+        await handleOrder();
+        window.location = paymentMethod === "payWithWallet" ? "/PaymentCanceled" : "/PaymentCashSuccess";
       }
-      handleOrder();
     } catch (error) {
       console.error("Error updating data:", error);
     }
-  }
+  };
 
   const handleOrder = async () => {
     let pay = null;
@@ -260,10 +259,10 @@ function Cart() {
                 /> Pay with Visa
               </label>
               {paymentMethod === 'payWithWallet' && (
-                <div className="mt-4">
-                  <label htmlFor="walletValue">Points in wallet: {randomPointsInWallet}</label><br />
-                  <label htmlFor="walletValue">Total: {pointsTakenAway}</label><br />
-                  <label htmlFor="walletValue">Points remaining: {pointsRemaining}</label><br />
+                <div className="pt-4">
+                  <label className="text-gray-500 ml-4"> Points in wallet: {randomPointsInWallet} </label><br />
+                  <label className="text-gray-500 ml-4"> Total: {total} </label><br />
+                  <label className="text-gray-500 ml-4"> Points remaining: {pointsRemaining} </label><br />
                 </div>
               )}
 

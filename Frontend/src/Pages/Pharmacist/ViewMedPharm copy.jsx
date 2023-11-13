@@ -12,8 +12,9 @@ export default function ViewMedPharmCopy() {
     Name: name,
     MedicinalUse: medicinaluse,
   });
+
   const handleSubmit = async (e) => {
-    e.preventDefaut();
+    e.preventDefault();
     Medicine = await GetMedicine({
       Name: name,
       MedicinalUse: medicinaluse,
@@ -32,8 +33,9 @@ export default function ViewMedPharmCopy() {
     navigate2(path2);
   };
 
-  if (Medicine) {
-    console.log(Medicine);
+  if (Medicine && Medicine.length > 0) {
+    console.log("Medicine:", Medicine);
+
     return (
       <div className="">
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
@@ -108,7 +110,21 @@ export default function ViewMedPharmCopy() {
                   <br />
                   <a>{p.Sales}</a>
                   <br />
-                  {(p.Picture === "") ? (<a >{p.Picture}</a>) : (<img src={p.Picture} alt={p.Name} className="w-20 h-20" />)}
+                  {/* {(p.Picture === "") ? (<a >{p.Picture}</a>) : (<img src={p.Picture} alt={p.Name} className="w-20 h-20" />)} */}
+                  {console.log("Image Filename:", p.Picture)}
+                  {p.Picture && (
+                    <div>
+                      <img
+                        src={
+                          p.Picture.startsWith("http")
+                            ? p.Picture // External URL
+                            : `http://localhost:3001/uploads/${p.Picture.substring(p.Picture.lastIndexOf('/') + 1, p.Picture.lastIndexOf('-Picture'))}-Picture.jpg` // Local image
+                        }
+                        alt={p.Name}
+                        className="w-20 h-20"
+                      />
+                    </div>
+                  )}
                   <br />
                   <button className="justify-center text-sky-600 outline w-40 h-9 rounded-md -mb-4 mt-3 shadow">
                     Select

@@ -4,29 +4,44 @@ const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57Nm
 
 const createMedicine = async (req, res) => {
   try {
-    await Medicine.create({
-      Name: req.body.Name,
-      Picture: req.body.Picture,
-      Description: req.body.Description,
-      MedicinalUse: req.body.MedicinalUse,
-      Price: req.body.Price,
-      Quantity: req.body.Quantity,
-      Sales: req.body.Sales,
-    });
+    const { Name, Description, MedicinalUse, Price, Quantity, Sales } = req.body;
+
+    const medicineData = {
+      Name,
+      Description,
+      MedicinalUse,
+      Price,
+      Quantity,
+      Sales,
+    };
+
+    if (req.files && req.files.Picture) {
+      const pictureFile = req.files.Picture;
+      const picturePath = `./uploadMedicine/${Name}-Picture.jpg`;
+
+      await pictureFile.mv(picturePath);
+      medicineData.Picture = picturePath;
+    }
+
+    await Medicine.create(medicineData);
+
     const price = parseInt(req.body.Price * 100);
     await stripe.products.create({
       name: req.body.Name,
-      default_price_data:{
+      default_price_data: {
         currency: 'egp',
         unit_amount: price
       }
-      ,description: "Medicine"
+      , description: "Medicine"
     })
     res.status(200).send("Created successfully");
   } catch (e) {
+    console.error("Failed to create Medicine", e);
     res.status(400).send("Failed to Create Medicine");
   }
 };
+
+
 
 const getMedicines = async (req, res) => {
   try {
