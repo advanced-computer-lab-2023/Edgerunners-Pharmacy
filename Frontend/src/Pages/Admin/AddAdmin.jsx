@@ -24,6 +24,7 @@ function AddAdmin(props) {
     console.log(newAdmin);
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
     if (passwordRegex.test(passwordValue)) {
+      setFailed(false);
       axios
         .post("http://localhost:3001/addAdmin", newAdmin, {})
         .then((res) => {

@@ -45,6 +45,11 @@ export default function Admin() {
                     Add an administrator
                   </a>
                 </li>
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/AddEmail">
+                    Add admin email
+                  </a>
+                </li>
                 {/* <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="#adoptions">
                     Chat

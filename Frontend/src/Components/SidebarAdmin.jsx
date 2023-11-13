@@ -11,6 +11,9 @@ const Sidebar = () => {
       <a className="menu-item" href="/AddAdmin">
         Add an administrator
       </a>
+      <a className="menu-item" href="/AddEmail">
+        Add an email for an admin
+      </a>
       <a className="menu-item" href="/ViewPharmInfoAdmin">
         View pharmacists
       </a>
