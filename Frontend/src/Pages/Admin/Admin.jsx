@@ -7,11 +7,7 @@ import {
   faBedPulse,
   faUserDoctor,
   faFileCirclePlus,
-  faPeopleGroup,
-  faCalendarCheck,
-  faStethoscope,
   faHandHoldingMedical,
-  faPrescriptionBottleMedical,
   faUserInjured,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -22,7 +18,12 @@ export default function Admin() {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-            <a href="/"><Logo /></a>
+            <a href="/"
+              onClick={() => {
+                sessionStorage.removeItem("Username");
+                sessionStorage.removeItem("type");
+                sessionStorage.removeItem("token");
+              }}><Logo /></a>
 
             <button
               className="navbar-toggler ps-0"
@@ -37,28 +38,49 @@ export default function Admin() {
                 <i className="fas fa-bars"></i>
               </span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarExample01">
+            <div className="navbar-collapse" id="navbarExample01">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#pets">
-                    Video Call
+                  <a className="nav-link" aria-current="page" href="/AddAdmin">
+                    Add an administrator
                   </a>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="#adoptions">
                     Chat
                   </a>
-                </li>
+                </li> */}
+
                 <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    aria-current="page"
-                    href="#foundation"
-                  >
-                    My Appointments
+                  <a className="nav-link" aria-current="page" href="/ViewPharmInfoAdmin">
+                    Pharmacists
                   </a>
                 </li>
+
                 <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/ViewPatientInfoAdmin">
+                    Patients
+                  </a>
+                </li>
+
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/ViewRequestsAdmin">
+                    Requests
+                  </a>
+                </li>
+
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/ViewMedAdmin">
+                    Medicines
+                  </a>
+                </li>
+
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/changePassword">
+                    Change password
+                  </a>
+                </li>
+                {/* <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="#help">
                     Health Record
                   </a>
@@ -72,9 +94,14 @@ export default function Admin() {
                   <a className="nav-link" aria-current="page" href="#about">
                     My Account
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#contact">
+                  <a className="nav-link" aria-current="page" href="/"
+                    onClick={() => {
+                      sessionStorage.removeItem("Username");
+                      sessionStorage.removeItem("type");
+                      sessionStorage.removeItem("token");
+                    }}>
                     Log Out
                   </a>
                 </li>
@@ -220,7 +247,7 @@ export default function Admin() {
               style={{ color: "#82d76a" }}
             />
             <a href="/ViewPharmInfoAdmin">
-            <h3>Doctoooooor</h3>
+              <h3>Doctoooooor</h3>
             </a>
             <p>View all pharmacists</p>
           </div>
@@ -231,7 +258,7 @@ export default function Admin() {
               style={{ color: "#82d76a" }}
             />
             <a href="/ViewRequestsAdmin">
-            <h3>Requests</h3>
+              <h3>Requests</h3>
             </a>
             <p>View all pharmacists' requests</p>
           </div>

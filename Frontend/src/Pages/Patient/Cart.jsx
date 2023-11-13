@@ -12,11 +12,6 @@ import GetAddress from "../getAddress";
 import axios from "axios";
 import { Input } from "postcss";
 
-//Dummy data 
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function Cart() {
   const [paymentMethod, setPaymentMethod] = useState('cashOnDelivery');
   const [medicineName] = useState();

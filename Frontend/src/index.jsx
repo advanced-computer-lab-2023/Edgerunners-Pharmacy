@@ -27,6 +27,7 @@ import PaymentCashSuccess from './Pages/Patient/PaymentCashSuccess';
 import PaymentCanceled from './Pages/Patient/PaymentCanceled';
 import ResetPass from './Pages/Login/ResetPass';
 import LoginPage from './Pages/Login/LoginPage';
+import ChangePassword from './Pages/Login/ChangePassword';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -61,6 +62,7 @@ root.render(
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/AddPharmacist" element={<AddPharmacist />} />
         <Route path="/AddPatient" element={<AddPatient />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="/ResetPass" element={<ResetPass />} />
 
         <Route path="/MedTableAllCopy" element={<MedTableAllCopy />} />
