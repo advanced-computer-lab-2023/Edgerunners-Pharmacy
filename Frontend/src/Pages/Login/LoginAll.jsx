@@ -48,6 +48,7 @@ export default function LoginAll() {
             <button className="button" onClick={routeChange5}>Login as patient</button> 
             */}
             <button className="button" onClick={routeChange6}>Login</button>
+            <a href="/ResetPass">Forgot your password?</a>
         </div>
     );
 }
