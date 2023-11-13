@@ -51,6 +51,7 @@ function AddPharmacist(props) {
     formData.append("licenseFile", licenseFile);
     // formData.append("file", file);
     try {
+      setFailed(false);
       const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
       if (passwordRegex.test(passwordRef.current.value)) {
         const result = await axios.post(

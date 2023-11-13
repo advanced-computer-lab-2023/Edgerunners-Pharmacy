@@ -47,6 +47,7 @@ function AddPatient(props) {
     console.log(AddPatient);
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
     if (passwordRegex.test(passwordValue)) {
+      setFailed(false);
       axios
         .post("http://localhost:3001/addPatient", AddPatient, {})
         .then((res) => {
