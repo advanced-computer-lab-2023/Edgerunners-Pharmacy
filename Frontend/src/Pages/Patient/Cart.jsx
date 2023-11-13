@@ -73,15 +73,19 @@ function Cart() {
 
   const handleincrement = async (name, price) => {
     try {
-      await axios.put("http://localhost:3001/incrementQuantity", {
-        medicinename: name,
-        price: price,
-        username: sessionStorage.getItem("Username"), // Replace with the actual username
-      });
-      console.log("Update request sent successfully");
-      setCount(count + 1);
-      setTotalPrice(totalprice + price);
-      // Update the state to trigger a re-render
+      // let availableQuantity = 0;
+      // if (count <= availableQuantity) {
+        await axios.put("http://localhost:3001/incrementQuantity", {
+          medicinename: name,
+          price: price,
+          username: sessionStorage.getItem("Username"),
+        });
+        console.log("Update request sent successfully");
+        setCount(count + 1);
+        setTotalPrice(totalprice + price);
+      // } else {
+      //   console.log("Cannot increment. Count is already at the cart's available quantity.");
+      // }
     } catch (error) {
       console.error("Error updating data:", error);
     }
@@ -92,7 +96,7 @@ function Cart() {
       await axios.put("http://localhost:3001/decrementQuantity", {
         medicinename: name,
         price: price,
-        username: sessionStorage.getItem("Username"), // Replace with the actual username
+        username: sessionStorage.getItem("Username"),
       });
       console.log("Update request sent successfully");
       setCount(count - 1);
@@ -110,14 +114,23 @@ function Cart() {
         medicinename: name,
         username: sessionStorage.getItem("Username"),
       });
+      console.log("Item removed successfully");
       setCount(0);
-      console.log("Update request sent successfully");
     } catch (error) {
       console.error("Error updating data:", error);
     }
   };
   const handlePayment = async () => {
     try {
+
+      await Promise.all(CartData.map(async (medicine) => {
+        const { medicineName, count } = medicine;
+        await axios.put("http://localhost:3001/updateQuantity", {
+          Name: medicineName,
+          taken: count,
+        });
+      }));
+
       if (paymentMethod === "payWithVisa") {
         let user = sessionStorage.getItem("Username")
         await axios.post("http://localhost:3001/create-checkout-session", { Username: user }).then((res) => {
@@ -133,6 +146,11 @@ function Cart() {
       }
     } catch (error) {
       console.error("Error updating data:", error);
+
+      // Redirect to another page if status is 400 with the message "Not enough to remove"
+      if (error.response && error.response.status === 400 && error.response.data === "Not enough to remove") {
+        window.location = "/ViewMedPatient";
+      }
     }
   };
 
@@ -209,7 +227,7 @@ function Cart() {
               ) : (
                 <div className="mt-6 w-[60rem] h-[12rem] justify-center space-y-4">
                   <h1>The cart is empty</h1>
-                  <h3>You can add medicines here</h3>
+                  <h3>You can add medicines <a href="/ViewMedPatient">here</a></h3>
                 </div>
               )}
           </div>

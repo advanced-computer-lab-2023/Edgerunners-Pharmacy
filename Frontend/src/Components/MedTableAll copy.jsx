@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../UI/Logo";
 import GetMedicine from "../Pages/getMedicine";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';

@@ -4,7 +4,7 @@ const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57Nm
 
 const createMedicine = async (req, res) => {
   try {
-    const { Name, Description, MedicinalUse, Price, Quantity} = req.body;
+    const { Name, Description, MedicinalUse, Price, Quantity } = req.body;
 
     const Sales = 0;
 
@@ -104,10 +104,61 @@ const deleteMedicine = async (req, res) => {
   }
 };
 
+const updateQuantity = async (req, res) => {
+  const name = req.body.Name;
+  const taken = req.body.taken;
+
+  try {
+    const medicine = await Medicine.findOne({ Name: name });
+
+    if (!medicine) {
+      return res.status(404).send("Medicine Not Found");
+    }
+    let available = medicine.Quantity - taken;
+    let sales;
+    if (available >= 0) {
+      if (medicine.Sales) {
+        sales = medicine.Sales + taken;
+      } else {
+        sales = taken;
+      }
+      await Medicine.updateOne({ Name: name }, { Quantity: available, Sales: sales });
+      res.status(200).send("Updated successfully");
+    } else {
+      res.status(400).send("Not enough to remove");
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(400).send("Error could not update Medicine !!");
+  }
+};
+
+const reverseQuantity = async (req, res) => {
+  const name = req.body.Name;
+  const taken = req.body.taken;
+
+  try {
+    const medicine = await Medicine.findOne({ Name: name });
+
+    if (!medicine) {
+      return res.status(404).send("Medicine Not Found");
+    }
+    let available = medicine.Quantity + taken;
+    let sales = medicine.Sales - taken;
+    await Medicine.updateOne({ Name: name }, { Quantity: available, Sales: sales });
+    res.status(200).send("Updated successfully");
+  } catch (e) {
+    console.error(e);
+    res.status(400).send("Error could not update Medicine !!");
+  }
+};
+
 module.exports = {
   createMedicine,
   getMedicines,
   updateMedicine,
   deleteMedicine,
   findMedicine,
+  updateQuantity,
+  reverseQuantity,
 };
