@@ -52,7 +52,7 @@ const getCart = async (req, res) => {
       total += cart[i].price;
     }
   }
-  console.log(user.Cart);
+  // console.log(user.Cart);
   res.status(200).send({ cart });
 }
 
@@ -210,7 +210,7 @@ const getAddress = async (req, res) => {
   const username = req.query.username;
   const user = await Patient.findOne({ Username: username });
   //const address = user.Address;
-  console.log(user);
+  // console.log(user);
   let address = [];
   if (user.Address) {
     address = user.Address;
@@ -235,7 +235,7 @@ const deletePatient = async (req, res) => {
 const getOrder = async (req, res) => {
   const username = req.query.username;
   const user = await Patient.findOne({ Username: username });
-  console.log(user);
+  // console.log(user);
   let orders = [];
   if (user.Orders) {
     orders = user.Orders;
@@ -339,7 +339,7 @@ const popOrder = async (req, res) => {
 const getWallet = async (req, res) => {
   const username = req.query.username;
   const user = await Patient.findOne({ Username: username });
-  console.log(user);
+  // console.log(user);
   wallet = user.WalletValue;
   res.status(200).json(wallet);
 }

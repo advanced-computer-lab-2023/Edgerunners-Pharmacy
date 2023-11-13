@@ -36,13 +36,15 @@ const OrderDetails = () => {
     const [orders, setOrders] = useState([]);
     const [status, setStatus] = useState();
     const [orderStatus, setOrderStatus] = useState({});
+    const [medicineName] = useState();
+    const [count, setCount] = useState(0);
     //incomplete
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const data = await makeOrderDetails();
-                console.log('Fetched data:', data);
+                // console.log('Fetched data:', data);
                 setOrders(data);
                 const initialOrderStatus = {};
                 data.forEach((order) => {
@@ -59,14 +61,47 @@ const OrderDetails = () => {
 
     const handleCancel = async (id) => {
         try {
-            await axios.put('http://localhost:3001/cancelOrder', {
-                username: sessionStorage.getItem("Username"),
-                orderid: id,
-            });
-            setOrderStatus((prevOrderStatus) => ({
-                ...prevOrderStatus,
-                [id]: 'Cancelled',
-            }));
+            if (orderStatus[id] !== 'Cancelled') {
+                await axios.put('http://localhost:3001/cancelOrder', {
+                    username: sessionStorage.getItem("Username"),
+                    orderid: id,
+                });
+                setOrderStatus((prevOrderStatus) => ({
+                    ...prevOrderStatus,
+                    [id]: 'Cancelled',
+                }));
+
+                // Use the updated orders state
+                setOrders((prevOrders) => {
+                    // Find the order that matches the id
+                    const updatedOrders = prevOrders.map((order) => {
+                        if (order.id === id) {
+                            // Update the status in the order
+                            return { ...order, status: 'Cancelled' };
+                        }
+                        return order;
+                    });
+
+                    return updatedOrders;
+                });
+
+                // Fetch the updated orders
+                const updatedOrdersData = await makeOrderDetails();
+                setOrders(updatedOrdersData);
+
+                // Reverse the quantities
+                const cartItems = updatedOrdersData.find((order) => order.id === id)?.cartItems || [];
+
+                await Promise.all(cartItems.map(async (medicine) => {
+                    const { medicineName, count } = medicine;
+                    await axios.put("http://localhost:3001/reverseQuantity", {
+                        Name: medicineName,
+                        taken: count,
+                    });
+                }));
+            } else{
+                console.log("Already cancelled");
+            }
         } catch (error) {
             console.error('Error updating data:', error);
         }
