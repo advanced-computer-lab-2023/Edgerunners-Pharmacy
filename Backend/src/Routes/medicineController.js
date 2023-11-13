@@ -5,7 +5,6 @@ const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57Nm
 const createMedicine = async (req, res) => {
   try {
     const { Name, Description, MedicinalUse, Price, Quantity } = req.body;
-
     const Sales = 0;
 
     const medicineData = {
@@ -42,8 +41,6 @@ const createMedicine = async (req, res) => {
     res.status(400).send("Failed to Create Medicine");
   }
 };
-
-
 
 const getMedicines = async (req, res) => {
   try {
@@ -114,18 +111,20 @@ const updateQuantity = async (req, res) => {
     if (!medicine) {
       return res.status(404).send("Medicine Not Found");
     }
+
     let available = medicine.Quantity - taken;
-    let sales;
+
     if (available >= 0) {
-      if (medicine.Sales) {
-        sales = medicine.Sales + taken;
-      } else {
-        sales = taken;
-      }
-      await Medicine.updateOne({ Name: name }, { Quantity: available, Sales: sales });
+      const sales = (medicine.Sales || 0) + taken;
+
+      await Medicine.updateOne(
+        { Name: name },
+        { Quantity: available, Sales: sales }
+      );
+
       res.status(200).send("Updated successfully");
     } else {
-      res.status(400).send("Not enough to remove");
+      res.status(400).send("Not enough quantity available");
     }
   } catch (e) {
     console.error(e);
@@ -143,10 +142,21 @@ const reverseQuantity = async (req, res) => {
     if (!medicine) {
       return res.status(404).send("Medicine Not Found");
     }
-    let available = medicine.Quantity + taken;
-    let sales = medicine.Sales - taken;
-    await Medicine.updateOne({ Name: name }, { Quantity: available, Sales: sales });
+
+    const available = medicine.Quantity + taken;
+
+    let sales = medicine.Sales
+    if (sales > 0) {
+      sales -= taken;
+    }
+
+    await Medicine.updateOne(
+      { Name: name },
+      { Quantity: available, Sales: sales }
+    );
+
     res.status(200).send("Updated successfully");
+
   } catch (e) {
     console.error(e);
     res.status(400).send("Error could not update Medicine !!");

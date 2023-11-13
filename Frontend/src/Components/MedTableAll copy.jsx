@@ -23,16 +23,20 @@ export default function MedTableAllCopy() {
     });
   };
 
-  const handleaddcart = async (name, price) => {
+  const handleaddcart = async (name, price, availableQuantity) => {
     if (sessionStorage.getItem("type") === "Patient") {
       try {
-        axios.put("http://localhost:3001/updatePatient", {
-          medicinename: name,
-          quantity: 1,
-          price: price,
-          username: sessionStorage.getItem("Username"),
-        });
-        console.log("Update request sent successfully");
+        if (availableQuantity > 0) {
+          axios.put("http://localhost:3001/updatePatient", {
+            medicinename: name,
+            quantity: 1,
+            price: price,
+            username: sessionStorage.getItem("Username"),
+          });
+          console.log("Update request sent successfully");
+        } else {
+          console.log("Cannot add to cart. Insufficient quantity.");
+        }
       } catch (error) {
         console.error("Error updating data:", error);
       }
@@ -97,7 +101,7 @@ export default function MedTableAllCopy() {
                     </div>
                   </div>
                   <div className="space-x-3 mt-11">
-                    <button className="justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 " onClick={() => handleaddcart(p.Name, p.Price)}>
+                    <button className="justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 " onClick={() => handleaddcart(p.Name, p.Price, p.Quantity)}>
                       <FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" /> Add to cart
                     </button>
                   </div>

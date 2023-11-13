@@ -4,9 +4,13 @@ import Sidebar from "../../Components/SidebarPatient";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import GetCart from "../getCart";
 
 function PaymentCanceled() {
     const navigate = useNavigate();
+
+    const [medicineName, setMedicineName] = useState();
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
         async function fetchData() {
@@ -15,7 +19,28 @@ function PaymentCanceled() {
 
                 const res = await axios.put("http://localhost:3001/popOrder", { username });
 
-                console.log('Data fetched successfully:', res.data);
+                console.log('Order deleted successfully:', res.data);
+
+                const result = await axios.get("http://localhost:3001/getcart", {
+                    params: { username }
+                });
+
+                console.log('Cart fetched successfully:', result.data);
+
+                if (Array.isArray(result.data.cart)) {
+                    const CartData = result.data.cart;
+
+                    // Reverse the quantities
+                    await Promise.all(CartData.map(async (medicine) => {
+                        const { medicineName, count } = medicine;
+                        await axios.put("http://localhost:3001/reverseQuantity", {
+                            Name: medicineName,
+                            taken: count,
+                        });
+                    }));
+                } else {
+                    console.error('Invalid data format received:', result.data.cart);
+                }
 
             } catch (error) {
                 // Log the error details
@@ -30,7 +55,7 @@ function PaymentCanceled() {
         }
 
         fetchData();
-    }, []);
+    }, [medicineName, count]);
 
     const goToPaymentCanceled = () => {
         navigate('/PaymentCanceled');

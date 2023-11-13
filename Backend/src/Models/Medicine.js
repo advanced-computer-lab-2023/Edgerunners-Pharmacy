@@ -31,7 +31,7 @@ const medicineSchema = new Schema(
         Sales: {
             type: Number,
             // required: true,
-        }
+        },
 
     },
     { timestamps: true }
