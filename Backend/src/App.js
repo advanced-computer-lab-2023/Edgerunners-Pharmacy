@@ -34,6 +34,9 @@ const {
   getMedicines,
   updateMedicine,
   deleteMedicine,
+  findMedicine,
+  updateQuantity,
+  reverseQuantity,
 } = require("./Routes/medicineController");
 
 const {
@@ -142,6 +145,8 @@ app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);
 app.put("/updateMedicine", updateMedicine);
 app.delete("/deleteMedicine", deleteMedicine);
+app.put("/updateQuantity", updateQuantity);
+app.put("/reverseQuantity", reverseQuantity);
 
 // app.post("/addMedicine", requireAuth, createMedicine);
 // app.get("/getMedicine", requireAuth, getMedicines);
