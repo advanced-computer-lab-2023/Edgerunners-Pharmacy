@@ -6,6 +6,7 @@ const createMedicine = async (req, res) => {
   try {
     const { Name, Description, MedicinalUse, Price, Quantity } = req.body;
     const Sales = 0;
+    const Status = "Not";
 
     const medicineData = {
       Name,
@@ -14,6 +15,7 @@ const createMedicine = async (req, res) => {
       Price,
       Quantity,
       Sales,
+      Status,
     };
 
     if (req.files && req.files.Picture) {
@@ -111,11 +113,10 @@ const findMedicine = async (req, res) => {
 const deleteMedicine = async (req, res) => {
   //delete a Medicine from the database
   try {
-    //console.log((await Medicine.find({ Name: req.body.Name })))
     if ((await Medicine.find({ Name: req.body.Name })).length == 0) {
       res.status(300).send("Medicine Not Found");
     } else {
-      await Medicine.deleteOne({ Name: req.body.Name });
+      await Medicine.updateOne({ Name: req.body.Name }, {$set: {Status: "Archived"}});
       const products = await stripe.products.list({
         active: true,
       });

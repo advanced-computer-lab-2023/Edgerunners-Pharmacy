@@ -8,13 +8,16 @@ const adminSchemaP = new Schema(
       required: true,
       unique: true,
     },
-
     Password: {
       type: String,
       required: true,
     },
     Role: {
       type: String,
+    },
+    Email: {
+      type: String,
+      unique: true,
     },
   },
   { timestamps: true },

@@ -29,6 +29,7 @@ import ResetPass from './Pages/Login/ResetPass';
 import LoginPage from './Pages/Login/LoginPage';
 import ChangePassword from './Pages/Login/ChangePassword';
 import Login from './Pages/Login/Login';
+import AddEmail from './Pages/Admin/AddEmail';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -39,6 +40,7 @@ root.render(
         
         <Route path="/Admin" element={<Admin />} />
         <Route path="/AddAdmin" element={<AddAdmin />} />
+        <Route path="/AddEmail" element={<AddEmail />} />
         <Route path="/ViewPharmInfoAdmin" element={<ViewPharmInfoAdmin />} />
         <Route path="/ViewPatientInfoAdmin" element={<ViewPatientInfoAdmin />} />
         <Route path="/ViewRequestsAdmin" element={<ViewRequestsAdmin />} />

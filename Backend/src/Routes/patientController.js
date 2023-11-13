@@ -1,9 +1,11 @@
 const Patient = require("../Models/Patient.js");
+const Admin = require("../Models/Admin.js");
+const Pharmacist = require("../Models/Pharmacist.js");
+
 const { default: mongoose } = require("mongoose");
 const express = require("express");
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
-const Pharmacist = require("../Models/Pharmacist.js");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const hashPassword = async (password) => {
   return bcrypt.hash(password, 5);
 };
@@ -23,7 +25,7 @@ const createPatient = async (req, res) => {
       EmergencyContact: {
         FullnameEC: req.body.EmergencyContact.FullnameEC,
         phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
-        Relations: req.body.EmergencyContact.Relations
+        Relations: req.body.EmergencyContact.Relations,
       },
     });
   } else {
@@ -55,7 +57,7 @@ const getCart = async (req, res) => {
   }
   // console.log(user.Cart);
   res.status(200).send({ cart });
-}
+};
 
 const getPatients = async (req, res) => {
   try {
@@ -77,15 +79,23 @@ const updatePatient = async (req, res) => {
       return res.status(404).send("User not found");
     }
     let cart = user.Cart || [];
-    const existingCartItemIndex = cart.findIndex(item => item.medicineName === orderName);
+    const existingCartItemIndex = cart.findIndex(
+      (item) => item.medicineName === orderName
+    );
     if (existingCartItemIndex !== -1) {
       // If the medicine is already in the cart, update the quantity and price
       cart[existingCartItemIndex].count += orderQuantity;
       cart[existingCartItemIndex].price = orderPrice;
-      cart[existingCartItemIndex].totalprice = orderPrice * cart[existingCartItemIndex].count;
+      cart[existingCartItemIndex].totalprice =
+        orderPrice * cart[existingCartItemIndex].count;
     } else {
       // If the medicine is not in the cart, add a new entry
-      cart.push({ medicineName: orderName, count: orderQuantity, price: orderPrice, totalprice: orderPrice });
+      cart.push({
+        medicineName: orderName,
+        count: orderQuantity,
+        price: orderPrice,
+        totalprice: orderPrice,
+      });
     }
     await Patient.updateOne({ Username: username }, { $set: { Cart: cart } });
     res.status(200).send("Updated cart successfully!");
@@ -105,7 +115,9 @@ const incrementQuantity = async (req, res) => {
       return res.status(404).send("User not found");
     }
     let cart = user.Cart || [];
-    const existingMedicineIndex = cart.findIndex(item => item.medicineName === orderName);
+    const existingMedicineIndex = cart.findIndex(
+      (item) => item.medicineName === orderName
+    );
 
     if (existingMedicineIndex !== -1) {
       cart[existingMedicineIndex].count += 1;
@@ -134,7 +146,9 @@ const decrementQuantity = async (req, res) => {
     }
 
     let cart = user.Cart || [];
-    const existingMedicineIndex = cart.findIndex(item => item.medicineName === orderName);
+    const existingMedicineIndex = cart.findIndex(
+      (item) => item.medicineName === orderName
+    );
 
     if (existingMedicineIndex !== -1) {
       // If the medicine is found in the cart
@@ -169,12 +183,13 @@ const removeFromCart = async (req, res) => {
       return res.status(404).send("User not found");
     }
     let cart = user.Cart || [];
-    const existingMedicineIndex = cart.findIndex(item => item.medicineName === orderName);
+    const existingMedicineIndex = cart.findIndex(
+      (item) => item.medicineName === orderName
+    );
 
     if (existingMedicineIndex !== -1) {
       cart.splice(existingMedicineIndex, 1);
-    }
-    else {
+    } else {
       // If the medicine is not in the cart
       return res.status(404).send("Medicine not found in the cart");
     }
@@ -184,7 +199,7 @@ const removeFromCart = async (req, res) => {
     console.log(e);
     res.status(400).send("Error could not remove medicine");
   }
-}
+};
 
 const updateAddress = async (req, res) => {
   try {
@@ -198,14 +213,22 @@ const updateAddress = async (req, res) => {
       return res.status(404).send("User not found");
     }
     let address = user.Address;
-    address.push({ state: state, city: city, street: street, apartment: apartment });
-    await Patient.updateOne({ Username: username }, { $set: { Address: address } });
+    address.push({
+      state: state,
+      city: city,
+      street: street,
+      apartment: apartment,
+    });
+    await Patient.updateOne(
+      { Username: username },
+      { $set: { Address: address } }
+    );
     res.status(200).send("Updated address successfully!");
   } catch (e) {
     console.log(e);
     res.status(400).send("Error could not update Patient's address!!");
   }
-}
+};
 
 const getAddress = async (req, res) => {
   const username = req.query.username;
@@ -217,7 +240,7 @@ const getAddress = async (req, res) => {
     address = user.Address;
   }
   res.status(200).send(address);
-}
+};
 
 const deletePatient = async (req, res) => {
   //delete a Patient from the database
@@ -243,7 +266,7 @@ const getOrder = async (req, res) => {
   }
   // console.log(orders);
   res.status(200).send(orders);
-}
+};
 
 const addOrder = async (req, res) => {
   try {
@@ -259,19 +282,29 @@ const addOrder = async (req, res) => {
     let order = user.Orders || [];
     let orderid = order.length;
     order.push({
-      orderid, cartItems: [...user.Cart], orderAddress, paymentMethod, orderStatus
+      orderid,
+      cartItems: [...user.Cart],
+      orderAddress,
+      paymentMethod,
+      orderStatus,
     });
-    const totalpricepaid = user.Cart.reduce((acc, item) => acc + item.totalprice, 0);
+    const totalpricepaid = user.Cart.reduce(
+      (acc, item) => acc + item.totalprice,
+      0
+    );
     if (wallet >= totalpricepaid) {
       wallet -= totalpricepaid;
     }
     user.Cart = [];
-    await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: [], WalletValue: wallet } });
+    await Patient.updateOne(
+      { Username: username },
+      { $set: { Orders: order, Cart: [], WalletValue: wallet } }
+    );
     res.status(200).send("Added order successfully!");
   } catch (e) {
     res.status(400).send("Error could not add order !!");
   }
-}
+};
 const cancelOrder = async (req, res) => {
   try {
     const username = req.body.username;
@@ -281,10 +314,15 @@ const cancelOrder = async (req, res) => {
       return res.status(404).send("User not found");
     }
     let order = user.Orders || [];
-    const existingOrderIndex = order.findIndex(item => item.orderid === orderid);
+    const existingOrderIndex = order.findIndex(
+      (item) => item.orderid === orderid
+    );
     if (existingOrderIndex !== -1) {
       order[existingOrderIndex].orderStatus = "Cancelled";
-      await Patient.updateOne({ Username: username }, { $set: { Orders: order } });
+      await Patient.updateOne(
+        { Username: username },
+        { $set: { Orders: order } }
+      );
     } else {
       res.status(400).send("Order not found");
     }
@@ -292,7 +330,7 @@ const cancelOrder = async (req, res) => {
   } catch (e) {
     res.status(400).send("Error could not change order status !!");
   }
-}
+};
 
 const popOrder = async (req, res) => {
   try {
@@ -311,8 +349,10 @@ const popOrder = async (req, res) => {
       const cart = user.Cart || [];
 
       // Merge items from canceled order back into the cart
-      canceledOrder.cartItems.forEach(item => {
-        const existingCartItemIndex = cart.findIndex(cartItem => cartItem.medicineName === item.medicineName);
+      canceledOrder.cartItems.forEach((item) => {
+        const existingCartItemIndex = cart.findIndex(
+          (cartItem) => cartItem.medicineName === item.medicineName
+        );
 
         if (existingCartItemIndex !== -1) {
           // If the medicine is already in the cart, update the quantity
@@ -327,7 +367,10 @@ const popOrder = async (req, res) => {
       // Remove the canceled order from the order history
       order.pop();
 
-      await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: cart } });
+      await Patient.updateOne(
+        { Username: username },
+        { $set: { Orders: order, Cart: cart } }
+      );
       res.status(200).send("Order status changed successfully!");
     } else {
       res.status(404).send("No order found to pop");
@@ -343,26 +386,55 @@ const getWallet = async (req, res) => {
   // console.log(user);
   wallet = user.WalletValue;
   res.status(200).json(wallet);
-}
+};
 
 const ResetPass = async (req, res) => {
   const newPassword = req.body.Password;
   const email = req.body.Email;
 
-  const pharmacist = await Pharmacist.findOne({ Email: req.params.Email });
-  if (pharmacist) {
+  let user = await Pharmacist.findOne({ Email: req.params.Email });
+  if (user) {
     await Pharmacist.updateOne(
       { Email: email, ReqStatus: "Accepted" },
-      { $set: { Password: await hashPassword(newPassword) } },
-    ).catch("an error happened");
+      { $set: { Password: await hashPassword(newPassword) } }
+    ).catch("An error happened");
   } else {
-    await Patient.updateOne(
-      { Email: email },
-      { $set: { Password: await hashPassword(newPassword) } },
-    ).catch("an error happened");
+    user = await Patient.findOne({ Email: req.params.Email });
+    if (user) {
+      await Patient.updateOne(
+        { Email: email },
+        { $set: { Password: await hashPassword(newPassword) } }
+      ).catch("An error happened");
+    } else {
+      user = await Admin.findOne({ Email: req.params.Email });
+      if (user) {
+        await Admin.updateOne(
+          { Email: email },
+          { $set: { Password: await hashPassword(newPassword) } }
+        ).catch("An error happened");
+      } else {
+        res.status(404).send("Email not found");
+      }
+    }
   }
   res.status(200).send("all good");
-
 };
 
-module.exports = { createPatient, getPatients, updatePatient, getCart, incrementQuantity, decrementQuantity, removeFromCart, updateAddress, getAddress, deletePatient, getOrder, addOrder, cancelOrder, popOrder, getWallet, ResetPass };
+module.exports = {
+  createPatient,
+  getPatients,
+  updatePatient,
+  getCart,
+  incrementQuantity,
+  decrementQuantity,
+  removeFromCart,
+  updateAddress,
+  getAddress,
+  deletePatient,
+  getOrder,
+  addOrder,
+  cancelOrder,
+  popOrder,
+  getWallet,
+  ResetPass,
+};

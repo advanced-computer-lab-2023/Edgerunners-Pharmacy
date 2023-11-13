@@ -1,6 +1,6 @@
 import Logo from "../../UI/Logo";
 import Card from "../../UI/Card";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 function AddPharmacist(props) {
@@ -16,44 +16,53 @@ function AddPharmacist(props) {
   const idFileRef = useRef();
   const degreeFileRef = useRef();
   const licenseFileRef = useRef();
+  const [Failed, setFailed] = useState(false);
 
   // const handleFileChange = (e) => {
   const handleFileChange = (fileRef) => (e) => {
     if (e.target.files) {
       //You can perform additional checks or validations if needed
       //console.log("Selected file:", e.target.files[0]);
-      console.log(`Selected file for ${fileRef.current.name}:`, e.target.files[0]);
+      console.log(
+        `Selected file for ${fileRef.current.name}:`,
+        e.target.files[0]
+      );
     }
-  }
+  };
 
   const handleUpload = async () => {
     // const file = fileRef.current.files[0];
     const idFile = idFileRef.current.files[0];
     const degreeFile = degreeFileRef.current.files[0];
     const licenseFile = licenseFileRef.current.files[0];
-
+    console.log(idFile);
+    const formData = new FormData();
     // if (file) {
-    if (idFile && degreeFile && licenseFile) {
-      const formData = new FormData();
-      formData.append("Username", usernameRef.current.value);
-      formData.append("Name", nameRef.current.value);
-      formData.append("Email", emailRef.current.value);
-      formData.append("Password", passwordRef.current.value);
-      formData.append("DOB", dobRef.current.value);
-      formData.append("Hourlyrate", hourlyrateRef.current.value);
-      formData.append("Affiliation", affiliationRef.current.value);
-      formData.append("Education", educationRef.current.value);
-      // formData.append("file", file);
-      formData.append("idFile", idFile);
-      formData.append("degreeFile", degreeFile);
-      formData.append("licenseFile", licenseFile);
-
-      try {
-        const result = await axios.post("http://localhost:3001/uploadFile", formData);
+    formData.append("Username", usernameRef.current.value);
+    formData.append("Name", nameRef.current.value);
+    formData.append("Email", emailRef.current.value);
+    formData.append("Password", passwordRef.current.value);
+    formData.append("DOB", dobRef.current.value);
+    formData.append("Hourlyrate", hourlyrateRef.current.value);
+    formData.append("Affiliation", affiliationRef.current.value);
+    formData.append("Education", educationRef.current.value);
+    formData.append("idFile", idFile);
+    formData.append("degreeFile", degreeFile);
+    formData.append("licenseFile", licenseFile);
+    // formData.append("file", file);
+    try {
+      const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
+      if (passwordRegex.test(passwordRef.current.value)) {
+        const result = await axios.post(
+          "http://localhost:3001/uploadFile",
+          formData
+        );
         console.log(result.data);
-      } catch (error) {
-        console.error("Error:", error.message);
+      } else {
+        setFailed(true);
       }
+    } catch (error) {
+      console.error("Error:", error.message);
     }
   };
 
@@ -279,6 +288,9 @@ function AddPharmacist(props) {
                 {" "}
                 Submit Request{" "}
               </button>
+              {Failed && (
+                <p style={{ color: "red" }}> Incorrect password format.</p>
+              )}
             </div>
           </form>
         </div>
