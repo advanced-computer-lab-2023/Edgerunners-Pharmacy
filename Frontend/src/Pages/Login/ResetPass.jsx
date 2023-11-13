@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import emailjs from "emailjs-com";
 import axios from "axios";
+import './PatientReg.scss';
 
 export default function ResetPass() {
   const [Email, setEmail] = useState();
@@ -18,6 +19,15 @@ export default function ResetPass() {
   const [Success, setSuccess] = useState(false);
   const [Failed, setFailed] = useState(false);
 
+  const passwordValidation = () => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
+    if (passwordRegex.test(NewPass)) {
+      ResetPass(); // Call the signup function here or perform other actions
+    } else {
+      // Show error in the register page
+      setFailed(true);
+    }
+  };
   const handleVerify = () => {
     const res1 = UserInput[0] + UserInput[1] + UserInput[2];
     const res2 = UserInput[3] + UserInput[4] + UserInput[5];
@@ -53,16 +63,17 @@ export default function ResetPass() {
       Email: Email,
       Password: NewPass,
     });
+    setVerified(false);
     if (res.data == "all good") {
-      setVerified(false);
       setSuccess(true);
-    } else {
-      setVerified(false);
       setFailed(false);
+      window.location.href = "/";
+    } else {
+      setFailed(true);
     }
   };
   return (
-    <div>
+    <div className="PatientReg">
       {OTP && (
         <>
           {UserInput.map((value, index) => (
@@ -74,33 +85,33 @@ export default function ResetPass() {
             />
           ))}
           <br />
-          <button onClick={handleVerify}>verify</button>
+          <button onClick={handleVerify}>Verify</button>
         </>
       )}
       {Intial && (
         <>
           <input
             type="text"
-            placeholder="enter registered email"
+            placeholder="Enter registered email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button onClick={handle}>reset password</button>
+          <button onClick={handle}>Reset password</button>
         </>
       )}
       {Verified && (
         <>
           <input
             type="text"
-            placeholder="enter your new password"
+            placeholder="Enter your new password"
             onChange={(e) => {
               setNewPass(e.target.value);
             }}
           />
-          <button onClick={ResetPass}>submit</button>
+          <button onClick={passwordValidation}>Submit</button>
         </>
       )}
       {Success && <p>Password updated successfully.</p>}
-      {Failed && <p>an error happened.</p>}
+      {Failed && <p>An error happened.</p>}
     </div>
   );
 }

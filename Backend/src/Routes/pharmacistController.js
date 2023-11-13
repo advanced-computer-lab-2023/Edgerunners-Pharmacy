@@ -31,21 +31,30 @@ const createPharmacist = async (req, res) => {
 const uploadFile = async (req, res) => {
   try {
     const username = req.body.Username;
-    const idFile = req.files.idFile;
-    const degreeFile = req.files.degreeFile;
-    const licenseFile = req.files.licenseFile;
-
-    const idFilename = `${username}-ID.pdf`;
-    const degreeFilename = `${username}-Degree.pdf`;
-    const licenseFilename = `${username}-License.pdf`;
-
-    const idFilePath = `./uploadPharmacist/${idFilename}`;
-    const degreeFilePath = `./uploadPharmacist/${degreeFilename}`;
-    const licenseFilePath = `./uploadPharmacist/${licenseFilename}`;
-
-    idFile.mv(idFilePath);
-    degreeFile.mv(degreeFilePath);
-    licenseFile.mv(licenseFilePath);
+    let files = []
+    if(req.files){
+      if (req.files.idFile) {
+        const idFile = req.files.idFile;
+        const idFilename = `${username}-ID.pdf`;
+        const idFilePath = `./uploadPharmacist/${idFilename}`;
+        idFile.mv(idFilePath);
+        files.push(idFilename);
+      }
+      if(req.files.degreeFile) {
+        const degreeFile = req.files.degreeFile;
+        const degreeFilename = `${username}-Degree.pdf`;
+        const degreeFilePath = `./uploadPharmacist/${degreeFilename}`;
+        degreeFile.mv(degreeFilePath);
+        files.push(degreeFilename);
+      }
+      if(req.files.licenseFile){
+        const licenseFile = req.files.licenseFile;
+        const licenseFilename = `${username}-License.pdf`;
+        const licenseFilePath = `./uploadPharmacist/${licenseFilename}`;
+        licenseFile.mv(licenseFilePath);
+        files.push(licenseFilename);
+      }
+    }
 
     await Pharmacist.create({
       Username: username,
@@ -57,7 +66,8 @@ const uploadFile = async (req, res) => {
       Affiliation: req.body.Affiliation,
       Education: req.body.Education,
       ReqStatus: "Pending",
-      FileNames: [idFilename, degreeFilename, licenseFilename],
+      FileNames: [files],
+      // FileNames: [idFilename, degreeFilename, licenseFilename],
     });
 
     res.status(200).send("Created successfully");

@@ -133,7 +133,7 @@ app.post("/addPharmacist", createPharmacist);
 app.post("/uploadFile", uploadFile);
 app.get("/getPharmacist", getPharmacists);
 app.put("/updatePharmacist", updatePharmacist);
-app.delete("/deletePharmacist", deletePharmacist);
+app.put("/deletePharmacist", deletePharmacist);
 app.post("/uploadDocument", uploadDocument);
 app.get("/viewFiles/:filename", viewFiles);
 
@@ -144,7 +144,7 @@ app.get("/viewFiles/:filename", viewFiles);
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);
 app.put("/updateMedicine", updateMedicine);
-app.delete("/deleteMedicine", deleteMedicine);
+app.put("/deleteMedicine", deleteMedicine);
 app.put("/updateQuantity", updateQuantity);
 app.put("/reverseQuantity", reverseQuantity);
 
