@@ -50,10 +50,8 @@ export default function ResetPass() {
   };
   const ResetPass = async () => {
     const res = await axios.put("http://localhost:3001/ResetPass", {
-      params: {
-        Email: Email,
-        Password: NewPass,
-      },
+      Email: Email,
+      Password: NewPass,
     });
     if (res.data == "all good") {
       setVerified(false);
@@ -81,7 +79,11 @@ export default function ResetPass() {
       )}
       {Intial && (
         <>
-          <input type="text" onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="text"
+            placeholder="enter registered email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <button onClick={handle}>reset password</button>
         </>
       )}

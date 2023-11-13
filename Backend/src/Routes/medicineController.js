@@ -74,6 +74,27 @@ const updateMedicine = async (req, res) => {
         },
       }
     );
+    const products = await stripe.products.list({
+      active: true,
+    });
+    let med = Medicine.findOne({ Name: req.body.Name });
+    
+    const product = products.data.find((p) => p.name === req.body.Name);
+
+    const price = parseInt(req.body.Price * 100);
+    if (req.body.Price !== med.Price) {
+      const newPrice = await stripe.prices.create({
+        product: product.id,
+        unit_amount: price,
+        currency: "egp",
+      });
+      await stripe.products.update(product.id, {
+        default_price: newPrice.id,
+      });
+      await stripe.prices.update(product.default_price, {
+        active: false,
+      });
+    }
     res.status(200).send("Updated Successfully");
   } catch (e) {
     res.status(400).send("Error could not update Medicine !!");
@@ -90,10 +111,18 @@ const findMedicine = async (req, res) => {
 const deleteMedicine = async (req, res) => {
   //delete a Medicine from the database
   try {
-    if ((await Medicine.find({ Name: req.body.Name }).length) == 0) {
+    //console.log((await Medicine.find({ Name: req.body.Name })))
+    if ((await Medicine.find({ Name: req.body.Name })).length == 0) {
       res.status(300).send("Medicine Not Found");
     } else {
       await Medicine.deleteOne({ Name: req.body.Name });
+      const products = await stripe.products.list({
+        active: true,
+      });
+      const product = products.data.find((p) => p.name === req.body.Name);
+      await stripe.products.update(product.id, {
+        active: false,
+      });
       res.status(200).send("Deleted successfully");
     }
   } catch (e) {
