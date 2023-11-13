@@ -30,7 +30,12 @@ function LoginPage(props) {
                     if (sessionStorage.getItem("type") === "Patient") {
                         window.location.replace("/Patient");
                     } else if (sessionStorage.getItem("type") === "Pharmacist") {
-                        window.location.replace("/Pharm");     
+                        window.location.replace("/Pharm");
+                    } else if (sessionStorage.getItem("type") === "PendingPharmacist") {
+                        sessionStorage.removeItem("Username");
+                        sessionStorage.removeItem("type");
+                        sessionStorage.removeItem("token");
+                        window.location.replace("/LoginAll");
                     } else {
                         window.location.replace("/Admin");
                     }

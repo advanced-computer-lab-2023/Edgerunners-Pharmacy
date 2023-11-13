@@ -42,9 +42,6 @@ const createPatient = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
-  //const username = "abdo";
-  //console.log(req.query.username);
-  //console.log(req.body);
   const user = await Patient.findOne({ Username: req.query.username });
 
   let cart = [];
@@ -254,7 +251,7 @@ const addOrder = async (req, res) => {
     const orderStatus = "Accepted";
     const username = req.body.username; // Replace with the actual username
     const user = await Patient.findOne({ Username: username });
-    const wallet = user.WalletValue;
+    let wallet = user.WalletValue;
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -263,9 +260,9 @@ const addOrder = async (req, res) => {
     order.push({
       orderid, cartItems: [...user.Cart], orderAddress, paymentMethod, orderStatus
     });
-    const totalpricepaid = user.Cart.totalprice;
+    const totalpricepaid = user.Cart.reduce((acc, item) => acc + item.totalprice, 0);
     if (wallet >= totalpricepaid) {
-      wallet = wallet - totalpricepaid;
+      wallet -= totalpricepaid;
     }
     user.Cart = [];
     await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: [], WalletValue: wallet } });
@@ -300,15 +297,40 @@ const popOrder = async (req, res) => {
   try {
     const username = req.body.username;
     const user = await Patient.findOne({ Username: username });
+
     if (!user) {
       return res.status(404).send("User not found");
     }
+
     let order = user.Orders || [];
     const existingOrderIndex = order.length - 1;
-    const cart = order[existingOrderIndex].cartItems;
-    order.pop();
-    await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: cart } });
-    res.status(200).send("Order status changed successfully!");
+
+    if (existingOrderIndex >= 0) {
+      const canceledOrder = order[existingOrderIndex];
+      const cart = user.Cart || [];
+
+      // Merge items from canceled order back into the cart
+      canceledOrder.cartItems.forEach(item => {
+        const existingCartItemIndex = cart.findIndex(cartItem => cartItem.medicineName === item.medicineName);
+
+        if (existingCartItemIndex !== -1) {
+          // If the medicine is already in the cart, update the quantity
+          cart[existingCartItemIndex].count += item.count;
+          cart[existingCartItemIndex].totalprice += item.totalprice;
+        } else {
+          // If the medicine is not in the cart, add a new entry
+          cart.push({ ...item });
+        }
+      });
+
+      // Remove the canceled order from the order history
+      order.pop();
+
+      await Patient.updateOne({ Username: username }, { $set: { Orders: order, Cart: cart } });
+      res.status(200).send("Order status changed successfully!");
+    } else {
+      res.status(404).send("No order found to pop");
+    }
   } catch (e) {
     res.status(400).send("Error could not change order status !!");
   }

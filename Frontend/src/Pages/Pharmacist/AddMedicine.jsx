@@ -3,7 +3,6 @@ import Logo from "../../UI/Logo";
 import { useRef } from "react";
 import axios from 'axios';
 import Sidebar from "../../Components/SidebarPharm";
-import UseImageUpload from "./UseImageUpload";
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
 //import {fontAwesomeIcon} from "@fortawesome/fontawesome-svg-core"; 
 
@@ -20,25 +19,21 @@ function AddMedicine(props) {
         const ingredientsValue = medicineIngredientsRef.current.value;
         const priceValue = medicinePriceRef.current.value;
         const useValue = medicineUseRef.current.value;
-        const quatityValue = medicineQuantityRef.current.value;
-        const pictureValue = pictureRef.current.value;
-        const newMedicine = {
-            Name: nameValue,
-            Picture: pictureValue,
-            Description: ingredientsValue,
-            Price: priceValue,
-            MedicinalUse: useValue,
-            Quantity: quatityValue,
-            Sales: 0,
-        };
-        console.log(newMedicine);
-        axios
-            .post("http://localhost:3001/addMedicine", newMedicine, {
+        const quantityValue = medicineQuantityRef.current.value;
 
-            })
+        const formData = new FormData();
+        formData.append('Name', nameValue);
+        formData.append('Description', ingredientsValue);
+        formData.append('Price', priceValue);
+        formData.append('MedicinalUse', useValue);
+        formData.append('Quantity', quantityValue);
+        formData.append('Picture', pictureRef.current.files[0]);
+
+        console.log(formData);
+
+        axios.post("http://localhost:3001/addMedicine", formData, {})
             .then((res) => {
-
-                console.log("Medicine added");
+                console.log("Medicine added", res);
                 medicineNameRef.current.value = "";
                 medicineIngredientsRef.current.value = "";
                 medicinePriceRef.current.value = "";
@@ -47,7 +42,7 @@ function AddMedicine(props) {
                 pictureRef.current.value = "";
             })
             .catch((error) => {
-                console.log("Unable to add Medicine");
+                console.error("Unable to add Medicine", error);
             });
     }
 
@@ -97,7 +92,7 @@ function AddMedicine(props) {
                                 <div className=" mb-4">
                                     <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Picture : </label>
                                     <br />
-                                    <input type="text" id="picture" name="picture" ref={pictureRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                    <input type="file" id="picture" name="picture" ref={pictureRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
                                 </div>
                                 <div className=" flex justify-center  mt-6">
                                     <br />

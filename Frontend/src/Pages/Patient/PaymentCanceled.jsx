@@ -15,17 +15,15 @@ function PaymentCanceled() {
 
                 const res = await axios.put("http://localhost:3001/popOrder", { username });
 
-                // Assuming you want to handle the response data
                 console.log('Data fetched successfully:', res.data);
 
             } catch (error) {
-                // Log the error details
+
                 console.error('Error fetching cart data:', error);
 
                 // If you want to handle the 404 error specifically
                 if (error.response && error.response.status === 404) {
                     console.error('User not found');
-                    // Redirect to an error page or handle appropriately
                 }
             }
         }
@@ -48,7 +46,7 @@ function PaymentCanceled() {
             </div>
             <div className='text-center mt-40'>
                 <h1>Payment Canceled</h1>
-                <h3 className='text-xl'>You can close this page now.</h3>
+                <h3 className='text-xl'>You can go back <a href="/MedTableAllCopy">here</a>.</h3>
             </div>
         </div>
     )

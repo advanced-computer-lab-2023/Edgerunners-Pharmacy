@@ -64,11 +64,11 @@ const Patient = require("./Models/Patient.js");
 const Pharmacist = require("./Models/Pharmacist.js");
 const Admin = require("./Models/Admin.js");
 const Medicine = require("./Models/Medicine.js");
-// #Importing the patientController
+
+app.use('/uploads', express.static('./uploadMedicine'));
 
 // configurations
 // Mongo DB
-
 mongoose
   .connect(MongoURI)
   .then(() => {
