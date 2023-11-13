@@ -21,7 +21,7 @@ const SidebarPatient = () => {
       <a className="menu-item" href="/Address">
         Add delivery address
       </a>
-      <a className="menu-item">
+      <a className="menu-item" href="/changePassword">
         Change my password
       </a>
       <a className="menu-item" href='/'

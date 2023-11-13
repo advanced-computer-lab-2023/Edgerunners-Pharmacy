@@ -92,7 +92,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const cors = require("cors");
-const { protectA, protectPH, protectP, signin } = require("./Models/auth");
+const { protectA, protectPH, protectP, signin, changePassword } = require("./Models/auth");
 
 app.use(cors());
 app.use(
@@ -105,6 +105,7 @@ app.use(
 
 app.post("/signin", signin);
 app.put("/ResetPass", ResetPass);
+app.put("/changePassword", changePassword);
 
 app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
@@ -191,20 +192,6 @@ app.post("/create-checkout-session", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      // line_items: //req.body.items.map(item => {
-      //   storeItems.map(item => {
-      //   //const storeItem = storeItems.get(item.id)
-      //   return {
-      //     price_data: {
-      //       currency: "usd",
-      //       product_data: {
-      //         name: item.name,
-      //       },
-      //       unit_amount: item.priceInCents,
-      //     },
-      //     quantity: item.quantity,
-      //   }
-      // })
       line_items: line_items,
       success_url: 'http://localhost:3000/PaymentSuccess',
       cancel_url: 'http://localhost:3000/PaymentCanceled',

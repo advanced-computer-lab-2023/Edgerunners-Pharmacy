@@ -7,9 +7,6 @@ import {
   faBedPulse,
   faUserDoctor,
   faFileCirclePlus,
-  faPeopleGroup,
-  faCalendarCheck,
-  faStethoscope,
   faHandHoldingMedical,
   faPrescriptionBottleMedical,
   faSyringe,
@@ -22,8 +19,13 @@ export default function Pharm() {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-          <a href="/"><Logo /></a>
-            
+            <a href="/"
+              onClick={() => {
+                sessionStorage.removeItem("Username");
+                sessionStorage.removeItem("type");
+                sessionStorage.removeItem("token");
+              }}><Logo /></a>
+
             <button
               className="navbar-toggler ps-0"
               type="button"
@@ -37,44 +39,30 @@ export default function Pharm() {
                 <i className="fas fa-bars"></i>
               </span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarExample01">
+            <div className="navbar-collapse" id="navbarExample01">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#pets">
-                    Video Call
-                  </a>
-                </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="#adoptions">
                     Chat
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    aria-current="page"
-                    href="#foundation"
-                  >
-                    My Appointments
+                  <a className="nav-link" aria-current="page" href="/ViewMedPharm">
+                    Medicine
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#help">
-                    Health Record
+                  <a className="nav-link" aria-current="page" href="/changePassword">
+                    Change password
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/Prescriptions">
-                    Prescriptions
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#about">
-                    My Account
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#contact">
+                  <a className="nav-link" aria-current="page" href="/"
+                    onClick={() => {
+                      sessionStorage.removeItem("Username");
+                      sessionStorage.removeItem("type");
+                      sessionStorage.removeItem("token");
+                    }}>
                     Log Out
                   </a>
                 </li>
@@ -137,12 +125,12 @@ export default function Pharm() {
           />
           <p>
             <br></br>
-          El7a2ny is a comprehensive healthcare platform that simplifies your healthcare journey. 
-          Our platform offers a wide range of services, allowing patients to view available medicines, 
-          place orders, and engage in direct chat consultations with experienced doctors and pharmacists. 
-          Whether you're seeking medication, professional medical advice, or seamless prescription fulfillment, 
-          our virtual pharmacy provides an all-in-one solution.
-          Experience a seamless healthcare experience that puts you in control of your wellness journey
+            El7a2ny is a comprehensive healthcare platform that simplifies your healthcare journey.
+            Our platform offers a wide range of services, allowing patients to view available medicines,
+            place orders, and engage in direct chat consultations with experienced doctors and pharmacists.
+            Whether you're seeking medication, professional medical advice, or seamless prescription fulfillment,
+            our virtual pharmacy provides an all-in-one solution.
+            Experience a seamless healthcare experience that puts you in control of your wellness journey
           </p>
         </div>
       </div>
@@ -174,8 +162,8 @@ export default function Pharm() {
               style={{ color: "#82d76a" }}
               bounce
             />
-             <a href = "/ViewMedPharm">
-            <h3>Medicine</h3>
+            <a href="/ViewMedPharm">
+              <h3>Medicine</h3>
             </a>
             <p>View all available medicines</p>
           </div>
@@ -229,8 +217,8 @@ export default function Pharm() {
               style={{ color: "#82d76a" }}
               bounce
             />
-            <a href = "/UseDocumentUpload">
-            <h3>Upload/Remove Documents</h3>
+            <a href="/UseDocumentUpload">
+              <h3>Upload/Remove Documents</h3>
             </a>
             <p>Upload/remove documents for my medical history</p>
           </div>

@@ -23,7 +23,7 @@ const Sidebar = () => {
       <a className="menu-item" href="/ViewMedAdmin">
         View medicines
       </a>
-      <a className="menu-item">
+      <a className="menu-item" href="/changePassword">
         Change my password
       </a>
       <a className="menu-item" href="/"

@@ -4,7 +4,9 @@ const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57Nm
 
 const createMedicine = async (req, res) => {
   try {
-    const { Name, Description, MedicinalUse, Price, Quantity, Sales } = req.body;
+    const { Name, Description, MedicinalUse, Price, Quantity} = req.body;
+
+    const Sales = 0;
 
     const medicineData = {
       Name,

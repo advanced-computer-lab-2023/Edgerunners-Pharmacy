@@ -11,7 +11,7 @@ const SidebarPharm = () => {
       <a className="menu-item" href="/ViewMedPharm">
         View medicines
       </a>
-      <a className="menu-item">
+      <a className="menu-item" href="/changePassword">
         Change my password
       </a>
       <a className="menu-item" href="/"

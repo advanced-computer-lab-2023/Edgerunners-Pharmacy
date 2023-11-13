@@ -7,9 +7,6 @@ import {
   faBedPulse,
   faUserDoctor,
   faFileCirclePlus,
-  faPeopleGroup,
-  faCalendarCheck,
-  faStethoscope,
   faHandHoldingMedical,
   faPrescriptionBottleMedical,
   faCartShopping,
@@ -22,7 +19,12 @@ export default function Patient() {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-            <a><Logo /></a>
+            <a href="/"
+              onClick={() => {
+                sessionStorage.removeItem("Username");
+                sessionStorage.removeItem("type");
+                sessionStorage.removeItem("token");
+              }}><Logo /></a>
             <button
               className="navbar-toggler ps-0"
               type="button"
@@ -36,44 +38,46 @@ export default function Patient() {
                 <i className="fas fa-bars"></i>
               </span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarExample01">
+            <div className="navbar-collapse" id="navbarExample01">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#pets">
-                    Video Call
-                  </a>
-                </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="#adoptions">
                     Chat
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    aria-current="page"
-                    href="#foundation"
-                  >
-                    My Appointments
+                  <a className="nav-link" aria-current="page" href="/ViewMedPatient">
+                    Medicine
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#help">
-                    Health Record
+                  <a className="nav-link" aria-current="page" href="/Cart">
+                    Cart
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/Prescriptions">
-                    Prescriptions
+                  <a className="nav-link" aria-current="page" href="/ViewOrders">
+                    Orders
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#about">
-                    My Account
+                  <a className="nav-link" aria-current="page" href="/Address">
+                    Add delivery address
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#contact">
+                  <a className="nav-link" aria-current="page" href="/changePassword">
+                    Change password
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href='/'
+                    onClick={() => {
+                      sessionStorage.removeItem("Username");
+                      sessionStorage.removeItem("type");
+                      sessionStorage.removeItem("token");
+
+                    }}>
                     Log Out
                   </a>
                 </li>
@@ -223,7 +227,7 @@ export default function Patient() {
               bounce
             />
             <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles">
-            <h3>Pharmacy</h3>
+              <h3>Pharmacy</h3>
             </a>
             <p>Chat with a pharmacist</p>
           </div>

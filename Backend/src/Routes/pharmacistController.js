@@ -28,27 +28,6 @@ const createPharmacist = async (req, res) => {
   }
 };
 
-// const uploadFile = async (req, res) => {
-//   const filename = req.body.Username + "-" + ".pdf";
-//   const file = req.files.file;
-//   var filePath = "./uploadPharmacist/" + filename;
-//   file.mv(filePath);
-
-//   await Pharmacist.create({
-//     Username: req.body.Username,
-//     Password: await hashPassword(req.body.Password),
-//     DOB: req.body.DOB,
-//     Name: req.body.Name,
-//     Email: req.body.Email,
-//     Hourlyrate: req.body.Hourlyrate,
-//     Affiliation: req.body.Affiliation,
-//     Education: req.body.Education,
-//     ReqStatus: "Pending",
-//     FileNames: [filename],
-//   });
-//   res.status(200).send("Created successfully");
-// };
-
 const uploadFile = async (req, res) => {
   try {
     const username = req.body.Username;
