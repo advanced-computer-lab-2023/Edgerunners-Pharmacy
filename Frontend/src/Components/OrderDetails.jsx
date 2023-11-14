@@ -62,9 +62,18 @@ const OrderDetails = () => {
     const handleCancel = async (id) => {
         try {
             if (orderStatus[id] !== 'Cancelled') {
+                let updatedOrdersData = await makeOrderDetails();
+                setOrders(updatedOrdersData);
+                // Reverse the quantities
+                const cartItems = updatedOrdersData.find((order) => order.id === id)?.cartItems || [];
+                let totalprice = 0;
+                for(let i = 0; i< cartItems.length ; i++){
+                    totalprice += cartItems[i].totalprice;
+                }
                 await axios.put('http://localhost:3001/cancelOrder', {
                     username: sessionStorage.getItem("Username"),
                     orderid: id,
+                    totalprice: totalprice,
                 });
                 setOrderStatus((prevOrderStatus) => ({
                     ...prevOrderStatus,
@@ -84,21 +93,16 @@ const OrderDetails = () => {
 
                     return updatedOrders;
                 });
-
-                // Fetch the updated orders
-                const updatedOrdersData = await makeOrderDetails();
-                setOrders(updatedOrdersData);
-
-                // Reverse the quantities
-                const cartItems = updatedOrdersData.find((order) => order.id === id)?.cartItems || [];
-
+   
                 await Promise.all(cartItems.map(async (medicine) => {
-                    const { medicineName, count } = medicine;
+                    const { medicineName, count, totalprice } = medicine;
                     await axios.put("http://localhost:3001/reverseQuantity", {
                         Name: medicineName,
                         taken: count,
                     });
                 }));
+                updatedOrdersData = await makeOrderDetails();
+                setOrders(updatedOrdersData);
             } else{
                 console.log("Already cancelled");
             }

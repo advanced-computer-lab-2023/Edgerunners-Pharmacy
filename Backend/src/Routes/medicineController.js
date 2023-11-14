@@ -77,7 +77,7 @@ const updateMedicine = async (req, res) => {
       }
     );
     const products = await stripe.products.list({
-      active: true,
+      active: true,limit : 1000
     });
     let med = Medicine.findOne({ Name: req.body.Name });
     
@@ -118,7 +118,7 @@ const deleteMedicine = async (req, res) => {
     } else {
       await Medicine.updateOne({ Name: req.body.Name }, {$set: {Status: "Archived"}});
       const products = await stripe.products.list({
-        active: true,
+        active: true,limit : 1000,
       });
       const product = products.data.find((p) => p.name === req.body.Name);
       await stripe.products.update(product.id, {

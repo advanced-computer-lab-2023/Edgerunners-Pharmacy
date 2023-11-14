@@ -1,9 +1,10 @@
 import Card from "../../UI/Card";
 import Logo from "../../UI/Logo";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 
 function ChangePassword() {
+    const [Failed, setFailed] = useState(false);
     const passwordRef = useRef();
     const passwordConRef = useRef();
     function submitHandeler(event) {
@@ -16,22 +17,28 @@ function ChangePassword() {
             Password: passwordValue,
             confirmPassword: passwordConValue,
         };
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
+      if (passwordRegex.test(passwordRef.current.value)) {
+        setFailed(false);
         axios
-            .put("http://localhost:3001/changePassword", change, {})
-            .then((res) => {
-                console.log(res);
-                console.log("Password changed");
-                passwordRef.current.value = "";
-                passwordConRef.current.value = "";
-                let type = sessionStorage.getItem("type");
-                if (type === "Pharmacist") {
-                    type = "Pharm";
-                }
-                window.location.href = `/${type}`;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        .put("http://localhost:3001/changePassword", change, {})
+        .then((res) => {
+            console.log(res);
+            console.log("Password changed");
+            passwordRef.current.value = "";
+            passwordConRef.current.value = "";
+            let type = sessionStorage.getItem("type");
+            if (type === "Pharmacist") {
+                type = "Pharm";
+            }
+            window.location.href = `/${type}`;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+      } else {
+        setFailed(true);
+      }
     }
     return (
         <div>
@@ -68,6 +75,11 @@ function ChangePassword() {
                                     <br />
                                     <button className="  text-sky-600  outline  w-40  h-9  rounded-md   mt-5 shadow"> Confirm </button>
                                 </div>
+                                {Failed && (
+                                    <p className="text-red-500 text-center mt-2">
+                                        Incorrect password format.
+                                    </p>
+                                )}
                             </div>
                         </form>
                     </div>
