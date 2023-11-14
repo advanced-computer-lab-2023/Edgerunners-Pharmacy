@@ -1,4 +1,6 @@
 const Pharmacist = require("../Models/Pharmacist");
+const Admin = require("../Models/Admin");
+const Patient = require("../Models/Patient");
 const { default: mongoose } = require("mongoose");
 const express = require("express");
 const bcrypt = require('bcrypt')
@@ -8,21 +10,31 @@ const hashPassword = async (password) => {
 };
 
 const createPharmacist = async (req, res) => {
-  //add a new Doctor to the database with
-  //Name, Email and Age
+
   try {
-    await Pharmacist.create({
-      Username: req.body.Username,
-      Password: await hashPassword(req.body.Password),
-      DOB: req.body.DOB,
-      Name: req.body.Name,
-      Email: req.body.Email,
-      Hourlyrate: req.body.Hourlyrate,
-      Affiliation: req.body.Affiliation,
-      Education: req.body.Education,
-      ReqStatus: "Pending",
-    });
-    res.status(200).send("Created successfully");
+    let adminUsername = await Admin.findOne({ Username: req.body.Username });
+    let patientUsername = await Patient.findOne({ Username: req.body.Username });
+    let adminEmail = await Admin.findOne({ Email: req.body.Email });
+    let patientEmail = await Patient.findOne({ Email: req.body.Email });
+
+    if (adminUsername || patientUsername) {
+      res.status(401).send("Username already exists");
+    } else if (adminEmail || patientEmail) {
+      res.status(401).send("Email already exists");
+    } else {
+      await Pharmacist.create({
+        Username: req.body.Username,
+        Password: await hashPassword(req.body.Password),
+        DOB: req.body.DOB,
+        Name: req.body.Name,
+        Email: req.body.Email,
+        Hourlyrate: req.body.Hourlyrate,
+        Affiliation: req.body.Affiliation,
+        Education: req.body.Education,
+        ReqStatus: "Pending",
+      });
+      res.status(200).send("Created successfully");
+    }
   } catch (e) {
     res.status(400).send("Failed to Create Pharmacist");
   }
@@ -32,7 +44,7 @@ const uploadFile = async (req, res) => {
   try {
     const username = req.body.Username;
     let files = []
-    if(req.files){
+    if (req.files) {
       if (req.files.idFile) {
         const idFile = req.files.idFile;
         const idFilename = `${username}-ID.pdf`;
@@ -40,14 +52,14 @@ const uploadFile = async (req, res) => {
         idFile.mv(idFilePath);
         files.push(idFilename);
       }
-      if(req.files.degreeFile) {
+      if (req.files.degreeFile) {
         const degreeFile = req.files.degreeFile;
         const degreeFilename = `${username}-Degree.pdf`;
         const degreeFilePath = `./uploadPharmacist/${degreeFilename}`;
         degreeFile.mv(degreeFilePath);
         files.push(degreeFilename);
       }
-      if(req.files.licenseFile){
+      if (req.files.licenseFile) {
         const licenseFile = req.files.licenseFile;
         const licenseFilename = `${username}-License.pdf`;
         const licenseFilePath = `./uploadPharmacist/${licenseFilename}`;
