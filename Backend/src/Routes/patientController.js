@@ -318,7 +318,10 @@ const cancelOrder = async (req, res) => {
   try {
     const username = req.body.username;
     const orderid = req.body.orderid;
+    const totalprice = req.body.totalprice;
+   
     const user = await Patient.findOne({ Username: username });
+    const wallet = user.WalletValue;
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -327,10 +330,11 @@ const cancelOrder = async (req, res) => {
       (item) => item.orderid === orderid
     );
     if (existingOrderIndex !== -1) {
+      
       order[existingOrderIndex].orderStatus = "Cancelled";
       await Patient.updateOne(
         { Username: username },
-        { $set: { Orders: order } }
+        { $set: { Orders: order , WalletValue : (wallet+ totalprice)} }
       );
     } else {
       res.status(400).send("Order not found");

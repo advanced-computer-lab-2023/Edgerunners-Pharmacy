@@ -175,7 +175,7 @@ app.post("/create-checkout-session", async (req, res) => {
     console.log(user);
     const storeItems = user.Cart;
     const products = await stripe.products.list({
-      active: true,
+      active: true,limit : 1000
     });
 
     let myPrices = [];

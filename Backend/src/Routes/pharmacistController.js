@@ -43,6 +43,10 @@ const createPharmacist = async (req, res) => {
 const uploadFile = async (req, res) => {
   try {
     const username = req.body.Username;
+    let adminUsername = await Admin.findOne({ Username: req.body.Username });
+    let patientUsername = await Patient.findOne({ Username: req.body.Username });
+    let adminEmail = await Admin.findOne({ Email: req.body.Email });
+    let patientEmail = await Patient.findOne({ Email: req.body.Email });
     let files = []
     if (req.files) {
       if (req.files.idFile) {
@@ -68,21 +72,28 @@ const uploadFile = async (req, res) => {
       }
     }
 
-    await Pharmacist.create({
-      Username: username,
-      Password: await hashPassword(req.body.Password),
-      DOB: req.body.DOB,
-      Name: req.body.Name,
-      Email: req.body.Email,
-      Hourlyrate: req.body.Hourlyrate,
-      Affiliation: req.body.Affiliation,
-      Education: req.body.Education,
-      ReqStatus: "Pending",
-      FileNames: [files],
-      // FileNames: [idFilename, degreeFilename, licenseFilename],
-    });
+    if (adminUsername || patientUsername) {
+      res.status(401).send("Username already exists");
+    } else if (adminEmail || patientEmail) {
+      res.status(401).send("Email already exists");
+    } else {
+      await Pharmacist.create({
+        Username: username,
+        Password: await hashPassword(req.body.Password),
+        DOB: req.body.DOB,
+        Name: req.body.Name,
+        Email: req.body.Email,
+        Hourlyrate: req.body.Hourlyrate,
+        Affiliation: req.body.Affiliation,
+        Education: req.body.Education,
+        ReqStatus: "Pending",
+        FileNames: [files],
+        // FileNames: [idFilename, degreeFilename, licenseFilename],
+      });
 
-    res.status(200).send("Created successfully");
+      res.status(200).send("Created successfully");
+    }
+
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).send("Internal Server Error");

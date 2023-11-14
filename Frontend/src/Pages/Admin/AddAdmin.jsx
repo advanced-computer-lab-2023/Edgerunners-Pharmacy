@@ -21,6 +21,7 @@ function AddAdmin(props) {
     const passwordConValue = passwordConRef.current.value;
     const newAdmin = {
       Username: usernameValue,
+      Email: emailValue,
       Password: passwordValue,
     };
     console.log(newAdmin);

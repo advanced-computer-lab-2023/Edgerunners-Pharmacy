@@ -11,37 +11,39 @@ function PaymentCanceled() {
 
     const [medicineName, setMedicineName] = useState();
     const [count, setCount] = useState(0);
-
+    const [reload, setReload] = useState(false);
     useEffect(() => {
         async function fetchData() {
             try {
-                let username = sessionStorage.getItem("Username");
+                if (!reload) {
+                    let username = sessionStorage.getItem("Username");
 
-                const res = await axios.put("http://localhost:3001/popOrder", { username });
+                    const res = await axios.put("http://localhost:3001/popOrder", { username });
 
-                console.log('Order deleted successfully:', res.data);
+                    console.log('Order deleted successfully:', res.data);
 
-                const result = await axios.get("http://localhost:3001/getcart", {
-                    params: { username }
-                });
+                    const result = await axios.get("http://localhost:3001/getcart", {
+                        params: { username }
+                    });
 
-                console.log('Cart fetched successfully:', result.data);
+                    console.log('Cart fetched successfully:', result.data);
 
-                if (Array.isArray(result.data.cart)) {
-                    const CartData = result.data.cart;
+                    if (Array.isArray(result.data.cart)) {
+                        const CartData = result.data.cart;
 
-                    // Reverse the quantities
-                    await Promise.all(CartData.map(async (medicine) => {
-                        const { medicineName, count } = medicine;
-                        await axios.put("http://localhost:3001/reverseQuantity", {
-                            Name: medicineName,
-                            taken: count,
-                        });
-                    }));
-                } else {
-                    console.error('Invalid data format received:', result.data.cart);
+                        // Reverse the quantities
+                        await Promise.all(CartData.map(async (medicine) => {
+                            const { medicineName, count } = medicine;
+                            await axios.put("http://localhost:3001/reverseQuantity", {
+                                Name: medicineName,
+                                taken: count,
+                            });
+                        }));
+                    } else {
+                        console.error('Invalid data format received:', result.data.cart);
+                    }
+                    setReload(true);
                 }
-
             } catch (error) {
                 // Log the error details
                 console.error('Error fetching cart data:', error);
@@ -55,7 +57,7 @@ function PaymentCanceled() {
         }
 
         fetchData();
-    }, [medicineName, count]);
+    }, []);
 
     const goToPaymentCanceled = () => {
         navigate('/PaymentCanceled');
