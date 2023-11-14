@@ -32,12 +32,27 @@ import Login from './Pages/Login/Login';
 import AddEmail from './Pages/Admin/AddEmail';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+if(sessionStorage.getItem("type") == null || sessionStorage.getItem("type") == "PendingPharmacist") {
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        
+        <Route path="/LoginAll" element={<LoginAll />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/LoginPage" element={<LoginPage />} />
+        <Route path="/AddPharmacist" element={<AddPharmacist />} />
+        <Route path="/AddPatient" element={<AddPatient />} />
+        <Route path="/ResetPass" element={<ResetPass />} />
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
+);
+} else if(sessionStorage.getItem("type") == "Admin") {
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
         <Route path="/Admin" element={<Admin />} />
         <Route path="/AddAdmin" element={<AddAdmin />} />
         <Route path="/AddEmail" element={<AddEmail />} />
@@ -45,12 +60,30 @@ root.render(
         <Route path="/ViewPatientInfoAdmin" element={<ViewPatientInfoAdmin />} />
         <Route path="/ViewRequestsAdmin" element={<ViewRequestsAdmin />} />
         <Route path="/ViewMedAdmin" element={<ViewMedAdmin />} />
-
+        <Route path="/changePassword" element={<ChangePassword />} />
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
+);
+} else if(sessionStorage.getItem("type") == "Pharmacist") {
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
         <Route path="/Pharm" element={<Pharm />} />
         <Route path="/AddMedicine" element={<AddMedicine />} />
         <Route path="/EditMedicine" element={<EditMedicine />} />
         <Route path="/ViewMedPharm" element={<ViewMedPharmCopy />} />
-        
+        <Route path="/changePassword" element={<ChangePassword />} />
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
+);
+} if(sessionStorage.getItem("type") == "Patient") {
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
         <Route path="/Patient" element={<Patient />} />
         <Route path="/ViewMedPatient" element={<ViewMedPatient />} />
         <Route path="/Cart" element={<Cart />} />
@@ -59,19 +92,9 @@ root.render(
         <Route path="/PaymentSuccess" element={<PaymentSuccess />} />
         <Route path="/PaymentCanceled" element={<PaymentCanceled />} Component={PaymentCanceled} />
         <Route path="/PaymentCashSuccess" element={<PaymentCashSuccess />} />
-          
-        
-        <Route path="/LoginAll" element={<LoginAll />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/LoginPage" element={<LoginPage />} />
-        <Route path="/AddPharmacist" element={<AddPharmacist />} />
-        <Route path="/AddPatient" element={<AddPatient />} />
         <Route path="/changePassword" element={<ChangePassword />} />
-        <Route path="/ResetPass" element={<ResetPass />} />
-
-        <Route path="/MedTableAllCopy" element={<MedTableAllCopy />} />
-        
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );
+}

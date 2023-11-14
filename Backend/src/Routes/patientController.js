@@ -1,7 +1,6 @@
 const Patient = require("../Models/Patient.js");
 const Admin = require("../Models/Admin.js");
 const Pharmacist = require("../Models/Pharmacist.js");
-
 const { default: mongoose } = require("mongoose");
 const express = require("express");
 const bcrypt = require("bcrypt");
@@ -11,37 +10,47 @@ const hashPassword = async (password) => {
 };
 
 const createPatient = async (req, res) => {
-  const wallet = 1000;
-  if (req.body.EmergencyContact) {
-    await Patient.create({
-      Username: req.body.Username,
-      Password: await hashPassword(req.body.Password),
-      Gender: req.body.Gender,
-      Name: req.body.Name,
-      Email: req.body.Email,
-      phoneNumber: req.body.phoneNumber,
-      DOB: req.body.DOB,
-      WalletValue: wallet,
-      EmergencyContact: {
-        FullnameEC: req.body.EmergencyContact.FullnameEC,
-        phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
-        Relations: req.body.EmergencyContact.Relations,
-      },
-    });
-  } else {
-    await Patient.create({
-      Username: req.body.Username,
-      Password: await hashPassword(req.body.Password),
-      Gender: req.body.Gender,
-      Name: req.body.Name,
-      Email: req.body.Email,
-      phoneNumber: req.body.phoneNumber,
-      DOB: req.body.DOB,
-      WalletValue: wallet,
-    });
-  }
+  let adminUsername = await Admin.findOne({ Username: req.body.Username });
+  let pharmacistUsername = await Pharmacist.findOne({ Username: req.body.Username });
+  let adminEmail = await Admin.findOne({ Email: req.body.Email });
+  let pharmacistEmail = await Pharmacist.findOne({ Email: req.body.Email });
 
-  res.status(200).send("Created successfully");
+  const wallet = 1000;
+  if (adminUsername || pharmacistUsername) {
+    res.status(401).send("Username already exists");
+  } else if (adminEmail || pharmacistEmail) {
+    res.status(401).send("Email already exists");
+  } else {
+    if (req.body.EmergencyContact) {
+      await Patient.create({
+        Username: req.body.Username,
+        Password: await hashPassword(req.body.Password),
+        Gender: req.body.Gender,
+        Name: req.body.Name,
+        Email: req.body.Email,
+        phoneNumber: req.body.phoneNumber,
+        DOB: req.body.DOB,
+        WalletValue: wallet,
+        EmergencyContact: {
+          FullnameEC: req.body.EmergencyContact.FullnameEC,
+          phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
+          Relations: req.body.EmergencyContact.Relations,
+        },
+      });
+    } else {
+      await Patient.create({
+        Username: req.body.Username,
+        Password: await hashPassword(req.body.Password),
+        Gender: req.body.Gender,
+        Name: req.body.Name,
+        Email: req.body.Email,
+        phoneNumber: req.body.phoneNumber,
+        DOB: req.body.DOB,
+        WalletValue: wallet,
+      });
+    }
+    res.status(200).send("Created successfully");
+  }
 };
 
 const getCart = async (req, res) => {

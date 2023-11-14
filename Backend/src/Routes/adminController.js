@@ -1,4 +1,6 @@
 const Admin = require("../Models/Admin");
+const Pharmacist = require("../Models/Pharmacist");
+const Patient = require("../Models/Patient");
 const { default: mongoose } = require("mongoose");
 const express = require("express");
 const bcrypt = require('bcrypt')
@@ -9,12 +11,24 @@ const hashPassword = async (password) => {
 
 const createAdmin = async (req, res) => {
   try {
-    await Admin.create({
-      Username: req.body.Username,
-      Password: await hashPassword(req.body.Password),
-      Role: "Admin",
-    });
-    res.status(200).send("Created successfully");
+    let pharmacistUsername = await Admin.findOne({ Username: req.body.Username });
+    let patientUsername = await Patient.findOne({ Username: req.body.Username });
+    let pharmacistEmail = await Admin.findOne({ Email: req.body.Email });
+    let patientEmail = await Patient.findOne({ Email: req.body.Email });
+
+    if (patientUsername || pharmacistUsername) {
+      res.status(401).send("Username already exists");
+    } else if (patientEmail || pharmacistEmail) {
+      res.status(401).send("Email already exists");
+    } else {
+      await Admin.create({
+        Username: req.body.Username,
+        Password: await hashPassword(req.body.Password),
+        Role: "Admin",
+        Email: req.body.Email,
+      });
+      res.status(200).send("Created successfully");
+    }
   } catch (e) {
     res.status(400).send("Error could not create Admin !!");
   }
@@ -30,15 +44,21 @@ const getAdmins = async (req, res) => {
 };
 
 const updateAdmin = async (req, res) => {
-  //update a Doctor in the database
   try {
     const username = req.body.Username;
     const email = req.body.Email;
+
+    let pharmacistEmail = await Admin.findOne({ Email: req.body.Email });
+    let patientEmail = await Patient.findOne({ Email: req.body.Email });
     if ((await Admin.find({ Username: username }).length) == 0) {
       res.status(300).send("User Not Found");
     } else {
-      await Admin.updateOne({ Username: username }, { $set: { Email: email} });
-      res.status(200).send("Email updated successfully");
+      if (pharmacistEmail || patientEmail) {
+        await Admin.updateOne({ Username: username }, { $set: { Email: email } });
+        res.status(200).send("Email updated successfully");
+      } else {
+        res.status(401).send("Email already exists");
+      }
     }
   } catch (e) {
     res.status(400).send("Error could not update email !!");

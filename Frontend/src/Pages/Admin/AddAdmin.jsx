@@ -8,6 +8,7 @@ import axios from "axios";
 
 function AddAdmin(props) {
   const usernameRef = useRef();
+  const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConRef = useRef();
   const [Failed, setFailed] = useState(false);
@@ -15,6 +16,7 @@ function AddAdmin(props) {
   function submitHandeler(event) {
     event.preventDefault();
     const usernameValue = usernameRef.current.value;
+    const emailValue = emailRef.current.value;
     const passwordValue = passwordRef.current.value;
     const passwordConValue = passwordConRef.current.value;
     const newAdmin = {
@@ -23,13 +25,14 @@ function AddAdmin(props) {
     };
     console.log(newAdmin);
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
-    if (passwordRegex.test(passwordValue)) {
+    if (passwordRegex.test(passwordValue) && passwordConValue == passwordValue) {
       setFailed(false);
       axios
         .post("http://localhost:3001/addAdmin", newAdmin, {})
         .then((res) => {
           console.log("Admin added");
           usernameRef.current.value = "";
+          emailRef.current.value = "";
           passwordRef.current.value = "";
           passwordConRef.current.value = "";
         })
@@ -44,7 +47,7 @@ function AddAdmin(props) {
     <div>
       <Sidebar pageWrapId={"page-wrap"} outerContainerId={"outer-container"} />
       <div className=" justify-center flex mt-20">
-        <Card width="w-4/12" height=" h-[32rem]">
+        <Card width="w-4/12" height=" h-[36rem]">
           <div className=" flex justify-center  mt-6 mb-0 ">
             <a href="/Admin">
               <Logo height="4rem" className="mt-6 mb-0" />
@@ -67,6 +70,21 @@ function AddAdmin(props) {
                     id="username"
                     name="username"
                     ref={usernameRef}
+                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div className=" mb-4">
+                  <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2">
+                    {" "}
+                    Email :{" "}
+                  </label>
+                  <br />
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    ref={emailRef}
                     className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                   />
                 </div>
@@ -98,15 +116,19 @@ function AddAdmin(props) {
                   />
                 </div>
                 <div className=" flex justify-center  mt-6">
-                  <br />
-                  <br />
+                  {/* <br />
+                  <br /> */}
                   <button className="  text-sky-600  outline  w-40  h-9  rounded-md   mt-5 shadow">
                     {" "}
                     Confirm{" "}
                   </button>
-                  {Failed && <p>Incorrect password format.</p>}
                 </div>
               </div>
+              {Failed && (
+                <p className="text-red-500 text-center mt-2">
+                  Incorrect password format.
+                </p>
+              )}
             </form>
           </div>
         </Card>

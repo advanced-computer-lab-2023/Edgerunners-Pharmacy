@@ -290,7 +290,9 @@ function AddPharmacist(props) {
                 Submit Request{" "}
               </button>
               {Failed && (
-                <p style={{ color: "red" }}> Incorrect password format.</p>
+                <p className="text-red-500 text-center mt-2">
+                  Incorrect password format.
+                </p>
               )}
             </div>
           </form>

@@ -225,7 +225,11 @@ function AddPatient(props) {
                 {" "}
                 Register{" "}
               </button>
-              {Failed && <p>Incorrect password format.</p>}
+              {Failed && (
+                <p className="text-red-500 text-center mt-2">
+                  Incorrect password format.
+                </p>
+              )}
             </div>
           </form>
         </div>
