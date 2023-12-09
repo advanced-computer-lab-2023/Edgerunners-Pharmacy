@@ -7,7 +7,6 @@ mongoose.set("strictQuery", false);
 require("dotenv").config();
 // const { requireAuth } = require('./Middleware/authMiddleware');
 
-//const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57NmZ58DTz0O2ljqL8P42WLklVXPUZGPvmUD4hlxEkbit9nfpSPCWEB00UWnsTWUw');
 
 const {
@@ -33,7 +32,8 @@ const {
   createMedicine,
   getMedicines,
   updateMedicine,
-  deleteMedicine,
+  archiveMedicine,
+  unarchiveMedicine,
   findMedicine,
   updateQuantity,
   reverseQuantity,
@@ -126,9 +126,6 @@ app.put("/cancelOrder", cancelOrder);
 app.get("/getWallet", getWallet);
 app.put("/popOrder", popOrder);
 
-// app.get("/getPatient", requireAuth, getPatients);
-// app.delete("/deletePatient", requireAuth, deletePatient);
-
 app.post("/addPharmacist", createPharmacist);
 app.post("/uploadFile", uploadFile);
 app.get("/getPharmacist", getPharmacists);
@@ -137,30 +134,19 @@ app.put("/deletePharmacist", deletePharmacist);
 app.post("/uploadDocument", uploadDocument);
 app.get("/viewFiles/:filename", viewFiles);
 
-// app.get("/getPharmacist", requireAuth, getPharmacists);
-// app.delete("/deletePharmacist", requireAuth, deletePharmacist);
-//app.post("/uploadDocument", requireAuth, uploadDocument);
-
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);
 app.put("/updateMedicine", updateMedicine);
-app.put("/deleteMedicine", deleteMedicine);
+app.put("/archiveMedicine", archiveMedicine);
+app.put("/unarchiveMedicine", unarchiveMedicine);
 app.put("/updateQuantity", updateQuantity);
 app.put("/reverseQuantity", reverseQuantity);
-
-// app.post("/addMedicine", requireAuth, createMedicine);
-// app.get("/getMedicine", requireAuth, getMedicines);
-// app.put("/updateMedicine", requireAuth, updateMedicine);
-// app.delete("/deleteMedicine", requireAuth, deleteMedicine);
 
 app.post("/addAdmin", createAdmin);
 app.get("/getAdmin", getAdmins);
 app.put("/updateAdmin", updateAdmin);
 app.delete("/deleteAdmin", deleteAdmin);
 
-// app.post("/addAdmin", requireAuth, createAdmin);
-// app.get("/getAdmin", requireAuth, getAdmins);
-// app.delete("/deleteAdmin", requireAuth, deleteAdmin);
 
 //STRIPE ------------------------------------------------------------------------
 
@@ -205,35 +191,4 @@ app.post("/create-checkout-session", async (req, res) => {
   } catch (e) {
     console.log(e);
   }
-
-
-  // const products = await stripe.products.list({
-  //   active: true,
-  // });
-  // //console.log(products.data);
-  // let price = null;
-  // for(let i =0; i< products.data.length ; i++ ){
-  //   //console.log(products.data[i]);
-  //   console.log(req.body.name.name)
-  //   if(products.data[i].name === req.body.name.name ){
-  //     price = products.data[i].default_price; 
-  //     break;
-  //   }
-  // }
-  //   console.log(price);
-  //   const session = await stripe.checkout.sessions.create({
-  //     payment_method_types:["card"],
-  //     mode: "payment",
-  //     line_items:[{
-  //       price :price,
-  //       quantity: 1,
-  //   }],
-  //     success_url: 'http://localhost:5173/Success',
-  //     cancel_url: 'http://localhost:5173/Cancel',
-  //   });
-  //   res.send({url: session.url})
 });
-
-/*
-                                                    End of your code
-*/
