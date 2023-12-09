@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "../../UI/Logo";
 import './Patient.scss'
 import '../Bootstrap.scss'
+import { Input } from "postcss";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBedPulse,
@@ -11,9 +13,28 @@ import {
   faPrescriptionBottleMedical,
   faCartShopping,
   faSyringe,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Patient() {
+  const [randomPointsInWallet, setRandomPointsInWallet] = useState(0);
+
+  useEffect(() => {
+    getWalletValue();
+  }, []); // The empty dependency array ensures the effect runs only once
+
+  const getWalletValue = async () => {
+    try {
+      let username = sessionStorage.getItem("Username");
+      const res = await axios.get("http://localhost:3001/getWallet", {
+        params: { username }
+      });
+      console.log("Wallet data from the server:", res.data);
+      setRandomPointsInWallet(res.data);
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
   return (
     <div className="Bootstrap Patient">
       <div className="header">
@@ -66,20 +87,27 @@ export default function Patient() {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/changePassword">
-                    Change password
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href='/'
-                    onClick={() => {
-                      sessionStorage.removeItem("Username");
-                      sessionStorage.removeItem("type");
-                      sessionStorage.removeItem("token");
 
-                    }}>
-                    Log Out
+                </li>
+                <li className="nav-item dropdown group">
+                  <a
+                    className="nav-link dropdown-toggle flex items-center" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                  >
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
                   </a>
+                  <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
+                    <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
+                    <div className="dropdown-divider"></div>
+                    <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
+                    <a className="nav-link" aria-current="page" href='/'
+                      onClick={() => {
+                        sessionStorage.removeItem("Username");
+                        sessionStorage.removeItem("type");
+                        sessionStorage.removeItem("token");
+                      }}>Log Out</a>
+                  </div>
                 </li>
               </ul>
 
@@ -116,7 +144,7 @@ export default function Patient() {
           </div>
         </div>
       </div>
-      <div className="body">
+      <div className="body mt-4">
         <div className="description first">
           <FontAwesomeIcon
             className="icon"
@@ -149,10 +177,9 @@ export default function Patient() {
           </p>
         </div>
       </div>
-      <div className="footer">
+      <div className="footer mt-4">
         <div className="headers">
-          <h3>Choose Our Any Services<br>
-          </br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a></h3>
+          <h3>Choose one of our services</h3>
         </div>
         <div className="footer-in row">
           {/* <div className="col-4">
@@ -170,29 +197,29 @@ export default function Patient() {
               member
             </p>
           </div> */}
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faHandHoldingMedical}
               size="4x"
               style={{ color: "#82d76a" }}
-              bounce
             />
-            <a href="/ViewMedPatient">
-              <h3>Medicine</h3>
+            <a href="/ViewMedPatient" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Medicine
+              </h3>
             </a>
-            <p>View all available medicines</p>
+            <p style={{ textAlign: "center", color: "gray" }}>View all available medicines</p>
           </div>
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faCartShopping}
               size="4x"
               style={{ color: "#82d76a" }}
-              bounce
             />
-            <a href="/Cart">
-              <h3>View my cart</h3>
+            <a href="/Cart" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>View my cart</h3>
             </a>
-            <p>
+            <p style={{ textAlign: "center", color: "gray" }}>
               view all the medicines added to your cart
             </p>
           </div>
@@ -207,41 +234,38 @@ export default function Patient() {
             </a>
             <p>view a list of all doctors along with their speciality</p>
           </div> */}
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faPrescriptionBottleMedical}
               size="4x"
               style={{ color: "#82d76a" }}
-              bounce
             />
-            <a href="ViewOrders">
-              <h3>View orders</h3>
+            <a href="ViewOrders" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>View orders</h3>
             </a>
-            <p>View past/current orders' details</p>
+            <p style={{ textAlign: "center", color: "gray" }}>View past/current orders' details</p>
           </div>
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faSyringe}
               size="4x"
               style={{ color: "#82d76a" }}
-              bounce
             />
-            <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles">
-              <h3>Pharmacy</h3>
+            <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Pharmacy</h3>
             </a>
-            <p>Chat with a pharmacist</p>
+            <p style={{ textAlign: "center", color: "gray" }}>Chat with a pharmacist</p>
           </div>
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faFileCirclePlus}
               size="4x"
               style={{ color: "#82d76a" }}
-              bounce
             />
-            <a href="/Address">
-              <h3>Add delivery address</h3>
+            <a href="/Address" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Add delivery address</h3>
             </a>
-            <p>Upload/remove documents for my medical history</p>
+            <p style={{ textAlign: "center", color: "gray" }}>Upload/remove documents for my medical history</p>
           </div>
         </div>
       </div>
