@@ -2,9 +2,12 @@ import Logo from "../../UI/Logo";
 import React, { useState, useEffect } from 'react';
 import Sidebar from "../../Components/SidebarPatient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import './Patient.scss'
+import '../Bootstrap.scss'
 import {
   faTrashCan,
   faArrowLeft,
+  faUser,
   faBasketShopping
 } from "@fortawesome/free-solid-svg-icons";
 import GetCart from "../getCart";
@@ -73,19 +76,14 @@ function Cart() {
 
   const handleincrement = async (name, price) => {
     try {
-      // let availableQuantity = 0;
-      // if (count <= availableQuantity) {
-        await axios.put("http://localhost:3001/incrementQuantity", {
-          medicinename: name,
-          price: price,
-          username: sessionStorage.getItem("Username"),
-        });
-        console.log("Update request sent successfully");
-        setCount(count + 1);
-        setTotalPrice(totalprice + price);
-      // } else {
-      //   console.log("Cannot increment. Count is already at the cart's available quantity.");
-      // }
+      await axios.put("http://localhost:3001/incrementQuantity", {
+        medicinename: name,
+        price: price,
+        username: sessionStorage.getItem("Username"),
+      });
+      console.log("Update request sent successfully");
+      setCount(count + 1);
+      setTotalPrice(totalprice + price);
     } catch (error) {
       console.error("Error updating data:", error);
     }
@@ -101,8 +99,6 @@ function Cart() {
       console.log("Update request sent successfully");
       setCount(count - 1);
       setTotalPrice(totalprice - price);
-
-      // Update the state to trigger a re-render
     } catch (error) {
       console.error("Error updating data:", error);
     }
@@ -122,7 +118,6 @@ function Cart() {
   };
   const handlePayment = async () => {
     try {
-
       await Promise.all(CartData.map(async (medicine) => {
         const { medicineName, count } = medicine;
         await axios.put("http://localhost:3001/updateQuantity", {
@@ -174,64 +169,144 @@ function Cart() {
       console.error("Error updating data:", error);
     }
   }
-  if (CartData) {
-    console.log(CartData);
-    console.log(options);
+
+  if (CartData && CartData.length > 0) {
     return (
       <div>
-        <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-        <div className="justify-center flex mb-4">
-          <a href="/Patient">
-            <Logo />
-          </a>
+        <div className="Bootstrap Patient">
+          <div className="header">
+            <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
+              <div className="container">
+                <a href="/"
+                  onClick={() => {
+                    sessionStorage.removeItem("Username");
+                    sessionStorage.removeItem("type");
+                    sessionStorage.removeItem("token");
+                  }}><Logo /></a>
+                <button
+                  className="navbar-toggler ps-0"
+                  type="button"
+                  data-mdb-toggle="collapse"
+                  data-mdb-target="#navbarExample01"
+                  aria-controls="navbarExample01"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span className="navbar-toggler-icon d-flex justify-content-start align-items-center">
+                    <i className="fas fa-bars"></i>
+                  </span>
+                </button>
+                <div className="navbar-collapse" id="navbarExample01">
+                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {/* <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="#adoptions">
+                    Chat
+                  </a>
+                </li> */}
+                    <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="/ViewMedPatient">
+                        Medicine
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="/Cart">
+                        Cart
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="/ViewOrders">
+                        Orders
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="/Address">
+                        Add delivery address
+                      </a>
+                    </li>
+                    <li className="nav-item">
+
+                    </li>
+                    <li className="nav-item dropdown group">
+                      <a
+                        className="nav-link dropdown-toggle flex items-center" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                      >
+                        <FontAwesomeIcon icon={faUser} className="mr-2" />
+                        <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
+                      </a>
+                      <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
+                        <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
+                        <div className="dropdown-divider"></div>
+                        <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
+                        <a className="nav-link" aria-current="page" href='/'
+                          onClick={() => {
+                            sessionStorage.removeItem("Username");
+                            sessionStorage.removeItem("type");
+                            sessionStorage.removeItem("token");
+                          }}>Log Out</a>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <ul className="navbar-nav flex-row">
+                    <li className="nav-item">
+                      <a className="nav-link px-2" href="#!">
+                        <i className="fab fa-facebook-square"></i>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link px-2" href="#!">
+                        <i className="fab fa-instagram"></i>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link ps-2" href="#!">
+                        <i className="fab fa-youtube"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
         </div>
-        <div className="flex mb-14">
+        <div className="flex mb-14 mt-32">
           <div className="ml-10">
-
-            {CartData && CartData.length > 0 ?
-              (CartData.map((p, index) => (
-
-                <div key={index} className="mt-6 w-[60rem] h-[12rem] rounded-md shadow-md  bg-gray-100 justify-center space-y-4">
-                  <div className="justify-center pl-4 pt-4">
-                    {p.Picture ? (
-                      <img alt={p.Name} className="w-20 h-20 mt-12" />
-                    ) : (<div className="rounded-md shadow-md w-40 h-40 bg-gray-300"><br></br>no image</div>)}
-                    <br />
-                    <div className="-mt-44 ml-44 mb-4">
-                      <h3 className="font-bold"><a >{p.medicineName}</a></h3>
-                      <div className="-mt-6">
-                        <label className="text-gray-500 ml-64"> Each: </label><label className="font-bold ">EGP </label><label><a >{p.price}</a></label>
-                        <label className="text-gray-500 ml-64"> Total: </label><label className="font-bold ">EGP </label><label><a >{p.totalprice}</a></label>
-                        <br />
-                        <label className="text-gray-500">Use: </label><label className="text-gray-500"><a ></a></label>
-                        <br />
-                        <label className="text-gray-500">Description: </label>
-                        <div className="mt-8 ml-34">
-                          <label className="text-gray-500">Quantity: </label>
-                          <label className="text-grey pl-2"> {p.count} </label>
-                          <button className="justify-end text-red-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ml-2" onClick={() => handledecrement(p.medicineName, p.price)}>
-                            -
-                          </button>
-                          <button className="justify-end text-sky-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ml-3" onClick={() => handleincrement(p.medicineName, p.price)}>
-                            +
-                          </button>
-                          <button className="justify-end ml-80 pl-52" onClick={() => handleremove(p.medicineName)}>
-                            <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#DC2626" }} />
-                          </button>
-                        </div>
+            {CartData.map((p, index) => (
+              <div key={index} className="mt-6 w-[60rem] h-[12rem] rounded-md shadow-md  bg-gray-100 justify-center space-y-4">
+                <div className="justify-center pl-4 pt-4">
+                  {p.Picture ? (
+                    <img alt={p.Name} className="w-20 h-20 mt-12" />
+                  ) : (<div className="rounded-md shadow-md w-40 h-40 bg-gray-300"><br></br>no image</div>)}
+                  <br />
+                  <div className="-mt-44 ml-44 mb-4">
+                    <h3 className="font-bold"><a >{p.medicineName}</a></h3>
+                    <div className="-mt-6">
+                      <label className="text-gray-500 ml-64"> Each: </label><label className="font-bold ">EGP </label><label><a >{p.price}</a></label>
+                      <label className="text-gray-500 ml-64"> Total: </label><label className="font-bold ">EGP </label><label><a >{p.totalprice}</a></label>
+                      <br />
+                      <label className="text-gray-500">Use: </label><label className="text-gray-500"><a ></a></label>
+                      <br />
+                      <label className="text-gray-500">Description: </label>
+                      <div className="mt-8 ml-34">
+                        <label className="text-gray-500">Quantity: </label>
+                        <label className="text-grey pl-2"> {p.count} </label>
+                        <button className="justify-end text-red-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ml-2" onClick={() => handledecrement(p.medicineName, p.price)}>
+                          -
+                        </button>
+                        <button className="justify-end text-sky-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ml-3" onClick={() => handleincrement(p.medicineName, p.price)}>
+                          +
+                        </button>
+                        <button className="justify-end ml-80 pl-52" onClick={() => handleremove(p.medicineName)}>
+                          <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#DC2626" }} />
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
-              ))
-              ) : (
-                <div className="mt-6 w-[60rem] h-[12rem] justify-center space-y-4">
-                  <h1>The cart is empty</h1>
-                  <h3>You can add medicines <a href="/ViewMedPatient">here</a></h3>
-                </div>
-              )}
+              </div>
+            ))}
           </div>
-
           <div className="ml-4 mt-6 w-[30rem] h-[30rem] bg-gray-50 rounded-md shadow-md justify-center space-y-4">
             <div className="flex items-center mt-4 ml-4">
               <select id="dropdown" value={selectedOption} onChange={handleSelectChange} className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5">
@@ -248,9 +323,7 @@ function Cart() {
                 </button>
               </a>
             </div>
-
             <form className="ml-4 pt-4">
-
               <label className="text-gray-500">
                 <input
                   type="radio" name="paymentMethod"
@@ -278,7 +351,6 @@ function Cart() {
                   <label className="text-gray-500 ml-4"> Points remaining: {pointsRemaining} </label><br />
                 </div>
               )}
-
             </form>
             <div className="pt-4">
               <label className="text-gray-500 ml-4"> Shipping cost </label><label className="text-gray-500 ml-72"> TBD </label>
@@ -300,6 +372,112 @@ function Cart() {
               </a>
             </div>
           </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <div className="Bootstrap Patient">
+          <div className="header">
+            <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
+              <div className="container">
+                <a href="/"
+                  onClick={() => {
+                    sessionStorage.removeItem("Username");
+                    sessionStorage.removeItem("type");
+                    sessionStorage.removeItem("token");
+                  }}><Logo /></a>
+                <button
+                  className="navbar-toggler ps-0"
+                  type="button"
+                  data-mdb-toggle="collapse"
+                  data-mdb-target="#navbarExample01"
+                  aria-controls="navbarExample01"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span className="navbar-toggler-icon d-flex justify-content-start align-items-center">
+                    <i className="fas fa-bars"></i>
+                  </span>
+                </button>
+                <div className="navbar-collapse" id="navbarExample01">
+                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {/* <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="#adoptions">
+                    Chat
+                  </a>
+                </li> */}
+                    <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="/ViewMedPatient">
+                        Medicine
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="/Cart">
+                        Cart
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="/ViewOrders">
+                        Orders
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="/Address">
+                        Add delivery address
+                      </a>
+                    </li>
+                    <li className="nav-item">
+
+                    </li>
+                    <li className="nav-item dropdown group">
+                      <a
+                        className="nav-link dropdown-toggle flex items-center" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                      >
+                        <FontAwesomeIcon icon={faUser} className="mr-2" />
+                        <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
+                      </a>
+                      <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
+                        <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
+                        <div className="dropdown-divider"></div>
+                        <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
+                        <a className="nav-link" aria-current="page" href='/'
+                          onClick={() => {
+                            sessionStorage.removeItem("Username");
+                            sessionStorage.removeItem("type");
+                            sessionStorage.removeItem("token");
+                          }}>Log Out</a>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <ul className="navbar-nav flex-row">
+                    <li className="nav-item">
+                      <a className="nav-link px-2" href="#!">
+                        <i className="fab fa-facebook-square"></i>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link px-2" href="#!">
+                        <i className="fab fa-instagram"></i>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link ps-2" href="#!">
+                        <i className="fab fa-youtube"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div className="mt-44 h-[16rem] justify-center text-center space-y-4">
+          <h1>The cart is empty</h1>
+          <h3>You can add medicines <a href="/ViewMedPatient">here</a></h3>
         </div>
       </div>
     );
