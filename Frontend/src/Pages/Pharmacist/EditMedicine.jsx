@@ -1,14 +1,14 @@
 import { Card, Typography } from "@material-tailwind/react";
-import GetMedicine, { DeleteMedicine } from "../getMedicine";
 import axios from "axios";
-import React, { useState, useEffect, useCallback } from "react";
-import { MaterialReactTable } from "material-react-table";
+import React, { useState, useEffect } from "react";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import Logo from "../../UI/Logo";
 import Sidebar from "../../Components/SidebarPharm";
+import ArchiveIcon from "@mui/icons-material/Archive";
+import UnarchiveIcon from "@mui/icons-material/Unarchive";
 
 const TABLE_HEAD = [
   "Picture",
@@ -18,21 +18,36 @@ const TABLE_HEAD = [
   "Price",
   "Quantity",
   "Sales",
+  "Edit",
+  "Archive/Unarchive",
 ];
 
 export default function EditMedicine() {
   const [Medicine, setMedicine] = useState(null);
   const [editMode, setEditMode] = useState({});
   const [forceEffect, setForceEffect] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3001/getMedicine");
-        setMedicine(response.data);
+        const medicineData = response.data;
+
+        // Set initial state for editMode based on the status of each medicine
+        const initialEditMode = {};
+        medicineData.forEach((medicine) => {
+          initialEditMode[medicine.Name] = false;
+          initialEditMode[`unarchive_${medicine.Name}`] =
+            medicine.Status === "Archived";
+        });
+
+        setMedicine(medicineData);
+        setEditMode(initialEditMode);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+
     fetchData();
     setForceEffect(false);
   }, [forceEffect]);
@@ -79,6 +94,64 @@ export default function EditMedicine() {
     }
   };
 
+  const handleArchive = async (p) => {
+    try {
+      const response = await axios.put("http://localhost:3001/archiveMedicine", {
+        Name: p.Name,
+      });
+
+      if (response.status === 200) {
+        // Update state immediately without waiting for the next render
+        setMedicine((prevMedicine) =>
+          prevMedicine.map((medicine) =>
+            medicine.Name === p.Name
+              ? { ...medicine, Status: 'Archived' }
+              : medicine
+          )
+        );
+        console.log("Archive request sent successfully");
+
+        // If the medicine is archived, update the state to change the button to unarchive
+        setEditMode((prevEditMode) => ({
+          ...prevEditMode,
+          [p.Name]: false,
+          [`unarchive_${p.Name}`]: true,
+        }));
+      }
+    } catch (error) {
+      console.error("Error archiving data:", error);
+    }
+  };
+
+  const handleUnarchive = async (p) => {
+    try {
+      const response = await axios.put("http://localhost:3001/unarchiveMedicine", {
+        Name: p.Name,
+      });
+
+      if (response.status === 200) {
+        // Update state immediately without waiting for the next render
+        setMedicine((prevMedicine) =>
+          prevMedicine.map((medicine) =>
+            medicine.Name === p.Name
+              ? { ...medicine, Status: 'Not' }
+              : medicine
+          )
+        );
+        console.log("Unarchive request sent successfully");
+
+        // If the medicine is unarchived, update the state to change the button back to archive
+        setEditMode((prevEditMode) => ({
+          ...prevEditMode,
+          [p.Name]: false,
+          [`unarchive_${p.Name}`]: false,
+        }));
+      }
+    } catch (error) {
+      console.error("Error unarchiving data:", error);
+    }
+  };
+
   if (Medicine === null) {
     return <div>Loading...</div>;
   } else if (Medicine.length === 0) {
@@ -110,10 +183,9 @@ export default function EditMedicine() {
               <tbody>
                 {Medicine.map((p, index) => {
                   const isLast = index === Medicine.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
+                  const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
                   const isEditing = editMode[p.Name] || false;
+
                   return (
                     <tr key={p.Name}>
                       <td className={classes}>
@@ -246,6 +318,25 @@ export default function EditMedicine() {
                             </Tooltip>
                           </Box>
                         )}
+                      </td>
+                      <td className={classes}>
+                        <Box sx={{ display: "flex", gap: "1rem" }}>
+                          {editMode[`unarchive_${p.Name}`] ? (
+                            // Unarchive button
+                            <Tooltip arrow placement="right" title="Unarchive">
+                              <IconButton color="default" onClick={() => handleUnarchive(p)}>
+                                <UnarchiveIcon />
+                              </IconButton>
+                            </Tooltip>
+                          ) : (
+                            // Archive button
+                            <Tooltip arrow placement="right" title="Archive">
+                              <IconButton color="default" onClick={() => handleArchive(p)}>
+                                <ArchiveIcon />
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                        </Box>
                       </td>
                       <td className={classes}>
                         {isEditing ? (

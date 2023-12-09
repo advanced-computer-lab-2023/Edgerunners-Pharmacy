@@ -167,7 +167,7 @@ export default function Pharm() {
             </a>
             <p>View all available medicines</p>
           </div>
-          <div className="col-4">
+          {/* <div className="col-4">
             <FontAwesomeIcon
               icon={faShoppingCart}
               size="4x"
@@ -178,7 +178,7 @@ export default function Pharm() {
             <p>
               Choose medicine to archive/unarchive
             </p>
-          </div>
+          </div> */}
           {/* <div className="col-4">
             <FontAwesomeIcon
               icon={faStethoscope}
@@ -192,16 +192,6 @@ export default function Pharm() {
           </div> */}
           <div className="col-4">
             <FontAwesomeIcon
-              icon={faPrescriptionBottleMedical}
-              size="4x"
-              style={{ color: "#82d76a" }}
-              bounce
-            />
-            <h3>Clinic</h3>
-            <p>Chat with a doctor</p>
-          </div>
-          <div className="col-4">
-            <FontAwesomeIcon
               icon={faSyringe}
               size="4x"
               style={{ color: "#82d76a" }}
@@ -212,6 +202,16 @@ export default function Pharm() {
           </div>
           <div className="col-4">
             <FontAwesomeIcon
+              icon={faPrescriptionBottleMedical}
+              size="4x"
+              style={{ color: "#82d76a" }}
+              bounce
+            />
+            <h3>Clinic</h3>
+            <p>Chat with a doctor</p>
+          </div>
+          {/* <div className="col-4">
+            <FontAwesomeIcon
               icon={faFileCirclePlus}
               size="4x"
               style={{ color: "#82d76a" }}
@@ -221,7 +221,7 @@ export default function Pharm() {
               <h3>Upload/Remove Documents</h3>
             </a>
             <p>Upload/remove documents for my medical history</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
