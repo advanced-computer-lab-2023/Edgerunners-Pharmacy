@@ -110,8 +110,8 @@ const findMedicine = async (req, res) => {
     res.status(200).send({ data: Medicine });
   }
 };
-const deleteMedicine = async (req, res) => {
-  //delete a Medicine from the database
+const archiveMedicine = async (req, res) => {
+  //archive Medicine
   try {
     if ((await Medicine.find({ Name: req.body.Name })).length == 0) {
       res.status(300).send("Medicine Not Found");
@@ -124,10 +124,31 @@ const deleteMedicine = async (req, res) => {
       await stripe.products.update(product.id, {
         active: false,
       });
-      res.status(200).send("Deleted successfully");
+      res.status(200).send("Archived successfully");
     }
   } catch (e) {
-    res.status(400).send("Error could not delete Medicine !!");
+    res.status(400).send("Error could not archive Medicine !!");
+  }
+};
+
+const unarchiveMedicine = async (req, res) => {
+  //unarchive Medicine
+  try {
+    if ((await Medicine.find({ Name: req.body.Name })).length == 0) {
+      res.status(300).send("Medicine Not Found");
+    } else {
+      await Medicine.updateOne({ Name: req.body.Name }, {$set: {Status: "Not"}});
+      const products = await stripe.products.list({
+        active: true,limit : 1000,
+      });
+      const product = products.data.find((p) => p.name === req.body.Name);
+      await stripe.products.update(product.id, {
+        active: true,
+      });
+      res.status(200).send("Unarchived successfully");
+    }
+  } catch (e) {
+    res.status(400).send("Error could not unarchive Medicine !!");
   }
 };
 
@@ -197,7 +218,8 @@ module.exports = {
   createMedicine,
   getMedicines,
   updateMedicine,
-  deleteMedicine,
+  archiveMedicine,
+  unarchiveMedicine,
   findMedicine,
   updateQuantity,
   reverseQuantity,
