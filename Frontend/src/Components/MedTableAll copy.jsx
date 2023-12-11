@@ -47,10 +47,10 @@ export default function MedTableAllCopy() {
     console.log(Medicine);
     return (
       <div className="">
-        <div className="form-prescription space-x-3 justify-center flex -mt-4 -mb-16">
-          <label className="-mb-4 -mt-60">Name</label>
+        <div className="form-prescription space-x-3 justify-center flex mb-4 mt-4">
+          <label className="-mt-48">Search</label>
           <input
-            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
+            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-48 shadow"
             type="text"
             name=""
             id=""
@@ -58,15 +58,15 @@ export default function MedTableAllCopy() {
               setName(e.target.value);
             }}
           />
-          <label className="-mb-4 -mt-60">Medicinal Use</label>
+          <label className="-mt-48">Medicinal Use</label>
           <input
-            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
+            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-48 shadow"
             type="text"
             onChange={(e) => {
               setMedicinalUse(e.target.value);
             }}
           />
-          <button className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4" type="submit" onSubmit={handleSubmit}>
+          <button className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-48 shadow" type="submit" onSubmit={handleSubmit}>
             Submit
           </button>
         </div>
