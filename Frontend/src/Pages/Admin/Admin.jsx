@@ -11,6 +11,7 @@ import {
   faUserInjured,
   faUserPlus,
   faUser,
+  faSyringe
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Admin() {
@@ -68,6 +69,11 @@ export default function Admin() {
                 </li>
                 <li className="nav-item">
 
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/ViewSalesAdmin">
+                    Sales Report
+                  </a>
                 </li>
                 <li className="nav-item dropdown group">
                   <a
@@ -225,6 +231,19 @@ export default function Admin() {
               </h3>
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View all available medicines</p>
+          </div>
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
+            <FontAwesomeIcon
+              icon={faSyringe}
+              size="4x"
+              style={{ color: "#93AFDA" }}
+            />
+            <a href="/ViewSalesAdmin" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Sales Report
+              </h3>
+            </a>
+            <p style={{ textAlign: "center", color: "gray" }}>View sales based on a chosen month</p>
           </div>
         </div>
       </div>

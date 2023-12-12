@@ -53,6 +53,11 @@ const Sidebar = () => {
                 <li className="nav-item">
 
                 </li>
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/ViewSalesAdmin">
+                    Sales Report
+                  </a>
+                </li>
                 <li className="nav-item dropdown group">
                   <a
                     className="nav-link dropdown-toggle flex items-center" href="#" id="navbarDropdown" role="button"
