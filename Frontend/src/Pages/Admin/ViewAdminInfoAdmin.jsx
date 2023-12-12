@@ -6,7 +6,7 @@ function ViewAdminInfoAdmin() {
     <div className="flex justify-center items-center">
       <div id="outer-container">
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-        <div className="mt-40 items-center flex justify-center">
+        <div className="mt-28 items-center flex justify-center">
           <AdminTable />
         </div>
       </div>

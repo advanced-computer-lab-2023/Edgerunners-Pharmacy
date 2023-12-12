@@ -91,7 +91,7 @@ export default function Admin() {
             </div>
           </div>
         </nav>
-        <div className="information-div">
+        {/* <div className="information-div">
           <div>
             <Logo className="logo" width={800} height={800} />
           </div>
@@ -102,9 +102,9 @@ export default function Admin() {
             </h1>
             <h3>Admin Homepage</h3>
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="body">
+      {/* <div className="body">
         <div className="description first">
           <FontAwesomeIcon
             className="icon"
@@ -136,18 +136,19 @@ export default function Admin() {
             Experience a seamless healthcare experience that puts you in control of your wellness journey
           </p>
         </div>
-      </div>
-      <div className="footer">
+      </div> */}
+      <div className="footer mt-20">
         <div className="headers">
-          <h3>Choose Our Any Services<br>
-          </br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a></h3>
+          <h3>Choose one of our services
+            {/* <br></br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a> */}
+          </h3>
         </div>
         <div className="footer-in row">
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faUser}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewAdminInfoAdmin" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
@@ -156,11 +157,11 @@ export default function Admin() {
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View all admins</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faUserDoctor}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewPharmInfoAdmin" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
@@ -169,11 +170,11 @@ export default function Admin() {
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View all pharmacists</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faUserInjured}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewPatientInfoAdmin" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
@@ -182,11 +183,11 @@ export default function Admin() {
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View all patients</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faFileCirclePlus}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewRequestsAdmin" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
@@ -195,11 +196,11 @@ export default function Admin() {
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View all pharmacists' requests</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faHandHoldingMedical}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewMedAdmin" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>

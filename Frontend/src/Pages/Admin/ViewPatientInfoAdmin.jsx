@@ -6,7 +6,7 @@ function ViewPatientInfoAdmin() {
     <div className="flex">
       <div id="outer-container">
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-        <div className="mt-40 items-center justify-center">
+        <div className="mt-28 items-center justify-center">
           <PatientTable />
         </div>
       </div>
