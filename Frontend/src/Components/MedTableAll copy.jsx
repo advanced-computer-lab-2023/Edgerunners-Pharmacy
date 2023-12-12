@@ -11,6 +11,7 @@ export default function MedTableAllCopy() {
   const [name, setName] = useState();
   const [medicinaluse, setMedicinalUse] = useState();
   const [forceEffect, setForceEffect] = useState(false);
+  const [addedToCart, setAddedToCart] = useState({});
 
   let MedicinalUses = GetMedicinalUse({});
   const uses = MedicinalUses || [];
@@ -19,18 +20,26 @@ export default function MedTableAllCopy() {
     Name: name,
     MedicinalUse: medicinaluse,
   });
+
   const handleSubmit = async (e) => {
-    e.preventDefaut();
+    e.preventDefault();
     Medicine = await GetMedicine({
       Name: name,
       MedicinalUse: medicinaluse,
     });
   };
 
-  const handleaddcart = async (name, price, availableQuantity) => {
+  const handleAddToCart = async (name, price, availableQuantity) => {
     if (sessionStorage.getItem("type") === "Patient") {
       try {
         if (availableQuantity > 0) {
+          // Disable the button temporarily
+          setAddedToCart((prevAddedToCart) => ({
+            ...prevAddedToCart,
+            [name]: true,
+          }));
+
+          // Update the cart
           axios.put("http://localhost:3001/updatePatient", {
             medicinename: name,
             quantity: 1,
@@ -38,6 +47,15 @@ export default function MedTableAllCopy() {
             username: sessionStorage.getItem("Username"),
           });
           console.log("Update request sent successfully");
+
+          // Wait for 2 seconds
+          setTimeout(() => {
+            // Enable the button after 2 seconds
+            setAddedToCart((prevAddedToCart) => ({
+              ...prevAddedToCart,
+              [name]: false,
+            }));
+          }, 500);
         } else {
           console.log("Cannot add to cart. Insufficient quantity.");
         }
@@ -73,7 +91,7 @@ export default function MedTableAllCopy() {
               setMedicinalUse(e.target.value);
             }}
           >
-            <option value="" disabled>
+            <option value="" enabled>
               Select Medicinal Use
             </option>
             {Array.isArray(uses) &&
@@ -115,8 +133,10 @@ export default function MedTableAllCopy() {
                     </div>
                   </div>
                   <div className="space-x-3 mt-11">
-                    <button className="justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 " onClick={() => handleaddcart(p.Name, p.Price, p.Quantity)}>
-                      <FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" /> Add to cart
+                    <button className={`justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 ${addedToCart[p.Name] ? 'bg-gray-300 cursor-not-allowed' : ''}`} 
+                            onClick={() => handleAddToCart(p.Name, p.Price, p.Quantity)}
+                            disabled={addedToCart[p.Name]}>
+                      {addedToCart[p.Name] ? 'Added to cart' : <><FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" /> Add to cart</>}
                     </button>
                   </div>
                 </div>

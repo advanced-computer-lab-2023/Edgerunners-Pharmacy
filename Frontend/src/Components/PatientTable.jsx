@@ -131,7 +131,7 @@ const PatientTable = () => {
   );
 
   return (
-    <div style={{ height: '100vh', width: '100vw' }}>
+    <div style={{ height: '100vh', width: '98.9vw' }}>
       <div className = "items-center flex justify-center">
         <h2 style={{ color: '#93AFDA'}}>Patients</h2>
       </div>
