@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Logo from "../../UI/Logo";
 import GetMedicine from "../getMedicine";
+import GetMedicinalUse from "../getMedicinalUses";
 import { Card } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../Components/SidebarPharm";
@@ -8,6 +9,9 @@ import Sidebar from "../../Components/SidebarPharm";
 export default function ViewMedPharmCopy() {
   const [name, setName] = useState();
   const [medicinaluse, setMedicinalUse] = useState();
+
+  let MedicinalUses = GetMedicinalUse({});
+  const uses = MedicinalUses || [];
 
   let Medicine = GetMedicine({
     Name: name,
@@ -53,14 +57,6 @@ export default function ViewMedPharmCopy() {
                 setName(e.target.value);
               }}
             />
-            <label className="-mt-60">Medicinal Use</label>
-            <input
-              className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
-              type="text"
-              onChange={(e) => {
-                setMedicinalUse(e.target.value);
-              }}
-            />
             <button
               className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
               type="submit"
@@ -68,6 +64,24 @@ export default function ViewMedPharmCopy() {
             >
               Submit
             </button>
+            <label className="-mt-60">Medicinal Use</label>
+            <select
+              className="text-sky-600 outline w-40 h-9 rounded-md -mt-60 shadow -mb-4"
+              value={medicinaluse}
+              onChange={(e) => {
+                setMedicinalUse(e.target.value);
+              }}
+            >
+              <option value="" disabled>
+                Select Medicinal Use
+              </option>
+              {Array.isArray(uses) &&
+                uses.map((use, index) => (
+                  <option key={index} value={use}>
+                    {use}
+                  </option>
+                ))}
+            </select>
             <div className="space-x-3 -mt-60">
               <button
                 className="  text-sky-600  outline  w-40  h-9  rounded-md shadow"
@@ -88,7 +102,7 @@ export default function ViewMedPharmCopy() {
         </div>
 
         <div className="grid grid-cols-4 flex -mt-40 ml-20 pb-10">
-        {Medicine.map((p, index) => {
+          {Medicine.map((p, index) => {
             return (
               <div key={index} className="mt-10 mb-2 pb-2 w-[20rem] h-[16rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
                 <div className="justify-center pl-4 mt-6">

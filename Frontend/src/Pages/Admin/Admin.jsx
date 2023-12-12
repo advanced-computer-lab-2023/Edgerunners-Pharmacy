@@ -88,6 +88,23 @@ export default function Admin() {
                   </div>
                 </li>
               </ul>
+              <ul className="navbar-nav flex-row">
+                <li className="nav-item">
+                  <a className="nav-link px-2" href="#!">
+                    <i className="fab fa-facebook-square"></i>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link px-2" href="#!">
+                    <i className="fab fa-instagram"></i>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link ps-2" href="#!">
+                    <i className="fab fa-youtube"></i>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </nav>
