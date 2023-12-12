@@ -58,7 +58,7 @@ export default function Pharm() {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page">
+                  <a className="nav-link" aria-current="page" href="/ViewSales">
                     Sales Report
                   </a>
                 </li>
@@ -176,7 +176,7 @@ export default function Pharm() {
               size="4x"
               style={{ color: "#93AFDA" }}
             />
-            <a style={{ textDecoration: "none" }}>
+            <a href="/ViewSales" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
                 Sales Report
               </h3>

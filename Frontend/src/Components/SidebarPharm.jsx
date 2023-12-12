@@ -41,7 +41,7 @@ const SidebarPharm = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page">
+                  <a className="nav-link" aria-current="page" href="/ViewSales">
                     Sales Report
                   </a>
                 </li>

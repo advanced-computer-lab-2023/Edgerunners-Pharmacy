@@ -30,6 +30,8 @@ import LoginPage from './Pages/Login/LoginPage';
 import ChangePassword from './Pages/Login/ChangePassword';
 import Login from './Pages/Login/Login';
 import AddEmail from './Pages/Admin/AddEmail';
+import ViewSales from './Pages/Pharmacist/ViewSales';
+import ViewSalesAdmin from './Pages/Admin/ViewSalesAdmin';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 if(sessionStorage.getItem("type") === null || sessionStorage.getItem("type") === "PendingPharmacist") {
@@ -62,6 +64,7 @@ root.render(
         <Route path="/ViewRequestsAdmin" element={<ViewRequestsAdmin />} />
         <Route path="/ViewMedAdmin" element={<ViewMedAdmin />} />
         <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/ViewSalesAdmin" element={<ViewSalesAdmin />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
@@ -76,6 +79,7 @@ root.render(
         <Route path="/EditMedicine" element={<EditMedicine />} />
         <Route path="/ViewMedPharm" element={<ViewMedPharmCopy />} />
         <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/ViewSales" element={<ViewSales />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
