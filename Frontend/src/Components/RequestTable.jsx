@@ -94,7 +94,10 @@ const RequestTable = () => {
   const pendingRequests = requests.filter((request) => request.reqStatus === 'Pending');
 
   return (
-    <div style={styles.tableContainer}>
+    <div style={{ ...styles.tableContainer, height: '100vh', width: '100vw' }}>
+      <div className = "items-center flex justify-center">
+        <h2 style={{ color: '#93AFDA'}}>Pharmacists' Requests</h2>
+      </div>
       <table style={styles.requestTable}>
         <thead>
           <tr style={styles.tableHeader}>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Logo from "../../UI/Logo";
 import GetMedicine from "../getMedicine";
 import { Card } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";

@@ -42,12 +42,7 @@ export default function Admin() {
             <div className="navbar-collapse" id="navbarExample01">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/AddEmail">
-                    Admin Email
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/AddAdmin">
+                  <a className="nav-link" aria-current="page" href="/ViewAdminInfoAdmin">
                     Admins
                   </a>
                 </li>
@@ -150,16 +145,16 @@ export default function Admin() {
         <div className="footer-in row">
           <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
-              icon={faUserPlus}
+              icon={faUser}
               size="4x"
               style={{ color: "#82d76a" }}
             />
-            <a href="/AddAdmin" style={{ textDecoration: "none" }}>
+            <a href="/ViewAdminInfoAdmin" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
-                Add Admin
+                Admins
               </h3>
             </a>
-            <p style={{ textAlign: "center", color: "gray" }}>Add a new admin to the system</p>
+            <p style={{ textAlign: "center", color: "gray" }}>View all admins</p>
           </div>
           <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon

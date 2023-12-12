@@ -33,23 +33,23 @@ const PharmTable = () => {
       ) {
         const usernameToDelete = row.getValue('username');
         //console.log(usernameToDelete);
-      await axios.delete("http://localhost:3001/deletePharmacist",{data: {Username: usernameToDelete}})
-      .then((response) => {
-        if (response.status === 200) {
-          // Update the local table data to remove the deleted row
-          const updatedData = tableData.filter((item) => item.username !== usernameToDelete);
-          setTableData(updatedData);
-          console.log(`Deleted user: ${usernameToDelete}`);
-        } else {
-          console.error(`Failed to delete user: ${usernameToDelete}`);
-        }
-      })
-      .catch((error) => {
-        console.error(`Error deleting user: ${usernameToDelete}`, error);
-      });
-      // const updatedData = [...tableData];
-      // updatedData.splice(row.index, 1);
-      // setTableData(updatedData);
+        await axios.delete("http://localhost:3001/deletePharmacist", { data: { Username: usernameToDelete } })
+          .then((response) => {
+            if (response.status === 200) {
+              // Update the local table data to remove the deleted row
+              const updatedData = tableData.filter((item) => item.username !== usernameToDelete);
+              setTableData(updatedData);
+              console.log(`Deleted user: ${usernameToDelete}`);
+            } else {
+              console.error(`Failed to delete user: ${usernameToDelete}`);
+            }
+          })
+          .catch((error) => {
+            console.error(`Error deleting user: ${usernameToDelete}`, error);
+          });
+        // const updatedData = [...tableData];
+        // updatedData.splice(row.index, 1);
+        // setTableData(updatedData);
       }
     },
     [tableData],
@@ -128,10 +128,13 @@ const PharmTable = () => {
     ],
     [handleDeleteRow]
   );
-  
+
 
   return (
-    <div>
+    <div style={{ height: '100vh', width: '100vw' }}>
+      <div className = "items-center flex justify-center">
+        <h2 style={{ color: '#93AFDA'}}>Pharmacists</h2>
+      </div>
       <MaterialReactTable
         columns={columns}
         data={tableData}
