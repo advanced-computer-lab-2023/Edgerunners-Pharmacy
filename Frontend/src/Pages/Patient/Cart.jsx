@@ -111,7 +111,7 @@ function Cart() {
         username: sessionStorage.getItem("Username"),
       });
       console.log("Item removed successfully");
-      setCount(0);
+      setCount(count-count);
     } catch (error) {
       console.error("Error updating data:", error);
     }
@@ -273,11 +273,11 @@ function Cart() {
         <div className="flex mb-14 mt-32">
           <div className="ml-10">
             {CartData.map((p, index) => (
-              <div key={index} className="mt-6 w-[60rem] h-[12rem] rounded-md shadow-md  bg-gray-100 justify-center space-y-4">
+              <div key={index} className="mt-6 w-[60rem] h-[14.25rem] rounded-md shadow-md  bg-gray-100 justify-center space-y-4">
                 <div className="justify-center pl-4 pt-4">
                   {p.Picture ? (
-                    <img alt={p.Name} className="w-20 h-20 mt-12" />
-                  ) : (<div className="rounded-md shadow-md w-40 h-40 bg-gray-300"><br></br>no image</div>)}
+                    <img alt={p.Name} className="w-20 h-20 mt-16" />
+                  ) : (<div className="mt-4 rounded-md shadow-md w-40 h-40 bg-gray-300"><br></br>no image</div>)}
                   <br />
                   <div className="-mt-44 ml-44 mb-4">
                     <h3 className="font-bold"><a >{p.medicineName}</a></h3>

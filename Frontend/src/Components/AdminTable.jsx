@@ -64,7 +64,7 @@ const AdminTable = () => {
                 enableColumnOrdering: false,
                 enableEditing: false,
                 enableSorting: false,
-                size: 80,
+                size: 100,
             },
             {
                 accessorKey: 'username',
@@ -105,7 +105,7 @@ const AdminTable = () => {
             <div className="items-center flex justify-center">
                 <h2 style={{ color: '#93AFDA' }}>Admins</h2>
             </div>
-            <div style={{ height: '100vh', width: '80vw' }}>
+            <div style={{ height: '100vh', width: '98.9vw' }}>
                 <MaterialReactTable
                     columns={columns}
                     data={tableData}
