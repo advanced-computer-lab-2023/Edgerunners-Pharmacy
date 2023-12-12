@@ -28,12 +28,7 @@ const SidebarPatient = () => {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-            <a href="/"
-              onClick={() => {
-                sessionStorage.removeItem("Username");
-                sessionStorage.removeItem("type");
-                sessionStorage.removeItem("token");
-              }}><Logo /></a>
+            <a href="/Patient"><Logo /></a>
             <button
               className="navbar-toggler ps-0"
               type="button"
@@ -93,7 +88,6 @@ const SidebarPatient = () => {
                   </div>
                 </li>
               </ul>
-
               <ul className="navbar-nav flex-row">
                 <li className="nav-item">
                   <a className="nav-link px-2" href="#!">

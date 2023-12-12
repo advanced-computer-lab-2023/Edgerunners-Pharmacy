@@ -47,10 +47,10 @@ function AddAdmin(props) {
   return (
     <div>
       <Sidebar pageWrapId={"page-wrap"} outerContainerId={"outer-container"} />
-      <div className=" justify-center flex mt-20">
+      <div className=" justify-center flex mt-28">
         <Card width="w-4/12" height=" h-[36rem]">
           <div className=" flex justify-center  mt-6 mb-0 ">
-            <a href="/Admin">
+            <a href="/ViewAdminInfoAdmin">
               <Logo height="4rem" className="mt-6 mb-0" />
             </a>
             <h1 className="text-2xl font-bold text-center text-sky-600 ml-0 mt-6">

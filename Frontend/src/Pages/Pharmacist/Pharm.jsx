@@ -74,7 +74,6 @@ export default function Pharm() {
                   </div>
                 </li>
               </ul>
-
               <ul className="navbar-nav flex-row">
                 <li className="nav-item">
                   <a className="nav-link px-2" href="#!">
@@ -95,7 +94,7 @@ export default function Pharm() {
             </div>
           </div>
         </nav>
-        <div className="information-div">
+        {/* <div className="information-div">
           <div>
             <Logo className="logo" width={800} height={800} />
           </div>
@@ -106,9 +105,9 @@ export default function Pharm() {
             </h1>
             <h3>Pharmacist Homepage</h3>
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="body">
+      {/* <div className="body">
         <div className="description first">
           <FontAwesomeIcon
             className="icon"
@@ -140,18 +139,19 @@ export default function Pharm() {
             Experience a seamless healthcare experience that puts you in control of your wellness journey
           </p>
         </div>
-      </div>
-      <div className="footer">
+      </div> */}
+      <div className="footer mt-20">
         <div className="headers">
-          <h3>Choose Our Any Services<br>
-          </br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a></h3>
+          <h3>Choose one of our services
+            {/* <br></br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a> */}
+          </h3>
         </div>
         <div className="footer-in row">
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faHandHoldingMedical}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewMedPharm" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
@@ -160,28 +160,28 @@ export default function Pharm() {
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View all available medicines</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faSyringe}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#93AFDA" }}
             />
             <a style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
-              Sales Report
+                Sales Report
               </h3>
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View sales based on a chosen month</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faPrescriptionBottleMedical}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#93AFDA" }}
             />
             <a style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
-              Clinic
+                Clinic
               </h3>
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>Chat with a doctor</p>

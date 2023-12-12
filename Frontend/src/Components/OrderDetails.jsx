@@ -67,7 +67,7 @@ const OrderDetails = () => {
                 // Reverse the quantities
                 const cartItems = updatedOrdersData.find((order) => order.id === id)?.cartItems || [];
                 let totalprice = 0;
-                for(let i = 0; i< cartItems.length ; i++){
+                for (let i = 0; i < cartItems.length; i++) {
                     totalprice += cartItems[i].totalprice;
                 }
                 await axios.put('http://localhost:3001/cancelOrder', {
@@ -93,7 +93,7 @@ const OrderDetails = () => {
 
                     return updatedOrders;
                 });
-   
+
                 await Promise.all(cartItems.map(async (medicine) => {
                     const { medicineName, count, totalprice } = medicine;
                     await axios.put("http://localhost:3001/reverseQuantity", {
@@ -103,7 +103,7 @@ const OrderDetails = () => {
                 }));
                 updatedOrdersData = await makeOrderDetails();
                 setOrders(updatedOrdersData);
-            } else{
+            } else {
                 console.log("Already cancelled");
             }
         } catch (error) {
@@ -113,6 +113,9 @@ const OrderDetails = () => {
 
     return (
         <div style={styles.tableContainer}>
+            <div className="items-center flex justify-center">
+                <h2 style={{ color: '#93AFDA' }}>Orders</h2>
+            </div>
             <table style={styles.requestTable}>
                 <thead>
                     <tr style={styles.tableHeader}>

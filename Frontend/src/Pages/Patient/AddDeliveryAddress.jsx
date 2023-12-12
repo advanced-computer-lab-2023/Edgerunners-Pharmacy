@@ -32,7 +32,7 @@ function AddDeliveryAddress() {
     return (
         <div>
             <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-            <div className=" justify-center flex mt-20">
+            <div className="items-center flex justify-center mt-28">
                 <Card width='w-4/12' height=' h-[35rem]'>
                     <div className=" flex justify-center  mt-6 mb-0 ">
                         <a href="/Patient"><Logo height='4rem' className="mt-6 mb-0" /></a>

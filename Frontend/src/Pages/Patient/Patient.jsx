@@ -126,7 +126,7 @@ export default function Patient() {
             </div>
           </div>
         </nav>
-        <div className="information-div">
+        {/* <div className="information-div">
           <div>
             <Logo className="logo" width={800} height={800} />
           </div>
@@ -137,9 +137,9 @@ export default function Patient() {
             </h1>
             <h3>Patient Homepage</h3>
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="body mt-4">
+      {/* <div className="body mt-4">
         <div className="description first">
           <FontAwesomeIcon
             className="icon"
@@ -171,17 +171,17 @@ export default function Patient() {
             Experience a seamless healthcare experience that puts you in control of your wellness journey
           </p>
         </div>
-      </div>
-      <div className="footer mt-4">
+      </div> */}
+      <div className="footer mt-20">
         <div className="headers">
           <h3>Choose one of our services</h3>
         </div>
         <div className="footer-in row">
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faHandHoldingMedical}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewMedPatient" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
@@ -190,51 +190,51 @@ export default function Patient() {
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View all available medicines</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faCartShopping}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/Cart" style={{ textDecoration: "none" }}>
-              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>View my cart</h3>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Cart</h3>
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>
               view all the medicines added to your cart
             </p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faPrescriptionBottleMedical}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="ViewOrders" style={{ textDecoration: "none" }}>
-              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>View orders</h3>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Orders</h3>
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>View past/current orders' details</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faSyringe}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#93AFDA" }}
             />
             <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Pharmacy</h3>
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>Chat with a pharmacist</p>
           </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center">
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
               icon={faFileCirclePlus}
               size="4x"
-              style={{ color: "#82d76a" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/Address" style={{ textDecoration: "none" }}>
-              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Add delivery address</h3>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Delivery address</h3>
             </a>
-            <p style={{ textAlign: "center", color: "gray" }}>Upload/remove documents for my medical history</p>
+            <p style={{ textAlign: "center", color: "gray" }}>Add a new delivery address</p>
           </div>
         </div>
       </div>
