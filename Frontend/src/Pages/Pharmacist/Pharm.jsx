@@ -11,6 +11,7 @@ import {
   faPrescriptionBottleMedical,
   faSyringe,
   faShoppingCart,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Pharm() {
@@ -41,30 +42,36 @@ export default function Pharm() {
             </button>
             <div className="navbar-collapse" id="navbarExample01">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                {/* <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#adoptions">
-                    Chat
-                  </a>
-                </li> */}
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="/ViewMedPharm">
                     Medicine
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/changePassword">
-                    Change password
+                  <a className="nav-link" aria-current="page">
+                    Sales Report
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/"
-                    onClick={() => {
-                      sessionStorage.removeItem("Username");
-                      sessionStorage.removeItem("type");
-                      sessionStorage.removeItem("token");
-                    }}>
-                    Log Out
+
+                </li>
+                <li className="nav-item dropdown group">
+                  <a
+                    className="nav-link dropdown-toggle flex items-center" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                  >
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
                   </a>
+                  <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
+                    <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
+                    <a className="nav-link" aria-current="page" href='/'
+                      onClick={() => {
+                        sessionStorage.removeItem("Username");
+                        sessionStorage.removeItem("type");
+                        sessionStorage.removeItem("token");
+                      }}>Log Out</a>
+                  </div>
                 </li>
               </ul>
 
@@ -140,88 +147,45 @@ export default function Pharm() {
           </br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a></h3>
         </div>
         <div className="footer-in row">
-          {/* <div className="col-4">
-            <FontAwesomeIcon
-              icon={faPeopleGroup}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-             <a href = "http://localhost:5173/viewFamilyMem">
-            <h3>Family</h3>
-            </a>
-            <p>
-              add family members using name, National ID, age, gender and
-              relation to the patient link another patient account as a family
-              member
-            </p>
-          </div> */}
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faHandHoldingMedical}
               size="4x"
               style={{ color: "#82d76a" }}
-              bounce
             />
-            <a href="/ViewMedPharm">
-              <h3>Medicine</h3>
+            <a href="/ViewMedPharm" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Medicine
+              </h3>
             </a>
-            <p>View all available medicines</p>
+            <p style={{ textAlign: "center", color: "gray" }}>View all available medicines</p>
           </div>
-          {/* <div className="col-4">
-            <FontAwesomeIcon
-              icon={faShoppingCart}
-              size="4x"
-              style={{ color: "#82d76a" }}
-              bounce
-            />
-            <h3>Archive/Unarchive Medicine</h3>
-            <p>
-              Choose medicine to archive/unarchive
-            </p>
-          </div> */}
-          {/* <div className="col-4">
-            <FontAwesomeIcon
-              icon={faStethoscope}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <a href = "http://localhost:5173/Doctors">
-            <h3>Our Doctors</h3>
-            </a>
-            <p>view a list of all doctors along with their speciality</p>
-          </div> */}
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faSyringe}
               size="4x"
               style={{ color: "#82d76a" }}
-              bounce
             />
-            <h3>Sales Report</h3>
-            <p>View sales based on a chosen month</p>
+            <a style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+              Sales Report
+              </h3>
+            </a>
+            <p style={{ textAlign: "center", color: "gray" }}>View sales based on a chosen month</p>
           </div>
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faPrescriptionBottleMedical}
               size="4x"
               style={{ color: "#82d76a" }}
-              bounce
             />
-            <h3>Clinic</h3>
-            <p>Chat with a doctor</p>
-          </div>
-          {/* <div className="col-4">
-            <FontAwesomeIcon
-              icon={faFileCirclePlus}
-              size="4x"
-              style={{ color: "#82d76a" }}
-              bounce
-            />
-            <a href="/UseDocumentUpload">
-              <h3>Upload/Remove Documents</h3>
+            <a style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+              Clinic
+              </h3>
             </a>
-            <p>Upload/remove documents for my medical history</p>
-          </div> */}
+            <p style={{ textAlign: "center", color: "gray" }}>Chat with a doctor</p>
+          </div>
         </div>
       </div>
     </div>

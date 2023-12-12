@@ -7,12 +7,8 @@ function ViewPatientInfoAdmin() {
     <div className="flex">
       <div id="outer-container">
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-        <div id="page-wrap">
-          <div className='flex justify-center'>
-            <a href="/Admin"><Logo height='4rem' className="mt-6 mb-0" /></a>
-          </div>
-          <PatientTable />
-        </div>
+        <h2 className="flex justify-center">Patient Table</h2>
+        <PatientTable />
       </div>
 
     </div>

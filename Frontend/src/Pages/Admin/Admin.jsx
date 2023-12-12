@@ -10,6 +10,7 @@ import {
   faHandHoldingMedical,
   faUserInjured,
   faUserPlus,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Admin() {
@@ -41,92 +42,55 @@ export default function Admin() {
             <div className="navbar-collapse" id="navbarExample01">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/AddAdmin">
-                    Add an administrator
+                  <a className="nav-link" aria-current="page" href="/AddEmail">
+                    Admin Email
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/AddEmail">
-                    Add admin email
+                  <a className="nav-link" aria-current="page" href="/AddAdmin">
+                    Admins
                   </a>
                 </li>
-                {/* <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#adoptions">
-                    Chat
-                  </a>
-                </li> */}
-
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="/ViewPharmInfoAdmin">
                     Pharmacists
                   </a>
                 </li>
-
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="/ViewPatientInfoAdmin">
                     Patients
                   </a>
                 </li>
-
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="/ViewRequestsAdmin">
                     Requests
                   </a>
                 </li>
-
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="/ViewMedAdmin">
-                    Medicines
+                    Medicine
                   </a>
                 </li>
+                <li className="nav-item">
 
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/changePassword">
-                    Change password
-                  </a>
                 </li>
-                {/* <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#help">
-                    Health Record
+                <li className="nav-item dropdown group">
+                  <a
+                    className="nav-link dropdown-toggle flex items-center" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                  >
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
                   </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/Prescriptions">
-                    Prescriptions
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#about">
-                    My Account
-                  </a>
-                </li> */}
-                <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/"
-                    onClick={() => {
-                      sessionStorage.removeItem("Username");
-                      sessionStorage.removeItem("type");
-                      sessionStorage.removeItem("token");
-                    }}>
-                    Log Out
-                  </a>
-                </li>
-              </ul>
-
-              <ul className="navbar-nav flex-row">
-                <li className="nav-item">
-                  <a className="nav-link px-2" href="#!">
-                    <i className="fab fa-facebook-square"></i>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link px-2" href="#!">
-                    <i className="fab fa-instagram"></i>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link ps-2" href="#!">
-                    <i className="fab fa-youtube"></i>
-                  </a>
+                  <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
+                    <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
+                    <a className="nav-link" aria-current="page" href='/'
+                      onClick={() => {
+                        sessionStorage.removeItem("Username");
+                        sessionStorage.removeItem("type");
+                        sessionStorage.removeItem("token");
+                      }}>Log Out</a>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -184,88 +148,70 @@ export default function Admin() {
           </br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a></h3>
         </div>
         <div className="footer-in row">
-          {/* <div className="col-4">
-            <FontAwesomeIcon
-              icon={faPeopleGroup}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-             <a href = "http://localhost:5173/viewFamilyMem">
-            <h3>Family</h3>
-            </a>
-            <p>
-              add family members using name, National ID, age, gender and
-              relation to the patient link another patient account as a family
-              member
-            </p>
-          </div> */}
-          <div className="col-4">
-            <FontAwesomeIcon
-              icon={faHandHoldingMedical}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <a href="/ViewMedAdmin">
-              <h3>Edeny el gor3a</h3>
-            </a>
-            <p>View all available medicines</p>
-          </div>
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faUserPlus}
               size="4x"
               style={{ color: "#82d76a" }}
             />
-            <a href="/AddAdmin">
-              <h3>Add Admin</h3>
+            <a href="/AddAdmin" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Add Admin
+              </h3>
             </a>
-            <p>
-              Add a new admin to the system
-            </p>
+            <p style={{ textAlign: "center", color: "gray" }}>Add a new admin to the system</p>
           </div>
-          {/* <div className="col-4">
-            <FontAwesomeIcon
-              icon={faStethoscope}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <a href = "http://localhost:5173/Doctors">
-            <h3>Our Doctors</h3>
-            </a>
-            <p>view a list of all doctors along with their speciality</p>
-          </div> */}
-          <div className="col-4">
-            <FontAwesomeIcon
-              icon={faUserInjured}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <a href="/ViewPatientInfoAdmin">
-              <h3>Patients</h3>
-            </a>
-            <p>View all patients</p>
-          </div>
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faUserDoctor}
               size="4x"
               style={{ color: "#82d76a" }}
             />
-            <a href="/ViewPharmInfoAdmin">
-              <h3>Doctoooooor</h3>
+            <a href="/ViewPharmInfoAdmin" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Pharmacists
+              </h3>
             </a>
-            <p>View all pharmacists</p>
+            <p style={{ textAlign: "center", color: "gray" }}>View all pharmacists</p>
           </div>
-          <div className="col-4">
+          <div className="col-4 text-center d-flex flex-column align-items-center">
+            <FontAwesomeIcon
+              icon={faUserInjured}
+              size="4x"
+              style={{ color: "#82d76a" }}
+            />
+            <a href="/ViewPatientInfoAdmin" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Patients
+              </h3>
+            </a>
+            <p style={{ textAlign: "center", color: "gray" }}>View all patients</p>
+          </div>
+          <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faFileCirclePlus}
               size="4x"
               style={{ color: "#82d76a" }}
             />
-            <a href="/ViewRequestsAdmin">
-              <h3>Requests</h3>
+            <a href="/ViewRequestsAdmin" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Requests
+              </h3>
             </a>
-            <p>View all pharmacists' requests</p>
+            <p style={{ textAlign: "center", color: "gray" }}>View all pharmacists' requests</p>
+          </div>
+          <div className="col-4 text-center d-flex flex-column align-items-center">
+            <FontAwesomeIcon
+              icon={faHandHoldingMedical}
+              size="4x"
+              style={{ color: "#82d76a" }}
+            />
+            <a href="/ViewMedAdmin" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Medicine
+              </h3>
+            </a>
+            <p style={{ textAlign: "center", color: "gray" }}>View all available medicines</p>
           </div>
         </div>
       </div>

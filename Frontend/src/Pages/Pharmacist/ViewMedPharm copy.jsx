@@ -40,11 +40,7 @@ export default function ViewMedPharmCopy() {
     return (
       <div className="">
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-        <div className="justify-center flex mt-6 mb-4" href="/Pharm">
-          <a href="/Pharm">
-            <Logo />
-          </a>
-        </div>
+        <div className="justify-center flex mt-6 mb-4" href="/Pharm"></div>
         <div >
           <div className="form-prescription space-x-3 justify-center flex -mb-16 ">
             <label className="-mt-60">Name</label>

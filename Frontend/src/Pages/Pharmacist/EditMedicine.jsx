@@ -161,11 +161,7 @@ export default function EditMedicine() {
       <div id="outer-container">
         <div id="page-wrap">
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-          <div className="flex justify-center">
-            <a href="/ViewMedPharm">
-              <Logo height="4rem" className="mt-6 mb-0" />
-            </a>
-          </div>
+          <h2 className="flex justify-center">Edit Medicine</h2>
           <Card className="h-full w-full overflow-scroll">
             <table className="w-full min-w-max table-auto text-left">
               <thead>
