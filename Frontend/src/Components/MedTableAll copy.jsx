@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GetMedicine from "../Pages/getMedicine";
+import GetMedicinalUse from "../Pages/getMedicinalUses";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { Card } from "@material-tailwind/react";
@@ -10,6 +11,9 @@ export default function MedTableAllCopy() {
   const [name, setName] = useState();
   const [medicinaluse, setMedicinalUse] = useState();
   const [forceEffect, setForceEffect] = useState(false);
+
+  let MedicinalUses = GetMedicinalUse({});
+  const uses = MedicinalUses || [];
 
   let Medicine = GetMedicine({
     Name: name,
@@ -58,17 +62,27 @@ export default function MedTableAllCopy() {
               setName(e.target.value);
             }}
           />
-          <label className="-mt-48">Medicinal Use</label>
-          <input
-            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-48 shadow"
-            type="text"
-            onChange={(e) => {
-              setMedicinalUse(e.target.value);
-            }}
-          />
           <button className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-48 shadow" type="submit" onSubmit={handleSubmit}>
             Submit
           </button>
+          <label className="-mt-48">Medicinal Use</label>
+          <select
+            className="text-sky-600 outline w-40 h-9 rounded-md -mt-48 shadow"
+            value={medicinaluse}
+            onChange={(e) => {
+              setMedicinalUse(e.target.value);
+            }}
+          >
+            <option value="" disabled>
+              Select Medicinal Use
+            </option>
+            {Array.isArray(uses) &&
+              uses.map((use, index) => (
+                <option key={index} value={use}>
+                  {use}
+                </option>
+              ))}
+          </select>
         </div>
 
         <div className="grid grid-cols-4 flex -mt-44 ml-20 pb-10">

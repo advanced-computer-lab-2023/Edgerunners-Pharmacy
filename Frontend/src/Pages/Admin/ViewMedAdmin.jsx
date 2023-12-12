@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import GetMedicine from "../getMedicine";
+import GetMedicinalUse from "../getMedicinalUses";
 import { Card } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../Components/SidebarAdmin";
 
 export default function ViewMedAdmin() {
   const [name, setName] = useState();
-  const [medicinaluse, setMedicinalUse] = useState();
+  const [medicinaluse, setMedicinalUse] = useState("");
+
   let Medicine = GetMedicine({
     Name: name,
     MedicinalUse: medicinaluse,
   });
+
+  let MedicinalUses = GetMedicinalUse({});
+  const uses = MedicinalUses || [];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +26,6 @@ export default function ViewMedAdmin() {
   };
 
   if (Medicine) {
-    console.log("Medicine:", Medicine);
     return (
       <div>
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
@@ -39,14 +43,6 @@ export default function ViewMedAdmin() {
                   setName(e.target.value);
                 }}
               />
-              <label className="-mt-60">Medicinal Use</label>
-              <input
-                className="text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
-                type="text"
-                onChange={(e) => {
-                  setMedicinalUse(e.target.value);
-                }}
-              />
               <button
                 className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-60 shadow -mb-4"
                 type="submit"
@@ -54,6 +50,24 @@ export default function ViewMedAdmin() {
               >
                 Submit
               </button>
+              <label className="-mt-60">Medicinal Use</label>
+              <select
+                className="text-sky-600 outline w-40 h-9 rounded-md -mt-60 shadow -mb-4"
+                value={medicinaluse}
+                onChange={(e) => {
+                  setMedicinalUse(e.target.value);
+                }}
+              >
+                <option value="" disabled>
+                  Select Medicinal Use
+                </option>
+                {Array.isArray(uses) &&
+                  uses.map((use, index) => (
+                    <option key={index} value={use}>
+                      {use}
+                    </option>
+                  ))}
+              </select>
             </div>
           </div>
 

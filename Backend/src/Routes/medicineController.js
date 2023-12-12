@@ -61,6 +61,15 @@ const getMedicines = async (req, res) => {
   }
 };
 
+const getMedicinalUse = async (req, res) => {
+  try {
+    const medicinalUses = await Medicine.distinct('MedicinalUse');
+    res.status(200).send(medicinalUses);
+  } catch (e) {
+    res.status(400).send("Error could not get medicinal uses!!");
+  }
+};
+
 const updateMedicine = async (req, res) => {
   //update a Medicine in the database
   const medicine = req.body.Name;
@@ -217,6 +226,7 @@ const reverseQuantity = async (req, res) => {
 module.exports = {
   createMedicine,
   getMedicines,
+  getMedicinalUse,
   updateMedicine,
   archiveMedicine,
   unarchiveMedicine,

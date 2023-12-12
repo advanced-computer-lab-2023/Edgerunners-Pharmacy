@@ -27,7 +27,17 @@ const SidebarPharm = () => {
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="/ViewMedPharm">
-                    Medicine
+                    View Medicine
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/AddMedicine">
+                    Add Medicine
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/EditMedicine">
+                    Edit Medicine
                   </a>
                 </li>
                 <li className="nav-item">

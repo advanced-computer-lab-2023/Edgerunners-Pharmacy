@@ -3,6 +3,7 @@ import Logo from "../../UI/Logo";
 import { useRef } from "react";
 import axios from 'axios';
 import Sidebar from "../../Components/SidebarPharm";
+import GetMedicinalUse from "../getMedicinalUses";
 //import {faCheck,faTimes,faInfoCircle} from "@fortawesome/fontawesome-svg-core";
 //import {fontAwesomeIcon} from "@fortawesome/fontawesome-svg-core"; 
 
@@ -13,6 +14,8 @@ function AddMedicine(props) {
     const medicineUseRef = useRef();
     const medicineQuantityRef = useRef();
     const pictureRef = useRef();
+    let MedicinalUses = GetMedicinalUse({});
+    const uses = MedicinalUses || [];
     function submitHandeler(event) {
         event.preventDefault();
         const nameValue = medicineNameRef.current.value;
@@ -77,7 +80,22 @@ function AddMedicine(props) {
                                 <div className=" mb-4">
                                     <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Medicinal Use : </label>
                                     <br />
-                                    <input type="text" id="medicineuse" name="medicineuse" ref={medicineUseRef} className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+                                    <select
+                                        id="medicineuse"
+                                        name="medicineuse"
+                                        ref = {medicineUseRef}
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                                    >
+                                        <option value="" disabled>
+                                            Select Medicinal Use
+                                        </option>
+                                        {Array.isArray(uses) &&
+                                            uses.map((use, index) => (
+                                                <option key={index} value={use}>
+                                                    {use}
+                                                </option>
+                                            ))}
+                                    </select>
                                 </div>
                                 <div className=" mb-4">
                                     <label className=" text-xl font-bold   font-SourceSansPro  text-gray-500 ml-2"> Quantity : </label>

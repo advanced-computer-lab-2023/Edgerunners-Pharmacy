@@ -31,6 +31,7 @@ const {
 const {
   createMedicine,
   getMedicines,
+  getMedicinalUse,
   updateMedicine,
   archiveMedicine,
   unarchiveMedicine,
@@ -136,6 +137,7 @@ app.get("/viewFiles/:filename", viewFiles);
 
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);
+app.get("/getMedicinalUse", getMedicinalUse);
 app.put("/updateMedicine", updateMedicine);
 app.put("/archiveMedicine", archiveMedicine);
 app.put("/unarchiveMedicine", unarchiveMedicine);
