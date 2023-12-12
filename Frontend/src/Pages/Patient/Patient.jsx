@@ -61,11 +61,6 @@ export default function Patient() {
             </button>
             <div className="navbar-collapse" id="navbarExample01">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                {/* <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#adoptions">
-                    Chat
-                  </a>
-                </li> */}
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="/ViewMedPatient">
                     Medicine
@@ -182,21 +177,6 @@ export default function Patient() {
           <h3>Choose one of our services</h3>
         </div>
         <div className="footer-in row">
-          {/* <div className="col-4">
-            <FontAwesomeIcon
-              icon={faPeopleGroup}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-             <a href = "http://localhost:5173/viewFamilyMem">
-            <h3>Family</h3>
-            </a>
-            <p>
-              add family members using name, National ID, age, gender and
-              relation to the patient link another patient account as a family
-              member
-            </p>
-          </div> */}
           <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faHandHoldingMedical}
@@ -223,17 +203,6 @@ export default function Patient() {
               view all the medicines added to your cart
             </p>
           </div>
-          {/* <div className="col-4">
-            <FontAwesomeIcon
-              icon={faStethoscope}
-              size="4x"
-              style={{ color: "#82d76a" }}
-            />
-            <a href = "http://localhost:5173/Doctors">
-            <h3>Our Doctors</h3>
-            </a>
-            <p>view a list of all doctors along with their speciality</p>
-          </div> */}
           <div className="col-4 text-center d-flex flex-column align-items-center">
             <FontAwesomeIcon
               icon={faPrescriptionBottleMedical}
