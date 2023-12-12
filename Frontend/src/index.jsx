@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Admin from './Pages/Admin/Admin'
 import AddAdmin from './Pages/Admin/AddAdmin';
 import AddPharmacist from './Pages/Pharmacist/AddPharmacist';
 import AddPatient from './Pages/Patient/AddPatient';
+import ViewAdminInfoAdmin from './Pages/Admin/ViewAdminInfoAdmin';
 import ViewPharmInfoAdmin from './Pages/Admin/ViewPharmInfoAdmin';
 import ViewPatientInfoAdmin from './Pages/Admin/ViewPatientInfoAdmin';
 import ViewRequestsAdmin from './Pages/Admin/ViewRequestsAdmin';
@@ -17,7 +18,6 @@ import EditMedicine from './Pages/Pharmacist/EditMedicine';
 import ViewMedPharmCopy from './Pages/Pharmacist/ViewMedPharm copy';
 import Patient from './Pages/Patient/Patient';
 import Pharm from './Pages/Pharmacist/Pharm';
-import MedTableAllCopy from './Components/MedTableAll copy';
 import LoginAll from './Pages/Login/LoginAll';
 import Cart from './Pages/Patient/Cart';
 import ViewOrders from './Pages/Patient/ViewOrders';
@@ -32,7 +32,7 @@ import Login from './Pages/Login/Login';
 import AddEmail from './Pages/Admin/AddEmail';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-if(sessionStorage.getItem("type") == null || sessionStorage.getItem("type") == "PendingPharmacist") {
+if(sessionStorage.getItem("type") === null || sessionStorage.getItem("type") === "PendingPharmacist") {
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -48,7 +48,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-} else if(sessionStorage.getItem("type") == "Admin") {
+} else if(sessionStorage.getItem("type") === "Admin") {
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -56,6 +56,7 @@ root.render(
         <Route path="/Admin" element={<Admin />} />
         <Route path="/AddAdmin" element={<AddAdmin />} />
         <Route path="/AddEmail" element={<AddEmail />} />
+        <Route path="/ViewAdminInfoAdmin" element={<ViewAdminInfoAdmin />} />
         <Route path="/ViewPharmInfoAdmin" element={<ViewPharmInfoAdmin />} />
         <Route path="/ViewPatientInfoAdmin" element={<ViewPatientInfoAdmin />} />
         <Route path="/ViewRequestsAdmin" element={<ViewRequestsAdmin />} />
@@ -65,7 +66,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-} else if(sessionStorage.getItem("type") == "Pharmacist") {
+} else if(sessionStorage.getItem("type") === "Pharmacist") {
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -79,7 +80,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-} if(sessionStorage.getItem("type") == "Patient") {
+} if(sessionStorage.getItem("type") === "Patient") {
 root.render(
   <React.StrictMode>
     <BrowserRouter>

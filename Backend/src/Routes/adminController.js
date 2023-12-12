@@ -37,7 +37,7 @@ const createAdmin = async (req, res) => {
 const getAdmins = async (req, res) => {
   try {
     const Admins = await Admin.find();
-    res.status(200).send({ data: Admins });
+    res.status(200).send(Admins);
   } catch (e) {
     res.status(400).send("Error could not get Admins !!");
   }

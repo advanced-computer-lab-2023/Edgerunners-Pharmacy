@@ -131,7 +131,10 @@ const PatientTable = () => {
   );
 
   return (
-    <div>
+    <div style={{ height: '100vh', width: '100vw' }}>
+      <div className = "items-center flex justify-center">
+        <h2 style={{ color: '#93AFDA'}}>Patients</h2>
+      </div>
       <MaterialReactTable
         columns={columns}
         data={tableData}
