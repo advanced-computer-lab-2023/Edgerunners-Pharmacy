@@ -236,7 +236,7 @@ export default function Admin() {
             <FontAwesomeIcon
               icon={faSyringe}
               size="4x"
-              style={{ color: "#93AFDA" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewSalesAdmin" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>

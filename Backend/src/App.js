@@ -57,6 +57,11 @@ const {
   uploadFile,
 } = require("./Routes/pharmacistController");
 
+const { 
+  createSalesRecord, 
+  getMedicinesForMonth, 
+} = require("./Routes/salesController");
+
 const MongoURI =
   process.env.MONGO_URI ||
   "mongodb+srv://Test1:Test1@cluster0.xo5a1to.mongodb.net/Pharmacy?retryWrites=true&w=majority";
@@ -68,6 +73,7 @@ const Patient = require("./Models/Patient.js");
 const Pharmacist = require("./Models/Pharmacist.js");
 const Admin = require("./Models/Admin.js");
 const Medicine = require("./Models/Medicine.js");
+const Sales = require("./Models/Sales.js");
 
 app.use('/uploads', express.static('./uploadMedicine'));
 
@@ -148,6 +154,9 @@ app.post("/addAdmin", createAdmin);
 app.get("/getAdmin", getAdmins);
 app.put("/updateAdmin", updateAdmin);
 app.delete("/deleteAdmin", deleteAdmin);
+
+app.post("/createSales", createSalesRecord);
+app.get("/getSalesofMonth", getMedicinesForMonth);
 
 
 //STRIPE ------------------------------------------------------------------------
