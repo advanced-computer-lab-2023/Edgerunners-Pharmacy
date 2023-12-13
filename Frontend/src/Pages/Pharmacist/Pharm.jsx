@@ -174,7 +174,7 @@ export default function Pharm() {
             <FontAwesomeIcon
               icon={faSyringe}
               size="4x"
-              style={{ color: "#93AFDA" }}
+              style={{ color: "#0284C7" }}
             />
             <a href="/ViewSales" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
