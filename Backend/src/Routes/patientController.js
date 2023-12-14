@@ -433,6 +433,12 @@ const ResetPass = async (req, res) => {
   res.status(200).send("all good");
 };
 
+const getOnePatient = async (req, res) => {
+  const username = req.query.username;
+  const user = await Patient.findOne({ Username: username });
+  res.status(200).json(user);
+};
+
 module.exports = {
   createPatient,
   getPatients,
@@ -450,4 +456,5 @@ module.exports = {
   popOrder,
   getWallet,
   ResetPass,
+  getOnePatient,
 };

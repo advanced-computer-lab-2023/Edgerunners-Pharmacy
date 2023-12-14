@@ -66,9 +66,8 @@ export default function MedTableAllCopy() {
   };
 
   if (Medicine) {
-    console.log(Medicine);
     return (
-      <div className="">
+      <div>
         <div className="form-prescription space-x-3 justify-center flex mb-4 mt-4">
           <label className="-mt-48">Search</label>
           <input

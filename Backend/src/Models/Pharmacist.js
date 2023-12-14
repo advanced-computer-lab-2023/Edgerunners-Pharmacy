@@ -54,6 +54,7 @@ const pharmacistSchema = new Schema(
       type: Array,
       required: false,
     },
+    
     WalletValue: {
       type: Number,
       required: false,

@@ -5,7 +5,6 @@ function ViewMedPatient() {
   return (
     <div>
       <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-
       <MedTableAllCopy />
     </div>
   );

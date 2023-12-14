@@ -79,4 +79,10 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
-module.exports = { createAdmin, getAdmins, updateAdmin, deleteAdmin };
+const getOneAdmin = async (req, res) => {
+  const username = req.query.username;
+  const user = await Admin.findOne({ Username: username });
+  res.status(200).json(user);
+};
+
+module.exports = { createAdmin, getAdmins, updateAdmin, deleteAdmin, getOneAdmin };
