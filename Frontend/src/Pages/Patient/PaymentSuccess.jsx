@@ -8,7 +8,7 @@ function PaymentSuccess() {
             <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
             <div className="justify-center flex mb-4">
                 <a href="/Patient">
-                    <Logo />
+                    <Logo height='4rem' className="mt-6 mb-0" />
                 </a>
             </div>
             <div className='text-center mt-40'>

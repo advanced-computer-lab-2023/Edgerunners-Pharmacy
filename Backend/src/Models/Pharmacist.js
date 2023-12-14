@@ -53,6 +53,10 @@ const pharmacistSchema = new Schema(
     FileNames:{
       type: Array,
       required: false,
+    },
+    WalletValue: {
+      type: Number,
+      required: false,
     }
   },
   { timestamps: true }

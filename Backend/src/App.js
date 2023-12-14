@@ -55,10 +55,12 @@ const {
   uploadDocument,
   viewFiles,
   uploadFile,
+  getWalletPharm,
 } = require("./Routes/pharmacistController");
 
 const { 
   createSalesRecord, 
+  removeSalesRecord,
   getMedicinesForMonth, 
 } = require("./Routes/salesController");
 
@@ -140,6 +142,7 @@ app.put("/updatePharmacist", updatePharmacist);
 app.put("/deletePharmacist", deletePharmacist);
 app.post("/uploadDocument", uploadDocument);
 app.get("/viewFiles/:filename", viewFiles);
+app.get("/getWalletPharm", getWalletPharm);
 
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);
@@ -156,6 +159,7 @@ app.put("/updateAdmin", updateAdmin);
 app.delete("/deleteAdmin", deleteAdmin);
 
 app.post("/createSales", createSalesRecord);
+app.delete("/removeSales", removeSalesRecord);
 app.get("/getSalesofMonth", getMedicinesForMonth);
 
 

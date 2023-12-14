@@ -91,6 +91,7 @@ export default function Patient() {
                   >
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
                     <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
+                    <a>{sessionStorage.getItem("Username")}</a>
                   </a>
                   <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
                     <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
@@ -199,9 +200,7 @@ export default function Patient() {
             <a href="/Cart" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Cart</h3>
             </a>
-            <p style={{ textAlign: "center", color: "gray" }}>
-              view all the medicines added to your cart
-            </p>
+            <p style={{ textAlign: "center", color: "gray" }}>View all the medicines added to your cart</p>
           </div>
           <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
@@ -216,17 +215,6 @@ export default function Patient() {
           </div>
           <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
             <FontAwesomeIcon
-              icon={faSyringe}
-              size="4x"
-              style={{ color: "#93AFDA" }}
-            />
-            <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles" style={{ textDecoration: "none" }}>
-              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Pharmacy</h3>
-            </a>
-            <p style={{ textAlign: "center", color: "gray" }}>Chat with a pharmacist</p>
-          </div>
-          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
-            <FontAwesomeIcon
               icon={faFileCirclePlus}
               size="4x"
               style={{ color: "#0284C7" }}
@@ -235,6 +223,17 @@ export default function Patient() {
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Delivery address</h3>
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>Add a new delivery address</p>
+          </div>
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
+            <FontAwesomeIcon
+              icon={faSyringe}
+              size="4x"
+              style={{ color: "#93AFDA" }}
+            />
+            <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Pharmacy</h3>
+            </a>
+            <p style={{ textAlign: "center", color: "gray" }}>Chat with a pharmacist</p>
           </div>
         </div>
       </div>

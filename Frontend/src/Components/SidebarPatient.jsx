@@ -28,7 +28,7 @@ const SidebarPatient = () => {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-            <a href="/Patient"><Logo /></a>
+            <a href="/Patient"><Logo height='4rem' className="mt-6 mb-0" /></a>
             <button
               className="navbar-toggler ps-0"
               type="button"
@@ -74,6 +74,7 @@ const SidebarPatient = () => {
                   >
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
                     <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
+                    <a>{sessionStorage.getItem("Username")}</a>
                   </a>
                   <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
                     <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
