@@ -28,7 +28,7 @@ const SidebarPatient = () => {
       <div className="header">
         <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
           <div className="container">
-            <a href="/Patient"><Logo /></a>
+            <a href="/Patient"><Logo height='4rem' className="mt-6 mb-0" /></a>
             <button
               className="navbar-toggler ps-0"
               type="button"

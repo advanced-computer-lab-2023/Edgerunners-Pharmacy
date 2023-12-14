@@ -32,12 +32,7 @@ function ViewOrders() {
         <div className="header">
           <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
             <div className="container">
-              <a href="/"
-                onClick={() => {
-                  sessionStorage.removeItem("Username");
-                  sessionStorage.removeItem("type");
-                  sessionStorage.removeItem("token");
-                }}><Logo /></a>
+              <a href="/Patient"><Logo height='4rem' className="mt-6 mb-0" /></a>
               <button
                 className="navbar-toggler ps-0"
                 type="button"

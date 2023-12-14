@@ -59,6 +59,7 @@ const {
 
 const { 
   createSalesRecord, 
+  removeSalesRecord,
   getMedicinesForMonth, 
 } = require("./Routes/salesController");
 
@@ -156,6 +157,7 @@ app.put("/updateAdmin", updateAdmin);
 app.delete("/deleteAdmin", deleteAdmin);
 
 app.post("/createSales", createSalesRecord);
+app.delete("/removeSales", removeSalesRecord);
 app.get("/getSalesofMonth", getMedicinesForMonth);
 
 

@@ -19,13 +19,13 @@ const createSalesRecord = async (req, res) => {
 
 const removeSalesRecord = async (req, res) => {
     try {
-      const recordId = req.body.id;
-      await Sales.findByIdAndRemove(recordId);
-      res.status(200).send("Removed successfully");
+        const recordId = req.body.id;
+        await Sales.findByIdAndRemove(recordId);
+        res.status(200).send("Removed successfully");
     } catch (e) {
-      res.status(400).send("Failed to remove sales record");
+        res.status(400).send("Failed to remove sales record");
     }
-  };
+};
 
 const getMedicinesForMonth = async (req, res) => {
     try {
@@ -40,5 +40,6 @@ const getMedicinesForMonth = async (req, res) => {
 
 module.exports = {
     createSalesRecord,
+    removeSalesRecord,
     getMedicinesForMonth,
 };
