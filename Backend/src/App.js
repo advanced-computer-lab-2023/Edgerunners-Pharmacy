@@ -55,6 +55,7 @@ const {
   uploadDocument,
   viewFiles,
   uploadFile,
+  getWalletPharm,
 } = require("./Routes/pharmacistController");
 
 const { 
@@ -141,6 +142,7 @@ app.put("/updatePharmacist", updatePharmacist);
 app.put("/deletePharmacist", deletePharmacist);
 app.post("/uploadDocument", uploadDocument);
 app.get("/viewFiles/:filename", viewFiles);
+app.get("/getWalletPharm", getWalletPharm);
 
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);

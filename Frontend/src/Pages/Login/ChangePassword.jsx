@@ -1,12 +1,24 @@
 import Card from "../../UI/Card";
 import Logo from "../../UI/Logo";
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function ChangePassword() {
     const [Failed, setFailed] = useState(false);
     const passwordRef = useRef();
     const passwordConRef = useRef();
+
+    let navigate = useNavigate();
+    const routeChange = () => {
+        let type = sessionStorage.getItem("type");
+        if (type === "Pharmacist") {
+            type = "Pharm";
+        }
+        let path = `/${type}`;
+        navigate(path);
+    };
+
     function submitHandeler(event) {
         event.preventDefault();
         const usernameValue = sessionStorage.getItem("Username");
@@ -18,32 +30,38 @@ function ChangePassword() {
             confirmPassword: passwordConValue,
         };
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
-      if (passwordRegex.test(passwordRef.current.value)) {
-        setFailed(false);
-        axios
-        .put("http://localhost:3001/changePassword", change, {})
-        .then((res) => {
-            console.log(res);
-            console.log("Password changed");
-            passwordRef.current.value = "";
-            passwordConRef.current.value = "";
-            let type = sessionStorage.getItem("type");
-            if (type === "Pharmacist") {
-                type = "Pharm";
-            }
-            window.location.href = `/${type}`;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-      } else {
-        setFailed(true);
-      }
+        if (passwordRegex.test(passwordRef.current.value)) {
+            setFailed(false);
+            axios
+                .put("http://localhost:3001/changePassword", change, {})
+                .then((res) => {
+                    console.log(res);
+                    console.log("Password changed");
+                    passwordRef.current.value = "";
+                    passwordConRef.current.value = "";
+                    let type = sessionStorage.getItem("type");
+                    if (type === "Pharmacist") {
+                        type = "Pharm";
+                    }
+                    window.location.href = `/${type}`;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            setFailed(true);
+        }
     }
     return (
         <div>
-            <div className=" justify-center flex mt-20">
-                <Card width='w-4/12' height=' h-[32rem]'>
+            <div className="text-2xl font-bold flex justify-center text-center text-sky-600 mt-16">
+                <a>{sessionStorage.getItem("type")}<br></br>Username: {sessionStorage.getItem("Username")}</a>
+            </div>
+            <div>
+                <button className="  text-sky-600  outline  w-40  h-9  rounded-md shadow" onClick={routeChange}> Back </button>
+            </div>
+            <div className=" justify-center flex mt-6">
+                <Card width='w-4/12' height=' h-[26rem]'>
                     <div className=" flex justify-center  mt-6 mb-0 ">
                         <a
                             onClick={() => {

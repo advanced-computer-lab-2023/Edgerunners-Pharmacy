@@ -17,6 +17,7 @@ const createPharmacist = async (req, res) => {
     let adminEmail = await Admin.findOne({ Email: req.body.Email });
     let patientEmail = await Patient.findOne({ Email: req.body.Email });
 
+    const wallet = 1000;
     if (adminUsername || patientUsername) {
       res.status(401).send("Username already exists");
     } else if (adminEmail || patientEmail) {
@@ -32,6 +33,7 @@ const createPharmacist = async (req, res) => {
         Affiliation: req.body.Affiliation,
         Education: req.body.Education,
         ReqStatus: "Pending",
+        WalletValue: wallet,
       });
       res.status(200).send("Created successfully");
     }
@@ -48,6 +50,7 @@ const uploadFile = async (req, res) => {
     let adminEmail = await Admin.findOne({ Email: req.body.Email });
     let patientEmail = await Patient.findOne({ Email: req.body.Email });
     let files = []
+    const wallet = 1000;
     if (req.files) {
       if (req.files.idFile) {
         const idFile = req.files.idFile;
@@ -88,6 +91,7 @@ const uploadFile = async (req, res) => {
         Education: req.body.Education,
         ReqStatus: "Pending",
         FileNames: [files],
+        WalletValue: wallet,
         // FileNames: [idFilename, degreeFilename, licenseFilename],
       });
 
@@ -203,6 +207,13 @@ const viewFiles = async (req, res) => {
   }
 };
 
+const getWalletPharm = async (req, res) => {
+  const username = req.query.username;
+  const user = await Pharmacist.findOne({ Username: username });
+  let wallet = user.WalletValue;
+  res.status(200).json(wallet);
+};
+
 module.exports = {
   createPharmacist,
   getPharmacists,
@@ -212,4 +223,5 @@ module.exports = {
   uploadDocument,
   viewFiles,
   uploadFile,
+  getWalletPharm,
 };

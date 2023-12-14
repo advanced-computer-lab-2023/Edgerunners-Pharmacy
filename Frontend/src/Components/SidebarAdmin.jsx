@@ -65,6 +65,7 @@ const Sidebar = () => {
                   >
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
                     <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
+                    <a>{sessionStorage.getItem("Username")}</a>
                   </a>
                   <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
                     <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>

@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../../../Frontend/src/UI/Logo";
+import axios from 'axios';
 
 const SidebarPharm = () => {
+  const [randomPointsInWallet, setRandomPointsInWallet] = useState(0);
+  useEffect(() => {
+    getWalletValue();
+  }, []); // The empty dependency array ensures the effect runs only once
+
+  const getWalletValue = async () => {
+    try {
+      let username = sessionStorage.getItem("Username");
+      const res = await axios.get("http://localhost:3001/getWalletPharm", {
+        params: { username }
+      });
+      console.log("Wallet data from the server:", res.data);
+      setRandomPointsInWallet(res.data);
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
+
   return (
     <div className="Bootstrap Patient">
       <div className="header">
@@ -55,8 +74,11 @@ const SidebarPharm = () => {
                   >
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
                     <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
+                    <a>{sessionStorage.getItem("Username")}</a>
                   </a>
                   <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
+                    <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
+                    <div className="dropdown-divider"></div>
                     <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
                     <a className="nav-link" aria-current="page" href='/'
                       onClick={() => {
