@@ -31,7 +31,7 @@ const SalesReportDetailsAdmin = () => {
         async function fetchData() {
             try {
                 const res = await axios.get("http://localhost:3001/getSales", {
-                    params: { month: selectedMonth },
+                    params: { month: selectedMonth, medicinename: '', dateoffilter: '' },
                 });
                 setSalesInfo(res.data);
 

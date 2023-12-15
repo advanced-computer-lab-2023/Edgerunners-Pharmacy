@@ -81,22 +81,21 @@ const SidebarPatient = () => {
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                   >
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
-                    <span className="hidden md:inline"></span>
-                    <a>{sessionStorage.getItem("Username")}</a>
+                    <span className="hidden md:inline">{sessionStorage.getItem("Username")}</span>
                   </a>
                   <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
-                    <a className="nav-link" aria-current="page">Email: {userInfo.Email}</a>
-                    <a className="nav-link" aria-current="page">Phone number: {userInfo.phoneNumber}</a>
-                    <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
+                    <span className="nav-link" aria-current="page">Email: {userInfo.Email}</span>
+                    <span className="nav-link" aria-current="page">Phone number: {userInfo.phoneNumber}</span>
+                    <span className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</span>
                     <div className="dropdown-divider"></div>
-                    <a className="nav-link" aria-current="page" href="/Address">Add delivery address</a>
-                    <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
-                    <a className="nav-link" aria-current="page" href='/'
+                    <span className="nav-link" aria-current="page" href="/Address">Add delivery address</span>
+                    <span className="nav-link" aria-current="page" href="/changePassword">Change password</span>
+                    <span className="nav-link" aria-current="page" href='/'
                       onClick={() => {
                         sessionStorage.removeItem("Username");
                         sessionStorage.removeItem("type");
                         sessionStorage.removeItem("token");
-                      }}>Log Out</a>
+                      }}>Log Out</span>
                   </div>
                 </li>
               </ul>
