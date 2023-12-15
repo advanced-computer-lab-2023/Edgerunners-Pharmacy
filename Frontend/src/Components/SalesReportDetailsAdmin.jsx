@@ -54,7 +54,7 @@ const SalesReportDetailsAdmin = () => {
             <div className="items-center flex justify-center">
                 <h2 style={{ color: '#93AFDA' }}>Sales Report</h2>
             </div>
-            <div className="flex justify-end pb-4 space-x-4">
+            <div className="flex justify-end pb-4 space-x-4 mt-10">
                 {/* Dropdown menu for sorting by month */}
                 <div>
                     <label className="text-gray-700">Choose Month:</label>

@@ -14,6 +14,7 @@ import GetCart from "../getCart";
 import GetAddress from "../getAddress";
 import axios from "axios";
 import { Input } from "postcss";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const [paymentMethod, setPaymentMethod] = useState('cashOnDelivery');
@@ -29,6 +30,12 @@ function Cart() {
   const [randomPointsInWallet, setRandomPointsInWallet] = useState(0);
   const [pointsTakenAway, setPointsTakenAway] = useState(0);
   const [pointsRemaining, setPointsRemaining] = useState(0);
+
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/ViewMedPatient`;
+    navigate(path);
+  };
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -290,9 +297,12 @@ function Cart() {
     return (
       <div>
         <SidebarPatient pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-        <div className="mt-44 h-[16rem] justify-center text-center space-y-4">
-          <h1>The cart is empty</h1>
-          <h3>You can add medicines <a href="/ViewMedPatient">here</a></h3>
+        <div className="mt-40">
+          <button className="text-sky-600  outline  w-40  h-9 rounded-md shadow ml-16" onClick={routeChange}> Back </button>
+          <div className="h-[16rem] justify-center text-center space-y-4">
+            <h1>The cart is empty</h1>
+            <h3>You can add medicines <a href="/ViewMedPatient">here</a></h3>
+          </div>
         </div>
       </div>
     );

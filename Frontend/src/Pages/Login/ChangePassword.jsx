@@ -54,11 +54,11 @@ function ChangePassword() {
     }
     return (
         <div>
-            <div className="text-2xl font-bold flex justify-center text-center text-sky-600 mt-16">
-                <a>{sessionStorage.getItem("type")}<br></br>Username: {sessionStorage.getItem("Username")}</a>
-            </div>
-            <div>
-                <button className="  text-sky-600  outline  w-40  h-9  rounded-md shadow" onClick={routeChange}> Back </button>
+            <div className="mt-16">
+                <div className="text-2xl font-bold flex justify-center text-center text-sky-600">
+                    <a>{sessionStorage.getItem("type")}<br></br>Username: {sessionStorage.getItem("Username")}</a>
+                </div>
+                <button className="text-sky-600  outline  w-40  h-9  rounded-md shadow  ml-16" onClick={routeChange}> Back </button>
             </div>
             <div className=" justify-center flex mt-6">
                 <Card width='w-4/12' height=' h-[26rem]'>
