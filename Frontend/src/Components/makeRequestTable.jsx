@@ -17,6 +17,7 @@ export const makeRequestTable = async () => {
       const affiliation = `${p.Affiliation}`;
       const educationalBackground = `${p.Education}`;
       const reqStatus = `${p.ReqStatus}`;
+      const files  = p.FileNames;
 
       data.push({
         id,
@@ -28,6 +29,7 @@ export const makeRequestTable = async () => {
         affiliation,
         educationalBackground,
         reqStatus,
+        files,
       });
     }
   } catch (error) {

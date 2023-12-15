@@ -74,7 +74,7 @@ export default function ViewMedAdmin() {
           <div className="grid grid-cols-4 flex -mt-40 ml-20 pb-10">
             {Medicine.map((p, index) => {
               return (
-                <div key={index} className="mt-10 mb-2 pb-2 w-[20rem] h-[16rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
+                <div key={index} className="mt-10 mb-2 pb-2 w-[20rem] h-[12rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
                   <div className="justify-center pl-4 mt-6">
                     {p.Picture ? (
                       <img

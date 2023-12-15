@@ -199,8 +199,7 @@ const uploadDocument = async (req, res) => {
 const viewFiles = async (req, res) => {
   try {
     const filename = req.params.filename;
-    // Read the contents of the uploadDirectory
-    res.status(200).download("./uploadPatient/" + filename);
+    res.status(200).download("./uploadPharmacist/" + filename);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
