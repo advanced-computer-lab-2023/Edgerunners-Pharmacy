@@ -60,6 +60,10 @@ const patientSchemaP = new Schema(
       type: Array,
       required: false
     },
+    Sales: {
+      type: Array,
+      required: false
+    },
     Address: {
       type: Array,
       required: false

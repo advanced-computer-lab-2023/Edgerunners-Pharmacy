@@ -159,10 +159,17 @@ function Cart() {
       pay = "Cash on delivery";
     }
     try {
+      let newDate = new Date();
+      let newDay = newDate.getDate();
+      let newMonth = newDate.getMonth() + 1;
+      let newYear = newDate.getFullYear();
+      let newFullDate = newDay + "/" + newMonth + "/" + newYear;
       await axios.put("http://localhost:3001/addOrder", {
         orderaddress: selectedOption,
         paymentmethod: pay,
         username: sessionStorage.getItem("Username"),
+        date: newFullDate,
+        month: newMonth,
       });
       console.log("Order request sent successfully");
     } catch (error) {

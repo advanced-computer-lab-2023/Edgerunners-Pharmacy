@@ -25,6 +25,7 @@ const {
   addOrder,
   cancelOrder,
   getWallet,
+  getSales,
   popOrder,
   getOnePatient,
 } = require("./Routes/patientController");
@@ -60,12 +61,6 @@ const {
   getOnePharmacist,
 } = require("./Routes/pharmacistController");
 
-const { 
-  createSalesRecord, 
-  removeSalesRecord,
-  getMedicinesForMonth, 
-} = require("./Routes/salesController");
-
 const MongoURI =
   process.env.MONGO_URI ||
   "mongodb+srv://Test1:Test1@cluster0.xo5a1to.mongodb.net/Pharmacy?retryWrites=true&w=majority";
@@ -77,7 +72,6 @@ const Patient = require("./Models/Patient.js");
 const Pharmacist = require("./Models/Pharmacist.js");
 const Admin = require("./Models/Admin.js");
 const Medicine = require("./Models/Medicine.js");
-const Sales = require("./Models/Sales.js");
 
 app.use('/uploads', express.static('./uploadMedicine'));
 
@@ -135,6 +129,7 @@ app.get("/getOrder", getOrder);
 app.put("/addOrder", addOrder);
 app.put("/cancelOrder", cancelOrder);
 app.get("/getWallet", getWallet);
+app.get("/getSales", getSales);
 app.put("/popOrder", popOrder);
 app.get("/getOnePatient",getOnePatient);
 
@@ -161,10 +156,6 @@ app.get("/getAdmin", getAdmins);
 app.put("/updateAdmin", updateAdmin);
 app.delete("/deleteAdmin", deleteAdmin);
 app.get("/getOneAdmin", getOneAdmin);
-
-app.post("/createSales", createSalesRecord);
-app.delete("/removeSales", removeSalesRecord);
-app.get("/getSalesofMonth", getMedicinesForMonth);
 
 
 //STRIPE ------------------------------------------------------------------------
