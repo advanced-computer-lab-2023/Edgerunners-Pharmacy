@@ -23,39 +23,30 @@ const styles = {
 };
 
 const SalesReportDetailsAdmin = () => {
-    const [orders, setOrders] = useState([]);
-    const [sortBy, setSortBy] = useState(null);
-    const [selectedMedicine, setSelectedMedicine] = useState('');
+    const [salesInfo, setSalesInfo] = useState([]);
+    const [salesID, setSalesID] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState('');
 
     useEffect(() => {
         async function fetchData() {
             try {
-                // Replace SalesReportDetails() with the actual function or API call to fetch data
-                const data = await SalesReportDetailsAdmin();
-                setOrders(data);
+                const res = await axios.get("http://localhost:3001/getSales", {
+                    params: { month: selectedMonth },
+                });
+                setSalesInfo(res.data);
+
+                const generatedSalesIDs = res.data.map((_, index) => index + 1);
+                setSalesID(generatedSalesIDs);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
 
         fetchData();
-    }, []);
-
-    const handleSort = (type) => {
-        setSortBy(type);
-        // Implement sorting logic here
-        // For example, you can modify the 'orders' array based on the selected type
-    };
-
-    const handleMedicineChange = (event) => {
-        setSelectedMedicine(event.target.value);
-        // Implement logic to update orders based on selected medicine
-    };
+    }, [selectedMonth]);
 
     const handleMonthChange = (event) => {
         setSelectedMonth(event.target.value);
-        // Implement logic to update orders based on selected month
     };
 
     return (
@@ -64,64 +55,48 @@ const SalesReportDetailsAdmin = () => {
                 <h2 style={{ color: '#93AFDA' }}>Sales Report</h2>
             </div>
             <div className="flex justify-end pb-4 space-x-4">
-                {/* Dropdown menu for sorting by date */}
+                {/* Dropdown menu for sorting by month */}
                 <div>
-                    <label className="text-gray-700">Sort by Date:</label>
+                    <label className="text-gray-700">Choose Month:</label>
                     <select
                         value={selectedMonth}
                         onChange={handleMonthChange}
                         className="text-sky-600 outline w-40 h-9 rounded-md -mt-60 shadow -mb-4"
                     >
-                        <option value="">Select Month</option>
-                        {/* Populate options based on your data */}
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        {/* Add more options as needed */}
+                        <option value={""}>Select Month</option>
+                        <option value={1}>January</option>
+                        <option value={2}>February</option>
+                        <option value={3}>March</option>
+                        <option value={4}>April</option>
+                        <option value={5}>May</option>
+                        <option value={6}>June</option>
+                        <option value={7}>July</option>
+                        <option value={8}>August</option>
+                        <option value={9}>September</option>
+                        <option value={10}>October</option>
+                        <option value={11}>November</option>
+                        <option value={12}>December</option>
                     </select>
                 </div>
             </div>
             <table style={styles.requestTable}>
                 <thead>
                     <tr style={styles.tableHeader}>
+                        <th style={styles.tableCell}>Sales ID</th>
                         <th style={styles.tableCell}>Medicine Name</th>
-                        <th style={styles.tableCell}>Sales</th>
+                        <th style={styles.tableCell}>Number of sales</th>
+                        <th style={styles.tableCell}>Price</th>
                         <th style={styles.tableCell}>Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.map((order, index) => (
-                        <tr
-                            key={order.id}
-                            style={index % 2 === 0 ? styles.evenRow : {}}
-                        >
-                            <td style={styles.tableCell}>{order.id}</td>
-                            <td style={styles.tableCell}>
-                                {order.cartItems ? (
-                                    order.cartItems.map((item, index) => (
-                                        <div key={index}>
-                                            {item.medicineName}
-                                        </div>
-                                    ))
-                                ) : 'N/A'}
-                            </td>
-                            <td style={styles.tableCell}>
-                                {order.cartItems ? (
-                                    order.cartItems.map((item, index) => (
-                                        <div key={index}>
-                                            {item.count}
-                                        </div>
-                                    ))
-                                ) : 'N/A'}
-                            </td>
-                            <td style={styles.tableCell}>
-                                {order.cartItems ? (
-                                    order.cartItems.map((item, index) => (
-                                        <div key={index}>
-                                            {item.date}
-                                        </div>
-                                    ))
-                                ) : 'N/A'}
-                            </td>
+                    {salesInfo.map((sale, index) => (
+                        <tr key={salesID[index]} style={index % 2 === 0 ? styles.evenRow : {}}>
+                            <td style={styles.tableCell}>{salesID[index]}</td>
+                            <td style={styles.tableCell}>{sale.medicineName}</td>
+                            <td style={styles.tableCell}>{sale.quantity}</td>
+                            <td style={styles.tableCell}>{sale.price}</td>
+                            <td style={styles.tableCell}>{sale.date}</td>
                         </tr>
                     ))}
                 </tbody>

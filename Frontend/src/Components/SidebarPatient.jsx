@@ -6,9 +6,11 @@ import axios from "axios";
 
 const SidebarPatient = () => {
   const [randomPointsInWallet, setRandomPointsInWallet] = useState(0);
+  const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
     getWalletValue();
+    getUserInfo();
   }, []); // The empty dependency array ensures the effect runs only once
 
   const getWalletValue = async () => {
@@ -23,6 +25,17 @@ const SidebarPatient = () => {
       console.error("Error updating data:", error);
     }
   };
+  const getUserInfo = async () => {
+    try {
+      let username = sessionStorage.getItem("Username");
+      const res = await axios.get("http://localhost:3001/getOnePatient", {
+        params: { username }
+      });
+      setUserInfo(res.data);
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  }
   return (
     <div className="Bootstrap Patient">
       <div className="header">
@@ -60,11 +73,6 @@ const SidebarPatient = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="/Address">
-                    Add delivery address
-                  </a>
-                </li>
-                <li className="nav-item">
 
                 </li>
                 <li className="nav-item dropdown group">
@@ -73,12 +81,15 @@ const SidebarPatient = () => {
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                   >
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
-                    <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
+                    <span className="hidden md:inline"></span>
                     <a>{sessionStorage.getItem("Username")}</a>
                   </a>
                   <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
+                    <a className="nav-link" aria-current="page">Email: {userInfo.Email}</a>
+                    <a className="nav-link" aria-current="page">Phone number: {userInfo.phoneNumber}</a>
                     <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
                     <div className="dropdown-divider"></div>
+                    <a className="nav-link" aria-current="page" href="/Address">Add delivery address</a>
                     <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
                     <a className="nav-link" aria-current="page" href='/'
                       onClick={() => {

@@ -39,10 +39,8 @@ export default function ViewMedPharmCopy() {
   };
 
   if (Medicine) {
-    console.log("Medicine:", Medicine);
-
     return (
-      <div className="">
+      <div>
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
         <div className="justify-center flex mt-6 mb-4" href="/Pharm"></div>
         <div >

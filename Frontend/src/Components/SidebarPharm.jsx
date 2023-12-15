@@ -5,19 +5,18 @@ import Logo from "../../../Frontend/src/UI/Logo";
 import axios from 'axios';
 
 const SidebarPharm = () => {
-  const [randomPointsInWallet, setRandomPointsInWallet] = useState(0);
+  const [userInfo, setUserInfo] = useState([]);
   useEffect(() => {
-    getWalletValue();
-  }, []); // The empty dependency array ensures the effect runs only once
+    getUserInfo();
+  }, []);
 
-  const getWalletValue = async () => {
+  const getUserInfo = async () => {
     try {
       let username = sessionStorage.getItem("Username");
-      const res = await axios.get("http://localhost:3001/getWalletPharm", {
+      const res = await axios.get("http://localhost:3001/getOnePharmacist", {
         params: { username }
       });
-      console.log("Wallet data from the server:", res.data);
-      setRandomPointsInWallet(res.data);
+      setUserInfo(res.data);
     } catch (error) {
       console.error("Error updating data:", error);
     }
@@ -73,11 +72,15 @@ const SidebarPharm = () => {
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                   >
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
-                    <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
+                    <span className="hidden md:inline"></span>
                     <a>{sessionStorage.getItem("Username")}</a>
                   </a>
                   <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
-                    <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
+                    <a className="nav-link" aria-current="page">Email: {userInfo.Email}</a>
+                    <a className="nav-link" aria-current="page">Hourly rate: {userInfo.Hourlyrate}</a>
+                    <a className="nav-link" aria-current="page">Affiliation: {userInfo.Affiliation}</a>
+                    <a className="nav-link" aria-current="page">Education: {userInfo.Education}</a>
+                    <a className="nav-link" aria-current="page">Wallet: {userInfo.WalletValue} points</a>
                     <div className="dropdown-divider"></div>
                     <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
                     <a className="nav-link" aria-current="page" href='/'

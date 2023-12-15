@@ -1,6 +1,6 @@
 import Logo from "../../UI/Logo";
 import React, { useState, useEffect } from 'react';
-import Sidebar from "../../Components/SidebarPatient";
+import SidebarPatient from "../../Components/SidebarPatient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Patient.scss'
 import '../Bootstrap.scss'
@@ -159,10 +159,17 @@ function Cart() {
       pay = "Cash on delivery";
     }
     try {
+      let newDate = new Date();
+      let newDay = newDate.getDate();
+      let newMonth = newDate.getMonth() + 1;
+      let newYear = newDate.getFullYear();
+      let newFullDate = newDay + "/" + newMonth + "/" + newYear;
       await axios.put("http://localhost:3001/addOrder", {
         orderaddress: selectedOption,
         paymentmethod: pay,
         username: sessionStorage.getItem("Username"),
+        date: newFullDate,
+        month: newMonth,
       });
       console.log("Order request sent successfully");
     } catch (error) {
@@ -173,98 +180,7 @@ function Cart() {
   if (CartData && CartData.length > 0) {
     return (
       <div>
-        <div className="Bootstrap Patient">
-          <div className="header">
-            <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
-              <div className="container">
-                <a href="/Patient"><Logo height='4rem' className="mt-6 mb-0" /></a>
-                <button
-                  className="navbar-toggler ps-0"
-                  type="button"
-                  data-mdb-toggle="collapse"
-                  data-mdb-target="#navbarExample01"
-                  aria-controls="navbarExample01"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span className="navbar-toggler-icon d-flex justify-content-start align-items-center">
-                    <i className="fas fa-bars"></i>
-                  </span>
-                </button>
-                <div className="navbar-collapse" id="navbarExample01">
-                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                    {/* <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#adoptions">
-                    Chat
-                  </a>
-                </li> */}
-                    <li className="nav-item">
-                      <a className="nav-link" aria-current="page" href="/ViewMedPatient">
-                        Medicine
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" aria-current="page" href="/Cart">
-                        Cart
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" aria-current="page" href="/ViewOrders">
-                        Orders
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" aria-current="page" href="/Address">
-                        Add delivery address
-                      </a>
-                    </li>
-                    <li className="nav-item">
-
-                    </li>
-                    <li className="nav-item dropdown group">
-                      <a
-                        className="nav-link dropdown-toggle flex items-center" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                      >
-                        <FontAwesomeIcon icon={faUser} className="mr-2" />
-                        <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
-                      </a>
-                      <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
-                        <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
-                        <div className="dropdown-divider"></div>
-                        <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
-                        <a className="nav-link" aria-current="page" href='/'
-                          onClick={() => {
-                            sessionStorage.removeItem("Username");
-                            sessionStorage.removeItem("type");
-                            sessionStorage.removeItem("token");
-                          }}>Log Out</a>
-                      </div>
-                    </li>
-                  </ul>
-
-                  <ul className="navbar-nav flex-row">
-                    <li className="nav-item">
-                      <a className="nav-link px-2" href="#!">
-                        <i className="fab fa-facebook-square"></i>
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link px-2" href="#!">
-                        <i className="fab fa-instagram"></i>
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link ps-2" href="#!">
-                        <i className="fab fa-youtube"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
+        <SidebarPatient pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
         <div className="flex mb-14 mt-32">
           <div className="ml-10">
             {CartData.map((p, index) => (
@@ -373,98 +289,7 @@ function Cart() {
   } else {
     return (
       <div>
-        <div className="Bootstrap Patient">
-          <div className="header">
-            <nav className="navbar navbar-expand-lg fixed-top navbar-scroll nav-color-bg">
-              <div className="container">
-                <a href="/Patient"><Logo height='4rem' className="mt-6 mb-0" /></a>
-                <button
-                  className="navbar-toggler ps-0"
-                  type="button"
-                  data-mdb-toggle="collapse"
-                  data-mdb-target="#navbarExample01"
-                  aria-controls="navbarExample01"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span className="navbar-toggler-icon d-flex justify-content-start align-items-center">
-                    <i className="fas fa-bars"></i>
-                  </span>
-                </button>
-                <div className="navbar-collapse" id="navbarExample01">
-                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                    {/* <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#adoptions">
-                    Chat
-                  </a>
-                </li> */}
-                    <li className="nav-item">
-                      <a className="nav-link" aria-current="page" href="/ViewMedPatient">
-                        Medicine
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" aria-current="page" href="/Cart">
-                        Cart
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" aria-current="page" href="/ViewOrders">
-                        Orders
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" aria-current="page" href="/Address">
-                        Add delivery address
-                      </a>
-                    </li>
-                    <li className="nav-item">
-
-                    </li>
-                    <li className="nav-item dropdown group">
-                      <a
-                        className="nav-link dropdown-toggle flex items-center" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                      >
-                        <FontAwesomeIcon icon={faUser} className="mr-2" />
-                        <span className="hidden md:inline"></span> {/* Displayed on larger screens */}
-                      </a>
-                      <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
-                        <a className="nav-link" aria-current="page">Wallet: {randomPointsInWallet} points</a>
-                        <div className="dropdown-divider"></div>
-                        <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
-                        <a className="nav-link" aria-current="page" href='/'
-                          onClick={() => {
-                            sessionStorage.removeItem("Username");
-                            sessionStorage.removeItem("type");
-                            sessionStorage.removeItem("token");
-                          }}>Log Out</a>
-                      </div>
-                    </li>
-                  </ul>
-
-                  <ul className="navbar-nav flex-row">
-                    <li className="nav-item">
-                      <a className="nav-link px-2" href="#!">
-                        <i className="fab fa-facebook-square"></i>
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link px-2" href="#!">
-                        <i className="fab fa-instagram"></i>
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link ps-2" href="#!">
-                        <i className="fab fa-youtube"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
+        <SidebarPatient pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
         <div className="mt-44 h-[16rem] justify-center text-center space-y-4">
           <h1>The cart is empty</h1>
           <h3>You can add medicines <a href="/ViewMedPatient">here</a></h3>

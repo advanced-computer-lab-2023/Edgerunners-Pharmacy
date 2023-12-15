@@ -6,7 +6,6 @@ import { Box, IconButton, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
-import Logo from "../../UI/Logo";
 import Sidebar from "../../Components/SidebarPharm";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
@@ -33,7 +32,7 @@ export default function EditMedicine() {
     let path = `/ViewMedPharm`;
     navigate(path);
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -160,9 +159,18 @@ export default function EditMedicine() {
   };
 
   if (Medicine === null) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+        <div>Loading...</div>
+      </div>);
   } else if (Medicine.length === 0) {
-    return <div>No data available.</div>;
+    return (
+      <div>
+        <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+        <div>No data available.</div>
+      </div>
+    );
   } else {
     return (
       <div id="outer-container">

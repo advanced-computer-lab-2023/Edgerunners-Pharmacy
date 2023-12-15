@@ -23,30 +23,43 @@ const styles = {
 };
 
 const SalesReportDetails = () => {
-    const [orders, setOrders] = useState([]);
-    const [sortBy, setSortBy] = useState(null);
-    const [selectedMedicine, setSelectedMedicine] = useState('');
+    const [salesInfo, setSalesInfo] = useState([]);
+    const [salesID, setSalesID] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState('');
+    const [selectedMedicine, setSelectedMedicine] = useState('');
+    const [selectedDate, setSelectedDate] = useState('');
+    const [MedicineNames, setMedicineNames] = useState([]);
+    const [dates, setDates] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                // Replace SalesReportDetails() with the actual function or API call to fetch data
-                const data = await SalesReportDetails();
-                setOrders(data);
+                const res = await axios.get("http://localhost:3001/getSales", {
+                    params: { month: selectedMonth, medicinename: selectedMedicine, dateoffilter: selectedDate },
+                });
+                setSalesInfo(res.data);
+
+                const generatedSalesIDs = res.data.map((_, index) => index + 1);
+                setSalesID(generatedSalesIDs);
+
+                const uniqueMedicineNames = Array.from(new Set(res.data.map(sale => sale.medicineName)));
+                setMedicineNames(uniqueMedicineNames);
+
+                const uniqueDates = Array.from(new Set(res.data.map(sale => sale.date)));
+                setDates(uniqueDates);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
 
         fetchData();
-    }, []);
+    }, [selectedMonth, selectedMedicine, selectedDate]);
 
-    const handleSort = (type) => {
-        setSortBy(type);
-        // Implement sorting logic here
-        // For example, you can modify the 'orders' array based on the selected type
-    };
+    // const handleSort = (type) => {
+    //     setSortBy(type);
+    //     // Implement sorting logic here
+    //     // For example, you can modify the 'orders' array based on the selected type
+    // };
 
     const handleMedicineChange = (event) => {
         setSelectedMedicine(event.target.value);
@@ -55,7 +68,10 @@ const SalesReportDetails = () => {
 
     const handleMonthChange = (event) => {
         setSelectedMonth(event.target.value);
-        // Implement logic to update orders based on selected month
+    };
+
+    const handleDateChange = (event) => {
+        setSelectedDate(event.target.value);
     };
 
     return (
@@ -66,78 +82,74 @@ const SalesReportDetails = () => {
             <div className="flex justify-end pb-4 space-x-4">
                 {/* Dropdown menu for sorting by medicine */}
                 <div>
-                    <label className="text-gray-700">Sort by Medicine:</label>
+                    <label className="text-gray-700">Sort by Medicine Name:</label>
                     <select
                         value={selectedMedicine}
                         onChange={handleMedicineChange}
                         className="text-sky-600 outline w-40 h-9 rounded-md -mt-60 shadow -mb-4"
                     >
                         <option value="" className="  text-sky-600  outline  w-40  h-9 rounded-md   mt-2 shadow">Select Medicine</option>
-                        {/* Populate options based on your data */}
-                        <option value="medicine1">Medicine 1</option>
-                        <option value="medicine2">Medicine 2</option>
-                        {/* Add more options as needed */}
+                        {MedicineNames.map((medicine, index) => (
+                            <option key={index} value={medicine}>{medicine}</option>
+                        ))}
                     </select>
                 </div>
-
                 {/* Dropdown menu for sorting by date */}
                 <div>
                     <label className="text-gray-700">Sort by Date:</label>
+                    <select
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        className="text-sky-600 outline w-40 h-9 rounded-md -mt-60 shadow -mb-4"
+                    >
+                        <option value="">Select Date</option>
+                        {dates.map((date, index) => (
+                            <option key={index} value={date}>{date}</option>
+                        ))}
+                    </select>
+                </div>
+                {/* Dropdown menu for sorting by month */}
+                <div>
+                    <label className="text-gray-700">Choose Month:</label>
                     <select
                         value={selectedMonth}
                         onChange={handleMonthChange}
                         className="text-sky-600 outline w-40 h-9 rounded-md -mt-60 shadow -mb-4"
                     >
-                        <option value="">Select Month</option>
-                        {/* Populate options based on your data */}
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        {/* Add more options as needed */}
+                        <option value={""}>Select Month</option>
+                        <option value={1}>January</option>
+                        <option value={2}>February</option>
+                        <option value={3}>March</option>
+                        <option value={4}>April</option>
+                        <option value={5}>May</option>
+                        <option value={6}>June</option>
+                        <option value={7}>July</option>
+                        <option value={8}>August</option>
+                        <option value={9}>September</option>
+                        <option value={10}>October</option>
+                        <option value={11}>November</option>
+                        <option value={12}>December</option>
                     </select>
                 </div>
             </div>
             <table style={styles.requestTable}>
                 <thead>
                     <tr style={styles.tableHeader}>
+                        <th style={styles.tableCell}>Sales ID</th>
                         <th style={styles.tableCell}>Medicine Name</th>
-                        <th style={styles.tableCell}>Sales</th>
+                        <th style={styles.tableCell}>Number of sales</th>
+                        <th style={styles.tableCell}>Price</th>
                         <th style={styles.tableCell}>Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.map((order, index) => (
-                        <tr
-                            key={order.id}
-                            style={index % 2 === 0 ? styles.evenRow : {}}
-                        >
-                            <td style={styles.tableCell}>{order.id}</td>
-                            <td style={styles.tableCell}>
-                                {order.cartItems ? (
-                                    order.cartItems.map((item, index) => (
-                                        <div key={index}>
-                                            {item.medicineName}
-                                        </div>
-                                    ))
-                                ) : 'N/A'}
-                            </td>
-                            <td style={styles.tableCell}>
-                                {order.cartItems ? (
-                                    order.cartItems.map((item, index) => (
-                                        <div key={index}>
-                                            {item.count}
-                                        </div>
-                                    ))
-                                ) : 'N/A'}
-                            </td>
-                            <td style={styles.tableCell}>
-                                {order.cartItems ? (
-                                    order.cartItems.map((item, index) => (
-                                        <div key={index}>
-                                            {item.date}
-                                        </div>
-                                    ))
-                                ) : 'N/A'}
-                            </td>
+                    {salesInfo.map((sale, index) => (
+                        <tr key={salesID[index]} style={index % 2 === 0 ? styles.evenRow : {}}>
+                            <td style={styles.tableCell}>{salesID[index]}</td>
+                            <td style={styles.tableCell}>{sale.medicineName}</td>
+                            <td style={styles.tableCell}>{sale.quantity}</td>
+                            <td style={styles.tableCell}>{sale.price}</td>
+                            <td style={styles.tableCell}>{sale.date}</td>
                         </tr>
                     ))}
                 </tbody>

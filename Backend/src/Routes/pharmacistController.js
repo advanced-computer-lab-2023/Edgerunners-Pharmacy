@@ -207,11 +207,10 @@ const viewFiles = async (req, res) => {
   }
 };
 
-const getWalletPharm = async (req, res) => {
+const getOnePharmacist = async (req, res) => {
   const username = req.query.username;
   const user = await Pharmacist.findOne({ Username: username });
-  let wallet = user.WalletValue;
-  res.status(200).json(wallet);
+  res.status(200).json(user);
 };
 
 module.exports = {
@@ -223,5 +222,5 @@ module.exports = {
   uploadDocument,
   viewFiles,
   uploadFile,
-  getWalletPharm,
+  getOnePharmacist,
 };

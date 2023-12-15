@@ -297,6 +297,20 @@ const addOrder = async (req, res) => {
       paymentMethod,
       orderStatus,
     });
+    let sales = user.Sales || [];
+    let salesid = sales.length;
+    for (let i = 0; i < user.Cart.length; i++) {
+      salesid = sales.length;
+      sales.push({
+        salesid,
+        medicineName: user.Cart[i].medicineName,
+        quantity: user.Cart[i].count,
+        price: user.Cart[i].totalprice,
+        date: req.body.date,
+        month: req.body.month,
+        orderid,
+      });
+    }
     const totalpricepaid = user.Cart.reduce(
       (acc, item) => acc + item.totalprice,
       0
@@ -307,7 +321,7 @@ const addOrder = async (req, res) => {
     user.Cart = [];
     await Patient.updateOne(
       { Username: username },
-      { $set: { Orders: order, Cart: [], WalletValue: wallet } }
+      { $set: { Orders: order, Sales: sales, Cart: [], WalletValue: wallet } }
     );
     res.status(200).send("Added order successfully!");
   } catch (e) {
@@ -319,22 +333,23 @@ const cancelOrder = async (req, res) => {
     const username = req.body.username;
     const orderid = req.body.orderid;
     const totalprice = req.body.totalprice;
-   
+
     const user = await Patient.findOne({ Username: username });
     const wallet = user.WalletValue;
     if (!user) {
       return res.status(404).send("User not found");
     }
+    let sales = user.Sales || [];
     let order = user.Orders || [];
     const existingOrderIndex = order.findIndex(
       (item) => item.orderid === orderid
     );
     if (existingOrderIndex !== -1) {
-      
+      sales = sales.filter(item => item.orderid !== orderid);
       order[existingOrderIndex].orderStatus = "Cancelled";
       await Patient.updateOne(
         { Username: username },
-        { $set: { Orders: order , WalletValue : (wallet+ totalprice)} }
+        { $set: { Orders: order, Sales: sales, WalletValue: (wallet + totalprice) } }
       );
     } else {
       res.status(400).send("Order not found");
@@ -353,12 +368,13 @@ const popOrder = async (req, res) => {
     if (!user) {
       return res.status(404).send("User not found");
     }
-
+    let sales = user.Sales || [];
     let order = user.Orders || [];
     const existingOrderIndex = order.length - 1;
 
     if (existingOrderIndex >= 0) {
       const canceledOrder = order[existingOrderIndex];
+      sales = sales.filter(item => item.orderid !== canceledOrder);
       const cart = user.Cart || [];
 
       // Merge items from canceled order back into the cart
@@ -382,7 +398,7 @@ const popOrder = async (req, res) => {
 
       await Patient.updateOne(
         { Username: username },
-        { $set: { Orders: order, Cart: cart } }
+        { $set: { Orders: order, Sales: sales, Cart: cart } }
       );
       res.status(200).send("Order status changed successfully!");
     } else {
@@ -399,6 +415,35 @@ const getWallet = async (req, res) => {
   // console.log(user);
   wallet = user.WalletValue;
   res.status(200).json(wallet);
+};
+
+const getSales = async (req, res) => {
+  try {
+    const users = await Patient.find();
+    let sales = [];
+    for (let i = 0; i < users.length; i++) {
+      for (let j = 0; j < users[i].Sales.length; j++) {
+        sales.push(users[i].Sales[j]);
+      }
+    }
+
+    let selected = req.query.month;
+    if (selected !== '')
+      sales = sales.filter(item => item.month == selected);
+
+    let name = req.query.medicinename;
+    if (name !== '')
+      sales = sales.filter(item => item.medicineName == name);
+
+    let date = req.query.dateoffilter;
+    if (date !== '')
+      sales = sales.filter(item => item.date == date);
+
+    res.status(200).json(sales);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
 const ResetPass = async (req, res) => {
@@ -433,6 +478,12 @@ const ResetPass = async (req, res) => {
   res.status(200).send("all good");
 };
 
+const getOnePatient = async (req, res) => {
+  const username = req.query.username;
+  const user = await Patient.findOne({ Username: username });
+  res.status(200).json(user);
+};
+
 module.exports = {
   createPatient,
   getPatients,
@@ -449,5 +500,7 @@ module.exports = {
   cancelOrder,
   popOrder,
   getWallet,
+  getSales,
   ResetPass,
+  getOnePatient,
 };
