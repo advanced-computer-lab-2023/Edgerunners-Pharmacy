@@ -81,13 +81,13 @@ const SidebarPharm = () => {
                     <span className="nav-link" aria-current="page">Education: {userInfo.Education}</span>
                     <span className="nav-link" aria-current="page">Wallet: {userInfo.WalletValue} points</span>
                     <div className="dropdown-divider"></div>
-                    <span className="nav-link" aria-current="page" href="/changePassword">Change password</span>
-                    <span className="nav-link" aria-current="page" href='/'
+                    <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
+                    <a className="nav-link" aria-current="page" href='/'
                       onClick={() => {
                         sessionStorage.removeItem("Username");
                         sessionStorage.removeItem("type");
                         sessionStorage.removeItem("token");
-                      }}>Log Out</span>
+                      }}>Log Out</a>
                   </div>
                 </li>
               </ul>

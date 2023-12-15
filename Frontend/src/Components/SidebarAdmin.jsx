@@ -84,15 +84,15 @@ const Sidebar = () => {
                     <span className="hidden md:inline">{sessionStorage.getItem("Username")}</span>
                   </a>
                   <div className="dropdown-menu absolute hidden group-hover:block" aria-labelledby="navbarDropdown">
-                    <a className="nav-link" aria-current="page">Email: {userInfo.Email}</a>
+                    <span className="nav-link" aria-current="page">Email: {userInfo.Email}</span>
                     <div className="dropdown-divider"></div>
-                    <span className="nav-link" aria-current="page" href="/changePassword">Change password</span>
-                    <span className="nav-link" aria-current="page" href='/'
+                    <a className="nav-link" aria-current="page" href="/changePassword">Change password</a>
+                    <a className="nav-link" aria-current="page" href='/'
                       onClick={() => {
                         sessionStorage.removeItem("Username");
                         sessionStorage.removeItem("type");
                         sessionStorage.removeItem("token");
-                      }}>Log Out</span>
+                      }}>Log Out</a>
                   </div>
                 </li>
               </ul>
