@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { useRef, useState } from "react";
 import SelectGender from "../../UI/SelectGender";
 import SelectRelation from "../../UI/SelectRelation";
 import axios from "axios";
@@ -15,11 +14,16 @@ class Login extends Component {
         signIn_username: null,
         signIn_password: null,
         signUp_gender: null,
-
-        role: null,
         signUp_hourlyRate: null,
         file: null,
+
+        success: false,
+        error: false,
+        errorPassword: false,
+        enable: false,
+        role: true,
     };
+
     handleFileChange = (e) => {
         if (e.target.files) {
             this.setState({ file: e.target.files[0] });
@@ -44,7 +48,6 @@ class Login extends Component {
                     method: "POST",
                     body: formData,
                 });
-
                 const data = await result.json();
 
                 console.log(data);
@@ -53,25 +56,27 @@ class Login extends Component {
             }
         }
     };
-    signUpAdmin = (event) => {
-        event.preventDefault();
-        const newUser = {
-            Username: this.state.signUp_username,
-            Password: this.state.signUp_password,
-        };
-        console.log(newUser);
 
-        axios
-            .post("http://localhost:3001/addAdmin", newUser)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        this.setState({ isContainerActive: false });
+    passwordValidationPatient = (e) => {
+        e.preventDefault();
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
 
+        if (passwordRegex.test(this.state.signUp_password)) {
+            this.signUpPatient(e);
+        } else {
+            this.setState({ errorPassword: true, success: false });
+        }
     };
+    passwordValidationPharmacist = (e) => {
+        e.preventDefault();
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
+        if (passwordRegex.test(this.state.signUp_password)) {
+            this.signUpPharmacist(e);
+        } else {
+            this.setState({ errorPassword: true, success: false });
+        }
+    };
+
     signUpPatient = (event) => {
         event.preventDefault();
         const newUser = {
@@ -99,7 +104,7 @@ class Login extends Component {
                 console.log(err);
             });
         this.setState({ isContainerActive: false });
-
+        this.setState({ errorPassword: false });
     };
     signUpPharmacist = (event) => {
         event.preventDefault();
@@ -116,7 +121,7 @@ class Login extends Component {
         console.log(newUser);
 
         axios
-            .post("http://localhost:3001/addPharmacist", newUser)
+            .post("http://localhost:3001/uploadFile", newUser)
             .then((res) => {
                 console.log(res);
             })
@@ -124,7 +129,7 @@ class Login extends Component {
                 console.log(err);
             });
         this.setState({ isContainerActive: false });
-
+        this.setState({ errorPassword: false });
     };
     signIn = async (event) => {
         event.preventDefault();
@@ -138,6 +143,8 @@ class Login extends Component {
                 Password: newUser.Password,
             })
             .then((res) => {
+                this.setState({ success: true });
+                this.setState({ error: false });
                 sessionStorage.setItem("Username", res.data.Username);
                 sessionStorage.setItem("token", res.data.token);
                 sessionStorage.setItem("type", res.data.type);
@@ -147,249 +154,244 @@ class Login extends Component {
                     if (sessionStorage.getItem("type") == "Patient") {
                         window.location.replace("/Patient");
                     } else if (sessionStorage.getItem("type") == "Pharmacist") {
-                        if (sessionStorage.getItem("ReqStatus") == "Accepted") {
-                            window.location.replace("/Pharmacist");
-                        }
-                        // else if(sessionStorage.getItem("Status") == "Waiting"){
-                        //   window.location.replace("/Contract");
-                        // }              
-                    } else {
+                        window.location.replace("/Pharm");
+                    } else if (sessionStorage.getItem("type") == "Admin") {
                         window.location.replace("/Admin");
+                    } else {
+                        this.setState({ error: true });
+                        this.setState({ success: false });
                     }
                 }
             })
             .catch((err) => {
                 console.log(err);
+                this.setState({ error: true });
+                this.setState({ success: false });
             });
     };
     render() {
         return (
             <div className="PatientReg">
-                <body>
-                    <div
-                        className={`container${this.state.isContainerActive ? " right-panel-active" : ""
-                            }`}
-                        id="container"
-                    >
-                        {this.state.role === "Patient" && (
-                            // Patient Registration
-                            <div class="form-container sign-up-container">
-                                <form action="">
-                                    <h1>Create Account</h1>
-                                    <div class="social-container">
-                                        <a href="#" class="social">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                        <a href="#" class="social">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                        <a href="#" class="social">
-                                            <i class="fab fa-linkedin-in"></i>
-                                        </a>
-                                    </div>
-                                    <span>or Use your Email for registration</span>
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_username: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="text"
-                                        placeholder="Username"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({ signUp_name: event.currentTarget.value });
-                                        }}
-                                        type="text"
-                                        placeholder="Name"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_email: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="email"
-                                        placeholder="Email"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_password: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="password"
-                                        placeholder="Password"
-                                    />
-                                    <SelectGender
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_gender: event.currentTarget.value,
-                                            });
-                                        }}
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_number: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="number"
-                                        placeholder="Phone Number"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({ signUp_DOB: event.currentTarget.value });
-                                        }}
-                                        type="date"
-                                        placeholder="Date Of Birth"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_emergencyContactName: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="text"
-                                        placeholder="Emergency Contact Name"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_emergencyContactNumber:
-                                                    event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="number"
-                                        placeholder="Emergency Contact Number"
-                                    />
-                                    <SelectRelation
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_relation: event.currentTarget.value,
-                                            });
-                                        }}
-                                    />
-                                    <button onClick={this.signUpPatient}> Sign Up</button>
-                                </form>
-                            </div>
-                        )}
-
-                        {this.state.role === "Pharmacist" && (
-                            // Pharmacist Registration
-                            <div class="form-container sign-up-container">
-                                <form action="">
-                                    <h1>Create Account</h1>
-                                    <div class="social-container">
-                                        <a href="#" class="social">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                        <a href="#" class="social">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                        <a href="#" class="social">
-                                            <i class="fab fa-linkedin-in"></i>
-                                        </a>
-                                    </div>
-                                    <span>or use your email for registration</span>
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_username: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="text"
-                                        placeholder="Username"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({ signUp_name: event.currentTarget.value });
-                                        }}
-                                        type="text"
-                                        placeholder="Name"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_email: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="email"
-                                        placeholder="Email"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_password: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="password"
-                                        placeholder="Password"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_hourlyRate: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="number"
-                                        placeholder="Hourly Rate"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({ signUp_DOB: event.currentTarget.value });
-                                        }}
-                                        type="date"
-                                        placeholder="Date Of Birth"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_affiliation: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="text"
-                                        placeholder="Affiliation"
-                                    />
-                                    <input
-                                        onChange={(event) => {
-                                            this.setState({
-                                                signUp_education: event.currentTarget.value,
-                                            });
-                                        }}
-                                        type="text"
-                                        placeholder="Education"
-                                    />
-                                    <div className="input-group">
-                                        <label htmlFor="file" className="sr-only">
-                                            Choose a file
-                                        </label>
+                <div className="bodyClass">
+                    <body>
+                        <div
+                            className={`container${this.state.isContainerActive ? " right-panel-active" : ""
+                                }`}
+                            id="container"
+                        >
+                            {this.state.role ? (
+                                <div class="form-container sign-up-container">
+                                    <form action="">
+                                        <h1>Create Account</h1>
+                                        <div class="social-container">
+                                            <a href="#" class="social">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                            <a href="#" class="social">
+                                                <i class="fab fa-google-plus-g"></i>
+                                            </a>
+                                            <a href="#" class="social">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                        </div>
+                                        <span>or Use your Email for registration</span>
                                         <input
-                                            id="file"
-                                            type="file"
-                                            onChange={this.handleFileChange}
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_username: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="text"
+                                            placeholder="Username"
                                         />
-                                    </div>
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({ signUp_name: event.currentTarget.value });
+                                            }}
+                                            type="text"
+                                            placeholder="Name"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_email: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="email"
+                                            placeholder="Email"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_password: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="password"
+                                            placeholder="Password"
+                                        />
+                                        <SelectGender
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_gender: event.currentTarget.value,
+                                                });
+                                            }}
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_number: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="number"
+                                            placeholder="Phone Number"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({ signUp_DOB: event.currentTarget.value });
+                                            }}
+                                            type="date"
+                                            placeholder="Date Of Birth"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_emergencyContactName: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="text"
+                                            placeholder="Emergency Contact Name"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_emergencyContactNumber:
+                                                        event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="number"
+                                            placeholder="Emergency Contact Number"
+                                        />
+                                        <SelectRelation
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_relation: event.currentTarget.value,
+                                                });
+                                            }}
+                                        />
+                                        <button onClick={this.passwordValidationPatient}> Sign Up</button>
+                                    </form>
+                                </div>
+                            ) : (
+                                <div class="form-container sign-up-container">
+                                    <form action="">
+                                        <h1>Create Account</h1>
+                                        <div class="social-container">
+                                            <a href="#" class="social">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                            <a href="#" class="social">
+                                                <i class="fab fa-google-plus-g"></i>
+                                            </a>
+                                            <a href="#" class="social">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                        </div>
+                                        <span>or use your email for registration</span>
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_username: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="text"
+                                            placeholder="Username"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({ signUp_name: event.currentTarget.value });
+                                            }}
+                                            type="text"
+                                            placeholder="Name"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_email: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="email"
+                                            placeholder="Email"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_password: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="password"
+                                            placeholder="Password"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_hourlyRate: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="number"
+                                            placeholder="Hourly Rate"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({ signUp_DOB: event.currentTarget.value });
+                                            }}
+                                            type="date"
+                                            placeholder="Date Of Birth"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_affiliation: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="text"
+                                            placeholder="Affiliation"
+                                        />
+                                        <input
+                                            onChange={(event) => {
+                                                this.setState({
+                                                    signUp_education: event.currentTarget.value,
+                                                });
+                                            }}
+                                            type="text"
+                                            placeholder="Education"
+                                        />
+                                        <div className="input-group">
+                                            <label htmlFor="file" className="sr-only">
+                                                Choose a file
+                                            </label>
+                                            <input
+                                                id="file"
+                                                type="file"
+                                                onChange={this.handleFileChange}
+                                            />
+                                        </div>
 
-                                    {this.state.file && (
-                                        <button onClick={() => {
-                                            this.handleUpload();
-                                            this.signUpPharmacist();
-                                        }} className="submit">
-                                            Sign Up
-                                        </button>
-                                    )}
-                                    {/* <button onClick = {this.handleUpload}> Sign Up</button> */}
-                                </form>
-                            </div>
-                        )}
+                                        {this.state.file && (
+                                            <button onClick={() => {
+                                                this.handleUpload();
+                                                this.passwordValidationPharmacist();
+                                            }} className="submit">
+                                                Sign Up
+                                            </button>
+                                        )}
+                                    </form>
+                                </div>
+                            )}
 
-                        {this.state.role === "Admin" && (
-                            // Admin Registration
-                            <div class="form-container sign-up-container">
+                            <div class="form-container sign-in-container">
+                                <img class="raya-img" alt="" />
                                 <form action="">
-                                    <h1>Create Account</h1>
+                                    <h1>Sign in</h1>
                                     <div class="social-container">
                                         <a href="#" class="social">
                                             <i class="fab fa-facebook-f"></i>
@@ -401,11 +403,11 @@ class Login extends Component {
                                             <i class="fab fa-linkedin-in"></i>
                                         </a>
                                     </div>
-                                    <span>or Use your Email for registration</span>
+                                    <span>or use your account</span>
                                     <input
                                         onChange={(event) => {
                                             this.setState({
-                                                signUp_username: event.currentTarget.value,
+                                                signIn_username: event.currentTarget.value,
                                             });
                                         }}
                                         type="text"
@@ -414,110 +416,73 @@ class Login extends Component {
                                     <input
                                         onChange={(event) => {
                                             this.setState({
-                                                signUp_password: event.currentTarget.value,
+                                                signIn_password: event.currentTarget.value,
                                             });
                                         }}
                                         type="password"
                                         placeholder="Password"
                                     />
-                                    <button onClick={this.signUpAdmin}> Sign Up</button>
+                                    <a href="/ResetPass">Forgot your password?</a>
+                                    {this.state.success && (
+                                        <a style={{ color: "green" }}>Login successfull</a>
+                                    )}
+                                    {this.state.error && (
+                                        <a style={{ color: "red" }}>Invalid username or password</a>
+                                    )}
+
+                                    <button onClick={this.signIn}>Sign In</button>
                                 </form>
                             </div>
-                        )}
-
-                        <div class="form-container sign-in-container">
-                            <img class="raya-img" alt="" />
-                            <form action="">
-                                <h1>Sign in</h1>
-                                <div class="social-container">
-                                    <a href="/patientHome" class="social">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                    <a href="#" class="social">
-                                        <i class="fab fa-google-plus-g"></i>
-                                    </a>
-                                    <a href="#" class="social">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                </div>
-                                <span>or use your account</span>
-                                <input
-                                    onChange={(event) => {
-                                        this.setState({
-                                            signIn_username: event.currentTarget.value,
-                                        });
-                                    }}
-                                    type="text"
-                                    placeholder="Username"
-                                />
-                                <input
-                                    onChange={(event) => {
-                                        this.setState({
-                                            signIn_password: event.currentTarget.value,
-                                        });
-                                    }}
-                                    type="password"
-                                    placeholder="Password"
-                                />
-                                <a href="/ResetPass">Forgot your password?</a>
-
-                                <button onClick={this.signIn}>Sign In</button>
-                            </form>
-                        </div>
-                        <div class="overlay-container">
-                            <div class="overlay">
-                                <div class="overlay-panel overlay-left">
-                                    <h1>Welcome Back!</h1>
-                                    <p>
-                                        To keep connected with us please login with your personal
-                                        details
-                                    </p>
-                                    <button
-                                        class="ghost"
-                                        id="signIn"
-                                        onClick={() => this.setState({ isContainerActive: false })}
-                                    >
-                                        Sign In
-                                    </button>
-                                </div>
-                                <div class="overlay-panel overlay-right">
-                                    <h1>Hi There!</h1>
-                                    <p>Enter your personal details to open an account with us</p>
-                                    <button
-                                        class="ghost"
-                                        id="signUpAdmin"
-                                        onClick={() => {
-                                            this.setState({ role: "Admin" });
-                                            this.setState({ isContainerActive: true });
-                                        }}
-                                    >
-                                        Sign Up as an Admin
-                                    </button>
-                                    <button
-                                        class="ghost"
-                                        id="signUpPatient"
-                                        onClick={() => {
-                                            this.setState({ role: "Patient" });
-                                            this.setState({ isContainerActive: true });
-                                        }}
-                                    >
-                                        Sign Up as a Patient
-                                    </button>
-                                    <button
-                                        class="ghost"
-                                        id="signUpPharmacist"
-                                        onClick={() => {
-                                            this.setState({ role: "Pharmacist" });
-                                            this.setState({ isContainerActive: true });
-                                        }}
-                                    >
-                                        Sign Up as a Pharmacist
-                                    </button>
+                            <div class="overlay-container">
+                                <div class="overlay">
+                                    <div class="overlay-panel overlay-left">
+                                        <h1>Welcome Back!</h1>
+                                        <p>
+                                            To keep connected with us please login with your personal
+                                            details
+                                        </p>
+                                        <button
+                                            class="ghost"
+                                            id="signIn"
+                                            onClick={() => this.setState({ isContainerActive: false })}
+                                        >
+                                            Sign In
+                                        </button>
+                                        {this.state.errorPassword && (
+                                            <p style={{ color: "red" }}>
+                                                Please write a valid password
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div class="overlay-panel overlay-right">
+                                        <h1>Hi There!</h1>
+                                        <p>Enter your personal details to open an account with us</p>
+                                        <button
+                                            className="ghost"
+                                            id="signUp"
+                                            onClick={() => {
+                                                this.setState({ role: true });
+                                                this.setState({ isContainerActive: true });
+                                            }}
+                                        >
+                                            Sign Up as a Patient
+                                        </button>
+                                        <button
+                                            className="ghost"
+                                            id="signUp"
+                                            onClick={() => {
+                                                this.setState({ role: false });
+                                                this.setState({ isContainerActive: true });
+                                            }}
+                                        >
+                                            Sign Up as a Pharmacist
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </body>
+                    </body>
+                </div>
             </div>
         );
     }
