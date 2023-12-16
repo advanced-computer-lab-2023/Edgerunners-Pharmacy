@@ -15,6 +15,7 @@ const TABLE_HEAD = [
   "Name",
   "Description",
   "Medicinal Use",
+  "Active Ingredient",
   "Price",
   "Quantity",
   "Sales",
@@ -280,6 +281,15 @@ export default function EditMedicine() {
                               {p.MedicinalUse}
                             </Typography>
                           )}
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {p.ActiveIngredient}
+                          </Typography>
                         </td>
                         <td className={classes}>
                           {isEditing ? (

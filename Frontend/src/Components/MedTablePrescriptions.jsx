@@ -14,8 +14,28 @@ export default function MedTablePrescriptions() {
   const [addedToCart, setAddedToCart] = useState({});
   const [showAlternatives, setShowAlternatives] = useState(false);
   const OverTheCounter = false;
-
   const navigate = useNavigate();
+
+  const HandleAlternatives = async (name) => {
+    try {
+      const alternatives = await getAlternatives(name);
+
+      navigate(`/Alternatives?medicinename=${encodeURIComponent(name)}&OverTheCounter=${OverTheCounter}`, { state: { alternatives } });
+    } catch (error) {
+      console.error("Error fetching alternatives:", error);
+    }
+  }
+
+  const getAlternatives = async (medicinename) => {
+    const res = await axios.get(`http://localhost:3001/showAlternatives`, {
+      params: {
+        medicinename,
+        OverTheCounter,
+      },
+    });
+    console.log(res.data);
+    return res.data;
+  };
 
   let MedicinalUses = GetMedicinalUse({});
   const uses = MedicinalUses || [];
@@ -136,9 +156,11 @@ export default function MedTablePrescriptions() {
                       <br />
                       <label className="text-gray-500">Use: </label><label className="text-gray-500"><a >{p.MedicinalUse}</a></label>
                       <br />
+                      <label className="text-gray-500">Active ingredient: </label><label className="text-gray-500"><a >{p.ActiveIngredient}</a></label>
+                      <br />
                     </div>
                   </div>
-                  <div className="space-x-3 mt-11">
+                  <div className="space-x-3 mt-8">
                     {p.Quantity > 0 ? (
                       <button
                         className={`justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 ${addedToCart[p.Name] ? 'bg-gray-300 cursor-not-allowed' : ''
@@ -155,9 +177,7 @@ export default function MedTablePrescriptions() {
                     ) : (
                       <button
                         className="justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5"
-                        onClick={() => {
-                          navigate(`/Alternatives?medicinename=${encodeURIComponent(p.Name)}&OverTheCounter=${OverTheCounter}`);
-                        }}
+                        onClick={() => HandleAlternatives(p.Name)}
                       >
                         Show Alternatives
                       </button>
