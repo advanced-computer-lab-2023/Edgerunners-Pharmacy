@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const patientSchemaP = new Schema(
+const patientSchema = new Schema(
   {
     Username: {
       type: String,
@@ -48,9 +48,32 @@ const patientSchemaP = new Schema(
       phoneNumberEC: {
         type: String,
       },
-      Relations: {
-        type: String,
-      },
+    },
+    Relations: {
+      type: Array,
+      required: false,
+    },
+    FileNames: {
+      type: Array,
+      required: false,
+    },
+
+    HealthRecords: {
+      type: Array,
+    },
+    Wallet: {
+      type: Number,
+      required: false,
+    },
+    HealthPackageflag: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    Linked: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     Cart: {
       type: Array,
@@ -68,13 +91,10 @@ const patientSchemaP = new Schema(
       type: Array,
       required: false
     },
-    Wallet: {
-      type: Number,
-      required: false
-    }
+
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-const PatientP = mongoose.model("Patient", patientSchemaP);
-module.exports = PatientP;
+const Patient = mongoose.model("Patient", patientSchema);
+module.exports = Patient;

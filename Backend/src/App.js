@@ -45,6 +45,7 @@ const {
   setActiveIngredient,
   getOneMedicine,
   getMedicinesPharm,
+  showAlternatives,
 } = require("./Routes/medicineController");
 
 const {
@@ -69,7 +70,7 @@ const {
 
 const MongoURI =
   process.env.MONGO_URI ||
-  "mongodb+srv://Test1:Test1@cluster0.xo5a1to.mongodb.net/Pharmacy?retryWrites=true&w=majority";
+  "mongodb+srv://Test1:Test1@cluster0.xo5a1to.mongodb.net/?retryWrites=true&w=majority";
 
 //App variables
 const app = express();
@@ -149,6 +150,7 @@ app.get("/viewFiles/:filename", viewFiles);
 app.get("/getOnePharmacist", getOnePharmacist);
 app.put("/notifyOutOfStock", notifyOutOfStock);
 app.get("/getBoolean", getOneMedicine);
+app.get("/showAlternatives", showAlternatives);
 
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);

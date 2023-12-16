@@ -327,6 +327,31 @@ const getOneMedicine = async (req, res) => {
   res.status(200).json(overthecounter);
 };
 
+const showAlternatives = async (req, res) => {
+  try {
+    const name = req.query.medicinename;
+
+    const user = await Medicine.findOne({ Name: name });
+
+    if (!user) {
+      return res.status(404).send("Medicine not found");
+    }
+
+    const activeIngredient = user.ActiveIngredient;
+
+    const alternatives = await Medicine.find({
+      ActiveIngredient: activeIngredient,
+      OverTheCounter: req.query.OverTheCounter,
+      Name: { $ne: name },
+    });
+
+    res.status(200).send(alternatives);
+  } catch (error) {
+    console.error("Error fetching alternatives:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   createMedicine,
   getMedicines,
@@ -342,4 +367,5 @@ module.exports = {
   setMedicinalUse,
   setActiveIngredient,
   getOneMedicine,
+  showAlternatives,
 };
