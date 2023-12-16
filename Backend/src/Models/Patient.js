@@ -68,7 +68,7 @@ const patientSchemaP = new Schema(
       type: Array,
       required: false
     },
-    WalletValue: {
+    Wallet: {
       type: Number,
       required: false
     }

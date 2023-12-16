@@ -182,7 +182,12 @@ const updateQuantity = async (req, res) => {
         { Quantity: available, Sales: sales }
       );
 
-      res.status(200).send("Updated successfully");
+      if (available === 0) {
+        res.status(200).send("Quantity is now zero");
+      } else {
+        res.status(200).send("Updated successfully");
+      }
+
     } else {
       res.status(400).send("Not enough quantity available");
     }

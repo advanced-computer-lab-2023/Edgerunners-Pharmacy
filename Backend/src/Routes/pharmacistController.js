@@ -212,6 +212,26 @@ const getOnePharmacist = async (req, res) => {
   res.status(200).json(user);
 };
 
+const notifyOutOfStock = async (req, res) => {
+  try {
+    const users = await Pharmacist.find({ ReqStatus: "Accepted" });
+
+    // Use Promise.all to wait for all promises to resolve
+    await Promise.all(users.map(async (user) => {
+      let notification = user.Notifications || [];
+      notification.push(req.body.notifications);
+      await Pharmacist.updateOne(
+        { Username: user.Username },
+        { $set: { Notifications: notification } },
+      );
+    }));
+
+    res.status(200).send("Updated successfully");
+  } catch (error) {
+    res.status(400).send("Error: Could not update Pharmacist!!");
+  }
+};
+
 module.exports = {
   createPharmacist,
   getPharmacists,
@@ -222,4 +242,5 @@ module.exports = {
   viewFiles,
   uploadFile,
   getOnePharmacist,
+  notifyOutOfStock,
 };

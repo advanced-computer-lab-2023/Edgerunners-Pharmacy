@@ -132,10 +132,17 @@ export default function MedTableAllCopy() {
                     </div>
                   </div>
                   <div className="space-x-3 mt-11">
-                    <button className={`justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 ${addedToCart[p.Name] ? 'bg-gray-300 cursor-not-allowed' : ''}`} 
-                            onClick={() => handleAddToCart(p.Name, p.Price, p.Quantity)}
-                            disabled={addedToCart[p.Name]}>
-                      {addedToCart[p.Name] ? 'Added to cart' : <><FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" /> Add to cart</>}
+                    <button
+                      className={`justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 ${addedToCart[p.Name] || p.Quantity <= 0 ? 'bg-gray-300 cursor-not-allowed' : ''
+                        }`}
+                      onClick={() => handleAddToCart(p.Name, p.Price, p.Quantity)}
+                      disabled={addedToCart[p.Name] || p.Quantity <= 0}
+                    >
+                      {addedToCart[p.Name] ? 'Added to cart' : (
+                        <>
+                          <FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" /> Add to cart
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>

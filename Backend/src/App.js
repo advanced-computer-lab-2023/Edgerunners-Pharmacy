@@ -59,6 +59,7 @@ const {
   viewFiles,
   uploadFile,
   getOnePharmacist,
+  notifyOutOfStock,
 } = require("./Routes/pharmacistController");
 
 const MongoURI =
@@ -141,6 +142,7 @@ app.put("/deletePharmacist", deletePharmacist);
 app.post("/uploadDocument", uploadDocument);
 app.get("/viewFiles/:filename", viewFiles);
 app.get("/getOnePharmacist", getOnePharmacist);
+app.put("/notifyOutOfStock", notifyOutOfStock);
 
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);

@@ -164,7 +164,9 @@ export default function EditMedicine() {
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
         <div className="mt-28" style={{ width: '100vw' }}>
           <button className=" text-sky-600  outline  w-40  h-9  rounded-md shadow ml-16" onClick={routeChange}>Back</button>
-          <div className="items-center flex justify-center">Loading...</div>
+          <div className="h-[16rem] items-center justify-center text-center space-y-4 mt-40">
+            <h1>Loading...</h1>
+          </div>
         </div>
       </div>);
   } else if (Medicine.length === 0) {
@@ -173,7 +175,9 @@ export default function EditMedicine() {
         <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
         <div className="mt-28" style={{ width: '100vw' }}>
           <button className=" text-sky-600  outline  w-40  h-9  rounded-md shadow ml-16" onClick={routeChange}>Back</button>
-          <div className="items-center flex justify-center">No data available.</div>
+          <div className="h-[16rem] items-center justify-center text-center space-y-4 mt-40">
+            <h1>No data available.</h1>
+          </div>
         </div>
       </div>
     );

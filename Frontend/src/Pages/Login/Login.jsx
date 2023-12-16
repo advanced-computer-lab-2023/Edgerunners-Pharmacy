@@ -369,7 +369,7 @@ class Login extends Component {
                                             type="text"
                                             placeholder="Education"
                                         />
-                                        <label className="mr-auto">Documents:</label>
+                                        <label className="mr-auto">Pharmacy degree:</label>
                                         <div className="input-group">
                                             <label htmlFor="file" className="sr-only">
                                                 Choose a file
@@ -380,7 +380,7 @@ class Login extends Component {
                                                 onChange={this.handleFileChange}
                                             />
                                         </div>
-                                        <label className="mr-auto">Documents:</label>
+                                        <label className="mr-auto">ID:</label>
                                         <div className="input-group">
                                             <label htmlFor="file" className="sr-only">
                                                 Choose a file
@@ -391,7 +391,7 @@ class Login extends Component {
                                                 onChange={this.handleFileChange}
                                             />
                                         </div>
-                                        <label className="mr-auto">Documents:</label>
+                                        <label className="mr-auto">Working license:</label>
                                         <div className="input-group">
                                             <label htmlFor="file" className="sr-only">
                                                 Choose a file

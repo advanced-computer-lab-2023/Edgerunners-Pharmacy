@@ -58,6 +58,11 @@ const pharmacistSchema = new Schema(
     WalletValue: {
       type: Number,
       required: false,
+    },
+
+    Notifications: {
+      type: Array,
+      required: false,
     }
   },
   { timestamps: true }
