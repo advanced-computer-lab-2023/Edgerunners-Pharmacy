@@ -329,9 +329,16 @@ const getOneMedicine = async (req, res) => {
 
 const showAlternatives = async (req, res) => {
   try {
-    const name = req.query.medicinename;
+    // Extract URL parameters from the request
+    const { medicinename, OverTheCounter } = req.query;
 
-    const user = await Medicine.findOne({ Name: name });
+    // Check if both parameters are present
+    if (!medicinename || !OverTheCounter) {
+      return res.status(400).send("Missing required parameters");
+    }
+
+    // Your existing code for fetching alternatives
+    const user = await Medicine.findOne({ Name: medicinename });
 
     if (!user) {
       return res.status(404).send("Medicine not found");
@@ -340,9 +347,10 @@ const showAlternatives = async (req, res) => {
     const activeIngredient = user.ActiveIngredient;
 
     const alternatives = await Medicine.find({
+      Status: "Not",
       ActiveIngredient: activeIngredient,
-      OverTheCounter: req.query.OverTheCounter,
-      Name: { $ne: name },
+      OverTheCounter: OverTheCounter,
+      Name: { $ne: medicinename },
     });
 
     res.status(200).send(alternatives);

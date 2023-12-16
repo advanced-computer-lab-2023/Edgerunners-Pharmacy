@@ -126,6 +126,8 @@ export default function ViewMedPharmCopy() {
                       <br />
                       <label className="text-gray-500">Use: </label><label className="text-gray-500"><a >{p.MedicinalUse}</a></label>
                       <br />
+                      <label className="text-gray-500">Active ingredient: </label><label className="text-gray-500"><a >{p.ActiveIngredient}</a></label>
+                      <br />
                       <label className="text-gray-500">Quantity: </label><label className="text-gray-500"><a >{p.Quantity}</a></label>
                       <br />
                       <label className="text-gray-500">Sales: </label><label className="text-gray-500"><a >{p.Sales}</a></label>

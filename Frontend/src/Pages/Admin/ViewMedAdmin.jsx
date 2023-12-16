@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GetMedicine from "../getMedicine";
+import GetMedicine from "../getMedicinePharm";
 import GetMedicinalUse from "../getMedicinalUses";
 import { Card } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
@@ -97,6 +97,8 @@ export default function ViewMedAdmin() {
                         <label className="text-gray-500"><a >{p.Description}</a></label>
                         <br />
                         <label className="text-gray-500">Use: </label><label className="text-gray-500"><a >{p.MedicinalUse}</a></label>
+                        <br />
+                        <label className="text-gray-500">Active ingredient: </label><label className="text-gray-500"><a >{p.ActiveIngredient}</a></label>
                         <br />
                       </div>
                     </div>

@@ -36,6 +36,8 @@ import ViewMedPrescription from './Pages/Patient/ViewMedPrescription';
 import Alternatives from './Pages/Patient/Alternatives';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// user hasn't logged in yet or is a pending pharmacist so won't access anything except login, reset password, and register pages.
 if(sessionStorage.getItem("type") === null || sessionStorage.getItem("type") === "PendingPharmacist") {
 root.render(
   <React.StrictMode>
@@ -52,6 +54,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+// if he is an admin a set of routes is only available for him meaning he can't access pharmacists' or patients' routes even if he know the url
 } else if(sessionStorage.getItem("type") === "Admin") {
 root.render(
   <React.StrictMode>
@@ -71,6 +74,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+// if he is a pharmacist a set of routes is only available for him meaning he can't access patients' or admins' routes even if he know the url
 } else if(sessionStorage.getItem("type") === "Pharmacist") {
 root.render(
   <React.StrictMode>
@@ -86,6 +90,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+// if he is a patient a set of routes is only available for him meaning he can't access pharmacists' or admins' routes even if he know the url
 } if(sessionStorage.getItem("type") === "Patient") {
 root.render(
   <React.StrictMode>
