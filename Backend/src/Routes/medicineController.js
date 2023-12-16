@@ -4,9 +4,16 @@ const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57Nm
 
 const createMedicine = async (req, res) => {
   try {
-    const { Name, Description, MedicinalUse, Price, Quantity } = req.body;
+    const { Name, Description, MedicinalUse, Price, Quantity, ActiveIngredient, OverTheCounter } = req.body;
     const Sales = 0;
     const Status = "Not";
+    let overcounter = true;
+
+    if (OverTheCounter === "Prescription") {
+      overcounter = false;
+    } else {
+      overcounter = true;
+    }
 
     const medicineData = {
       Name,
@@ -16,6 +23,8 @@ const createMedicine = async (req, res) => {
       Quantity,
       Sales,
       Status,
+      ActiveIngredient,
+      OverTheCounter: overcounter,
     };
 
     if (req.files && req.files.Picture) {
@@ -46,7 +55,7 @@ const createMedicine = async (req, res) => {
 
 const getMedicines = async (req, res) => {
   try {
-    const { MedicinalUse, Name } = req.query;
+    const { MedicinalUse, Name, OverTheCounter } = req.query;
     const filter = {};
     if (MedicinalUse) {
       filter.MedicinalUse = MedicinalUse;
@@ -54,7 +63,23 @@ const getMedicines = async (req, res) => {
     if (Name) {
       filter.Name = Name;
     }
+
+    if (OverTheCounter !== undefined) {
+      filter.OverTheCounter = OverTheCounter;
+    }
+
+    filter.Status = "Not";
+
     const Medicines = await Medicine.find(filter);
+    res.status(200).send(Medicines);
+  } catch (e) {
+    res.status(400).send("Error could not get Medicines !!");
+  }
+};
+
+const getMedicinesPharm = async (req, res) => {
+  try {
+    const Medicines = await Medicine.find();
     res.status(200).send(Medicines);
   } catch (e) {
     res.status(400).send("Error could not get Medicines !!");
@@ -63,10 +88,77 @@ const getMedicines = async (req, res) => {
 
 const getMedicinalUse = async (req, res) => {
   try {
-    const medicinalUses = await Medicine.distinct('MedicinalUse');
-    res.status(200).send(medicinalUses);
+    let filteruses = [];
+    const medicine = await Medicine.find();
+
+    if (medicine && medicine.length > 0) {
+      filteruses = medicine[0].ArrayMedicineUse;
+      res.status(200).send(filteruses);
+    } else {
+      res.status(404).send("No medicinal uses found");
+    }
   } catch (e) {
-    res.status(400).send("Error could not get medicinal uses!!");
+    console.error(e);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+const getActiveIngredient = async (req, res) => {
+  try {
+    let filteractive = [];
+    const medicine = await Medicine.find();
+
+    if (medicine && medicine.length > 0) {
+      filteractive = medicine[0].ArrayActiveIngredient;
+      res.status(200).send(filteractive);
+    } else {
+      res.status(404).send("No active ingredients found");
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+const setMedicinalUse = async (req, res) => {
+  try {
+    let filteruses = [];
+    const medicine = await Medicine.find();
+
+    if (medicine && medicine.length > 0) {
+      filteruses = medicine[0].ArrayMedicineUse;
+      filteruses.push(req.body);
+      for (let i = 0; i < medicine.length; i++) {
+        await Medicine.updateOne({ Name: medicine[i].Name }, { $set: { ArrayMedicineUse: filteruses } });
+      }
+      res.status(200).send(filteruses);
+    } else {
+      res.status(404).send("No medicinal uses found");
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+const setActiveIngredient = async (req, res) => {
+  try {
+    let filteractive = [];
+    const medicine = await Medicine.find();
+
+    if (medicine && medicine.length > 0) {
+      filteractive = medicine[0].ArrayActiveIngredient;
+      filteractive.push(req.body);
+      for (let i = 0; i < medicine.length; i++) {
+        await Medicine.updateOne({ Name: medicine[i].Name }, { $set: { ArrayActiveIngredient: filteractive } });
+      }
+      res.status(200).send(filteractive);
+    } else {
+      res.status(404).send("No active ingredients found");
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -86,10 +178,10 @@ const updateMedicine = async (req, res) => {
       }
     );
     const products = await stripe.products.list({
-      active: true,limit : 1000
+      active: true, limit: 1000
     });
     let med = Medicine.findOne({ Name: req.body.Name });
-    
+
     const product = products.data.find((p) => p.name === req.body.Name);
 
     const price = parseInt(req.body.Price * 100);
@@ -125,9 +217,9 @@ const archiveMedicine = async (req, res) => {
     if ((await Medicine.find({ Name: req.body.Name })).length == 0) {
       res.status(300).send("Medicine Not Found");
     } else {
-      await Medicine.updateOne({ Name: req.body.Name }, {$set: {Status: "Archived"}});
+      await Medicine.updateOne({ Name: req.body.Name }, { $set: { Status: "Archived" } });
       const products = await stripe.products.list({
-        active: true,limit : 1000,
+        active: true, limit: 1000,
       });
       const product = products.data.find((p) => p.name === req.body.Name);
       await stripe.products.update(product.id, {
@@ -146,9 +238,9 @@ const unarchiveMedicine = async (req, res) => {
     if ((await Medicine.find({ Name: req.body.Name })).length == 0) {
       res.status(300).send("Medicine Not Found");
     } else {
-      await Medicine.updateOne({ Name: req.body.Name }, {$set: {Status: "Not"}});
+      await Medicine.updateOne({ Name: req.body.Name }, { $set: { Status: "Not" } });
       const products = await stripe.products.list({
-        active: true,limit : 1000,
+        active: true, limit: 1000,
       });
       const product = products.data.find((p) => p.name === req.body.Name);
       await stripe.products.update(product.id, {
@@ -228,9 +320,17 @@ const reverseQuantity = async (req, res) => {
   }
 };
 
+const getOneMedicine = async (req, res) => {
+  const name = req.query.medicinename;
+  const user = await Medicine.findOne({ Name: name });
+  let overthecounter = user.OverTheCounter;
+  res.status(200).json(overthecounter);
+};
+
 module.exports = {
   createMedicine,
   getMedicines,
+  getMedicinesPharm,
   getMedicinalUse,
   updateMedicine,
   archiveMedicine,
@@ -238,4 +338,8 @@ module.exports = {
   findMedicine,
   updateQuantity,
   reverseQuantity,
+  getActiveIngredient,
+  setMedicinalUse,
+  setActiveIngredient,
+  getOneMedicine,
 };

@@ -40,6 +40,11 @@ const {
   findMedicine,
   updateQuantity,
   reverseQuantity,
+  getActiveIngredient,
+  setMedicinalUse,
+  setActiveIngredient,
+  getOneMedicine,
+  getMedicinesPharm,
 } = require("./Routes/medicineController");
 
 const {
@@ -132,7 +137,7 @@ app.put("/cancelOrder", cancelOrder);
 app.get("/getWallet", getWallet);
 app.get("/getSales", getSales);
 app.put("/popOrder", popOrder);
-app.get("/getOnePatient",getOnePatient);
+app.get("/getOnePatient", getOnePatient);
 
 app.post("/addPharmacist", createPharmacist);
 app.post("/uploadFile", uploadFile);
@@ -143,10 +148,15 @@ app.post("/uploadDocument", uploadDocument);
 app.get("/viewFiles/:filename", viewFiles);
 app.get("/getOnePharmacist", getOnePharmacist);
 app.put("/notifyOutOfStock", notifyOutOfStock);
+app.get("/getBoolean", getOneMedicine);
 
 app.post("/addMedicine", createMedicine);
 app.get("/getMedicine", getMedicines);
+app.get("/getMedicinePharm", getMedicinesPharm);
 app.get("/getMedicinalUse", getMedicinalUse);
+app.get("/getActiveIngredient", getActiveIngredient);
+app.put("/setMedicinalUse", setMedicinalUse);
+app.put("/setActiveIngredient", setActiveIngredient);
 app.put("/updateMedicine", updateMedicine);
 app.put("/archiveMedicine", archiveMedicine);
 app.put("/unarchiveMedicine", unarchiveMedicine);
@@ -173,7 +183,7 @@ app.post("/create-checkout-session", async (req, res) => {
     console.log(user);
     const storeItems = user.Cart;
     const products = await stripe.products.list({
-      active: true,limit : 1000
+      active: true, limit: 1000
     });
 
     let myPrices = [];

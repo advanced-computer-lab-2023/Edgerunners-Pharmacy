@@ -36,7 +36,7 @@ export default function EditMedicine() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/getMedicine");
+        const response = await axios.get("http://localhost:3001/getMedicinePharm");
         const medicineData = response.data;
 
         // Set initial state for editMode based on the status of each medicine

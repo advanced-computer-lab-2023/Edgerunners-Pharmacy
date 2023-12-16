@@ -12,6 +12,7 @@ export default function MedTableAllCopy() {
   const [medicinaluse, setMedicinalUse] = useState();
   const [forceEffect, setForceEffect] = useState(false);
   const [addedToCart, setAddedToCart] = useState({});
+  const [showAlternatives, setShowAlternatives] = useState(false);
 
   let MedicinalUses = GetMedicinalUse({});
   const uses = MedicinalUses || [];
@@ -19,6 +20,7 @@ export default function MedTableAllCopy() {
   let Medicine = GetMedicine({
     Name: name,
     MedicinalUse: medicinaluse,
+    OverTheCounter: true,
   });
 
   const handleSubmit = async (e) => {
@@ -26,6 +28,7 @@ export default function MedTableAllCopy() {
     Medicine = await GetMedicine({
       Name: name,
       MedicinalUse: medicinaluse,
+      OverTheCounter: true,
     });
   };
 
@@ -57,6 +60,7 @@ export default function MedTableAllCopy() {
             }));
           }, 500);
         } else {
+          setShowAlternatives(true);
           console.log("Cannot add to cart. Insufficient quantity.");
         }
       } catch (error) {
@@ -132,18 +136,29 @@ export default function MedTableAllCopy() {
                     </div>
                   </div>
                   <div className="space-x-3 mt-11">
-                    <button
-                      className={`justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 ${addedToCart[p.Name] || p.Quantity <= 0 ? 'bg-gray-300 cursor-not-allowed' : ''
-                        }`}
-                      onClick={() => handleAddToCart(p.Name, p.Price, p.Quantity)}
-                      disabled={addedToCart[p.Name] || p.Quantity <= 0}
-                    >
-                      {addedToCart[p.Name] ? 'Added to cart' : (
-                        <>
-                          <FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" /> Add to cart
-                        </>
-                      )}
-                    </button>
+                    {p.Quantity > 0 ? (
+                      <button
+                        className={`justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5 ${addedToCart[p.Name] ? 'bg-gray-300 cursor-not-allowed' : ''
+                          }`}
+                        onClick={() => handleAddToCart(p.Name, p.Price, p.Quantity)}
+                        disabled={addedToCart[p.Name]}
+                      >
+                        {addedToCart[p.Name] ? 'Added to cart' : (
+                          <>
+                            <FontAwesomeIcon icon={faCartPlus} size="1x" color="sky-600" /> Add to cart
+                          </>
+                        )}
+                      </button>
+                    ) : (
+                      <button
+                        className="justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5"
+                        onClick={() => {
+                          // Handle the click for showing alternatives
+                        }}
+                      >
+                        Show Alternatives
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

@@ -34,6 +34,22 @@ const medicineSchema = new Schema(
       type: String,
       enum: ["Archived", "Not"],
     },
+    ActiveIngredient: {
+      type: String,
+      required: false,
+    },
+    ArrayMedicineUse: {
+      type: Array,
+      required: false,
+    },
+    ArrayActiveIngredient: {
+      type: Array,
+      required: false,
+    },
+    OverTheCounter: {
+      type: Boolean,
+      required: false,
+    }
   },
   { timestamps: true }
 );
