@@ -75,7 +75,7 @@ export default function Patient() {
               <FontAwesomeIcon
                 icon={faSyringe}
                 size="4x"
-                style={{ color: "#93AFDA" }}
+                style={{ color: "#0284C7" }}
               />
               <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles" style={{ textDecoration: "none" }}>
                 <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Pharmacy</h3>

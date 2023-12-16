@@ -182,19 +182,9 @@ class Login extends Component {
                             {this.state.role ? (
                                 <div class="form-container sign-up-container">
                                     <form action="">
-                                        <h1>Create Account</h1>
-                                        <div class="social-container">
-                                            <a href="#" class="social">
-                                                <i class="fab fa-facebook-f"></i>
-                                            </a>
-                                            <a href="#" class="social">
-                                                <i class="fab fa-google-plus-g"></i>
-                                            </a>
-                                            <a href="#" class="social">
-                                                <i class="fab fa-linkedin-in"></i>
-                                            </a>
-                                        </div>
-                                        <span>or Use your Email for registration</span>
+                                        <h1 className="text-5xl pt-56">Create Account</h1>
+                                        <br></br>
+                                        <label className="mr-auto">Username:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -204,6 +194,7 @@ class Login extends Component {
                                             type="text"
                                             placeholder="Username"
                                         />
+                                        <label className="mr-auto">Name:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({ signUp_name: event.currentTarget.value });
@@ -211,6 +202,7 @@ class Login extends Component {
                                             type="text"
                                             placeholder="Name"
                                         />
+                                        <label className="mr-auto">Email:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -220,6 +212,7 @@ class Login extends Component {
                                             type="email"
                                             placeholder="Email"
                                         />
+                                        <label className="mr-auto">Password:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -229,13 +222,20 @@ class Login extends Component {
                                             type="password"
                                             placeholder="Password"
                                         />
-                                        <SelectGender
+                                        <label className="mr-auto">Gender:</label>
+                                        <select
                                             onChange={(event) => {
                                                 this.setState({
                                                     signUp_gender: event.currentTarget.value,
                                                 });
                                             }}
-                                        />
+                                            className="bg-50 border border-300 text-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option>Select gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+
+                                        </select>
+                                        <label className="mr-auto">Phone number:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -245,6 +245,7 @@ class Login extends Component {
                                             type="number"
                                             placeholder="Phone Number"
                                         />
+                                        <label className="mr-auto">Date of birth:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({ signUp_DOB: event.currentTarget.value });
@@ -252,6 +253,7 @@ class Login extends Component {
                                             type="date"
                                             placeholder="Date Of Birth"
                                         />
+                                        <label className="mr-auto">Emergency contact name:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -261,6 +263,7 @@ class Login extends Component {
                                             type="text"
                                             placeholder="Emergency Contact Name"
                                         />
+                                        <label className="mr-auto">Emergency contact number:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -271,6 +274,7 @@ class Login extends Component {
                                             type="number"
                                             placeholder="Emergency Contact Number"
                                         />
+                                        <label className="mr-auto">Relation:</label>
                                         <SelectRelation
                                             onChange={(event) => {
                                                 this.setState({
@@ -278,25 +282,18 @@ class Login extends Component {
                                                 });
                                             }}
                                         />
+                                        <br></br>
                                         <button onClick={this.passwordValidationPatient}> Sign Up</button>
+                                        <br></br>
                                     </form>
                                 </div>
                             ) : (
                                 <div class="form-container sign-up-container">
                                     <form action="">
-                                        <h1>Create Account</h1>
-                                        <div class="social-container">
-                                            <a href="#" class="social">
-                                                <i class="fab fa-facebook-f"></i>
-                                            </a>
-                                            <a href="#" class="social">
-                                                <i class="fab fa-google-plus-g"></i>
-                                            </a>
-                                            <a href="#" class="social">
-                                                <i class="fab fa-linkedin-in"></i>
-                                            </a>
-                                        </div>
-                                        <span>or use your email for registration</span>
+                                        <br></br>
+                                        <h1 className="text-5xl pt-64">Create Account</h1>
+                                        <br></br>
+                                        <label className="mr-auto">Username:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -306,6 +303,7 @@ class Login extends Component {
                                             type="text"
                                             placeholder="Username"
                                         />
+                                        <label className="mr-auto">Name:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({ signUp_name: event.currentTarget.value });
@@ -313,6 +311,7 @@ class Login extends Component {
                                             type="text"
                                             placeholder="Name"
                                         />
+                                        <label className="mr-auto">Email:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -322,6 +321,7 @@ class Login extends Component {
                                             type="email"
                                             placeholder="Email"
                                         />
+                                        <label className="mr-auto">Password:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -331,6 +331,7 @@ class Login extends Component {
                                             type="password"
                                             placeholder="Password"
                                         />
+                                        <label className="mr-auto">Hourly rate:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -340,6 +341,7 @@ class Login extends Component {
                                             type="number"
                                             placeholder="Hourly Rate"
                                         />
+                                        <label className="mr-auto">Date of birth:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({ signUp_DOB: event.currentTarget.value });
@@ -347,6 +349,7 @@ class Login extends Component {
                                             type="date"
                                             placeholder="Date Of Birth"
                                         />
+                                        <label className="mr-auto">Affiliation:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -356,6 +359,7 @@ class Login extends Component {
                                             type="text"
                                             placeholder="Affiliation"
                                         />
+                                        <label className="mr-auto">Education:</label>
                                         <input
                                             onChange={(event) => {
                                                 this.setState({
@@ -365,6 +369,7 @@ class Login extends Component {
                                             type="text"
                                             placeholder="Education"
                                         />
+                                        <label className="mr-auto">Documents:</label>
                                         <div className="input-group">
                                             <label htmlFor="file" className="sr-only">
                                                 Choose a file
@@ -375,15 +380,36 @@ class Login extends Component {
                                                 onChange={this.handleFileChange}
                                             />
                                         </div>
+                                        <label className="mr-auto">Documents:</label>
+                                        <div className="input-group">
+                                            <label htmlFor="file" className="sr-only">
+                                                Choose a file
+                                            </label>
+                                            <input
+                                                id="file"
+                                                type="file"
+                                                onChange={this.handleFileChange}
+                                            />
+                                        </div>
+                                        <label className="mr-auto">Documents:</label>
+                                        <div className="input-group">
+                                            <label htmlFor="file" className="sr-only">
+                                                Choose a file
+                                            </label>
+                                            <input
+                                                id="file"
+                                                type="file"
+                                                onChange={this.handleFileChange}
+                                            />
+                                        </div>
+                                        <br></br>
+                                        <button onClick={() => {
+                                            this.handleUpload();
+                                            this.passwordValidationPharmacist();
+                                        }} className="submit">
+                                            Sign Up
+                                        </button>
 
-                                        {this.state.file && (
-                                            <button onClick={() => {
-                                                this.handleUpload();
-                                                this.passwordValidationPharmacist();
-                                            }} className="submit">
-                                                Sign Up
-                                            </button>
-                                        )}
                                     </form>
                                 </div>
                             )}
@@ -392,18 +418,6 @@ class Login extends Component {
                                 <img class="raya-img" alt="" />
                                 <form action="">
                                     <h1>Sign in</h1>
-                                    <div class="social-container">
-                                        <a href="#" class="social">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                        <a href="#" class="social">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                        <a href="#" class="social">
-                                            <i class="fab fa-linkedin-in"></i>
-                                        </a>
-                                    </div>
-                                    <span>or use your account</span>
                                     <input
                                         onChange={(event) => {
                                             this.setState({
@@ -467,6 +481,7 @@ class Login extends Component {
                                         >
                                             Sign Up as a Patient
                                         </button>
+                                        <br></br>
                                         <button
                                             className="ghost"
                                             id="signUp"
