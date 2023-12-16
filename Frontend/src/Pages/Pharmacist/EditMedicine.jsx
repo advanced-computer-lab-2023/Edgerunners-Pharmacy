@@ -184,11 +184,11 @@ export default function EditMedicine() {
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
           <div className="mt-28" style={{ width: '100vw' }}>
             <button className=" text-sky-600  outline  w-40  h-9  rounded-md shadow ml-16" onClick={routeChange}>Back</button>
-            <div className="items-center flex justify-center">
+            <div className="items-center flex justify-center -mt-14">
               <h2 style={{ color: '#93AFDA' }}>Edit Medicine</h2>
             </div>
             <Card className="h-full w-full">
-              <table className="w-full min-w-max table-auto text-left">
+              <table className="w-full min-w-max table-auto text-left mt-8">
                 <thead>
                   <tr>
                     {TABLE_HEAD.map((head) => (

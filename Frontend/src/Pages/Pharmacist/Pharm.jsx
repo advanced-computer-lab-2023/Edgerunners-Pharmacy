@@ -74,7 +74,7 @@ export default function Pharm() {
             <FontAwesomeIcon
               icon={faPrescriptionBottleMedical}
               size="4x"
-              style={{ color: "#93AFDA" }}
+              style={{ color: "#0284C7" }}
             />
             <a style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>

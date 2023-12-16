@@ -60,8 +60,8 @@ function AddMedicine(props) {
     return (
         <div>
             <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-            <div className="mt-28">
-                <button className="text-sky-600  outline  w-40  h-9 rounded-md shadow ml-16" onClick={routeChange}> Back </button>
+            <button className="text-sky-600  outline  w-40  h-9 rounded-md shadow ml-16 mt-28" onClick={routeChange}> Back </button>
+            <div className="-mt-9">
                 <div className=" justify-center flex mb-20">
                     <Card width='w-4/12' height=' h-[45rem]'>
                         <div className=" flex justify-center  mt-6 mb-0 ">
