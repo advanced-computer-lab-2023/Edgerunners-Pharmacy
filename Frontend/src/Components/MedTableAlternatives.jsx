@@ -1,39 +1,23 @@
 import React, { useState, useEffect } from "react";
-import GetMedicine from "../Pages/getMedicine";
-import GetMedicinalUse from "../Pages/getMedicinalUses";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import { Card } from "@material-tailwind/react";
-import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import GetAlternatives from "../Pages/getAlternatives";
 
-export default function MedTableAllCopy() {
-  const [name, setName] = useState();
-  const [medicinaluse, setMedicinalUse] = useState();
-  const [forceEffect, setForceEffect] = useState(false);
+export default function MedTableAlternatives() {
+  const { medicinename, OverTheCounter } = useParams();
+  const isOverTheCounter = OverTheCounter === "true";
   const [addedToCart, setAddedToCart] = useState({});
   const [showAlternatives, setShowAlternatives] = useState(false);
-  const OverTheCounter = true;
 
   const navigate = useNavigate();
 
-  let MedicinalUses = GetMedicinalUse({});
-  const uses = MedicinalUses || [];
-
-  let Medicine = GetMedicine({
-    Name: name,
-    MedicinalUse: medicinaluse,
-    OverTheCounter,
+  let Medicine = GetAlternatives({
+    medicinename,
+    isOverTheCounter,
   });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    Medicine = await GetMedicine({
-      Name: name,
-      MedicinalUse: medicinaluse,
-      OverTheCounter,
-    });
-  };
 
   const handleAddToCart = async (name, price, availableQuantity) => {
     if (sessionStorage.getItem("type") === "Patient") {
@@ -74,41 +58,8 @@ export default function MedTableAllCopy() {
 
   if (Medicine) {
     return (
-      <div>
-        <div className="form-prescription space-x-3 justify-center flex mb-4 mt-4">
-          <label className="-mt-48">Search</label>
-          <input
-            className="text-sky-600  outline  w-40  h-9  rounded-md -mt-48 shadow"
-            type="text"
-            name=""
-            id=""
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <button className="  text-sky-600  outline  w-40  h-9  rounded-md -mt-48 shadow" type="submit" onSubmit={handleSubmit}>
-            Submit
-          </button>
-          <label className="-mt-48">Medicinal Use</label>
-          <select
-            className="text-sky-600 outline w-40 h-9 rounded-md -mt-48 shadow"
-            value={medicinaluse}
-            onChange={(e) => {
-              setMedicinalUse(e.target.value);
-            }}
-          >
-            <option value="" enabled>
-              Select Medicinal Use
-            </option>
-            {Array.isArray(uses) &&
-              uses.map((use, index) => (
-                <option key={index} value={use}>
-                  {use}
-                </option>
-              ))}
-          </select>
-        </div>
-
+      <div className="mt-40">
+        <button className="text-sky-600  outline  w-40  h-9 rounded-md shadow ml-16" onClick={routeChange}> Back </button>
         <div className="grid grid-cols-4 flex -mt-44 ml-20 pb-10">
           {Medicine.map((p, index) => {
             return (
@@ -156,7 +107,7 @@ export default function MedTableAllCopy() {
                       <button
                         className="justify-end text-sky-600 outline w-72 h-9 rounded-md mb-2 mt-0.5"
                         onClick={() => {
-                          navigate(`/Alternatives?medicinename=${encodeURIComponent(p.Name)}&OverTheCounter=${OverTheCounter}`);
+                          navigate(`/Alternatives?medicinename=${encodeURIComponent(p.Name)}&OverTheCounter=${isOverTheCounter}`);
                         }}
                       >
                         Show Alternatives
@@ -167,6 +118,15 @@ export default function MedTableAllCopy() {
               </div>
             );
           })}
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="mt-40">
+        <button className="text-sky-600  outline  w-40  h-9 rounded-md shadow ml-16" onClick={routeChange}> Back </button>
+        <div className="h-[16rem] justify-center text-center space-y-4 mt-28">
+          <h1>There are no alternatives</h1>
         </div>
       </div>
     );

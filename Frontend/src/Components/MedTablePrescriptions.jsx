@@ -7,13 +7,13 @@ import { Card } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-export default function MedTableAllCopy() {
+export default function MedTablePrescriptions() {
   const [name, setName] = useState();
   const [medicinaluse, setMedicinalUse] = useState();
   const [forceEffect, setForceEffect] = useState(false);
   const [addedToCart, setAddedToCart] = useState({});
   const [showAlternatives, setShowAlternatives] = useState(false);
-  const OverTheCounter = true;
+  const OverTheCounter = false;
 
   const navigate = useNavigate();
 

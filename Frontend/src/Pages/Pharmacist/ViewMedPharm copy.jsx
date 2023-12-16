@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../UI/Logo";
-import GetMedicine from "../getMedicine";
+import GetMedicine from "../getMedicinePharm";
 import GetMedicinalUse from "../getMedicinalUses";
 import { Card } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";

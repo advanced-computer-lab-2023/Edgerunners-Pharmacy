@@ -32,6 +32,8 @@ import Login from './Pages/Login/Login';
 import AddEmail from './Pages/Admin/AddEmail';
 import ViewSales from './Pages/Pharmacist/ViewSales';
 import ViewSalesAdmin from './Pages/Admin/ViewSalesAdmin';
+import ViewMedPrescription from './Pages/Patient/ViewMedPrescription';
+import Alternatives from './Pages/Patient/Alternatives';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 if(sessionStorage.getItem("type") === null || sessionStorage.getItem("type") === "PendingPharmacist") {
@@ -91,6 +93,8 @@ root.render(
       <Routes>
         <Route path="/Patient" element={<Patient />} />
         <Route path="/ViewMedPatient" element={<ViewMedPatient />} />
+        <Route path="/ViewMedPrescriptions" element={<ViewMedPrescription />} />
+        <Route path="/Alternatives" element={<Alternatives />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/ViewOrders" element={<ViewOrders />} />
         <Route path="/Address" element={<AddDeliveryAddress />} />

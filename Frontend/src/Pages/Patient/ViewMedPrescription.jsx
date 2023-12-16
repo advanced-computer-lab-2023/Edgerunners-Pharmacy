@@ -1,13 +1,13 @@
-import MedTableAllCopy from "../../Components/MedTableAll copy";
+import MedTablePrescriptions from "../../Components/MedTablePrescriptions";
 import Sidebar from "../../Components/SidebarPatient";
 
-function ViewMedPatient() {
+function ViewMedPrescription() {
   return (
     <div>
       <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-      <MedTableAllCopy />
+      <MedTablePrescriptions />
     </div>
   );
 }
 
-export default ViewMedPatient;
+export default ViewMedPrescription;

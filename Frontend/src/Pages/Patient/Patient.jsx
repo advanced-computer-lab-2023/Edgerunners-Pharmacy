@@ -12,6 +12,7 @@ import {
   faCartShopping,
   faSyringe,
   faUser,
+  faPrescription
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarPatient from "../../Components/SidebarPatient";
 
@@ -27,16 +28,29 @@ export default function Patient() {
           <div className="footer-in row">
             <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
               <FontAwesomeIcon
+                icon={faPrescription}
+                size="4x"
+                style={{ color: "#0284C7" }}
+              />
+              <a href="/ViewMedPrescriptions" style={{ textDecoration: "none" }}>
+                <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                  Prescription Medicine
+                </h3>
+              </a>
+              <p style={{ textAlign: "center", color: "gray" }}>View all prescription medicines</p>
+            </div>
+            <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
+              <FontAwesomeIcon
                 icon={faHandHoldingMedical}
                 size="4x"
                 style={{ color: "#0284C7" }}
               />
               <a href="/ViewMedPatient" style={{ textDecoration: "none" }}>
                 <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
-                  Medicine
+                  Over the Counter Medicine
                 </h3>
               </a>
-              <p style={{ textAlign: "center", color: "gray" }}>View all available medicines</p>
+              <p style={{ textAlign: "center", color: "gray" }}>View all over the counter medicines</p>
             </div>
             <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
               <FontAwesomeIcon
