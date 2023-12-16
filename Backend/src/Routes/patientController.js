@@ -30,7 +30,7 @@ const createPatient = async (req, res) => {
         Email: req.body.Email,
         phoneNumber: req.body.phoneNumber,
         DOB: req.body.DOB,
-        WalletValue: wallet,
+        Wallet: wallet,
         EmergencyContact: {
           FullnameEC: req.body.EmergencyContact.FullnameEC,
           phoneNumberEC: req.body.EmergencyContact.phoneNumberEC,
@@ -46,7 +46,7 @@ const createPatient = async (req, res) => {
         Email: req.body.Email,
         phoneNumber: req.body.phoneNumber,
         DOB: req.body.DOB,
-        WalletValue: wallet,
+        Wallet: wallet,
       });
     }
     res.status(200).send("Created successfully");
@@ -284,7 +284,7 @@ const addOrder = async (req, res) => {
     const orderStatus = "Accepted";
     const username = req.body.username; // Replace with the actual username
     const user = await Patient.findOne({ Username: username });
-    let wallet = user.WalletValue;
+    let wallet = user.Wallet;
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -315,13 +315,13 @@ const addOrder = async (req, res) => {
       (acc, item) => acc + item.totalprice,
       0
     );
-    if (wallet >= totalpricepaid) {
+    if (wallet >= totalpricepaid && paymentMethod == "Wallet") {
       wallet -= totalpricepaid;
     }
     user.Cart = [];
     await Patient.updateOne(
       { Username: username },
-      { $set: { Orders: order, Sales: sales, Cart: [], WalletValue: wallet } }
+      { $set: { Orders: order, Sales: sales, Cart: [], Wallet: wallet } }
     );
     res.status(200).send("Added order successfully!");
   } catch (e) {
@@ -335,7 +335,7 @@ const cancelOrder = async (req, res) => {
     const totalprice = req.body.totalprice;
 
     const user = await Patient.findOne({ Username: username });
-    const wallet = user.WalletValue;
+    const wallet = user.Wallet;
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -349,7 +349,7 @@ const cancelOrder = async (req, res) => {
       order[existingOrderIndex].orderStatus = "Cancelled";
       await Patient.updateOne(
         { Username: username },
-        { $set: { Orders: order, Sales: sales, WalletValue: (wallet + totalprice) } }
+        { $set: { Orders: order, Sales: sales, Wallet: (wallet + totalprice) } }
       );
     } else {
       res.status(400).send("Order not found");
@@ -413,7 +413,7 @@ const getWallet = async (req, res) => {
   const username = req.query.username;
   const user = await Patient.findOne({ Username: username });
   // console.log(user);
-  wallet = user.WalletValue;
+  wallet = user.Wallet;
   res.status(200).json(wallet);
 };
 

@@ -1,11 +1,3 @@
-.outer {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
 .reset-pass-container {
     max-width: 400px;
     margin: auto;

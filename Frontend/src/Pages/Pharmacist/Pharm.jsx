@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../Components/SidebarPharm";
+import NotificationPopup from "./NotificationPopup";
 import './Pharm.scss'
 import '../Bootstrap.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,8 +18,10 @@ import {
 
 export default function Pharm() {
   const [randomPointsInWallet, setRandomPointsInWallet] = useState(0);
+  const [notifications, setNotifications] = useState([]);
   useEffect(() => {
     getWalletValue();
+    getOnePharmacist();
   }, []); // The empty dependency array ensures the effect runs only once
 
   const getWalletValue = async () => {
@@ -31,6 +34,16 @@ export default function Pharm() {
       setRandomPointsInWallet(res.data);
     } catch (error) {
       console.error("Error updating data:", error);
+    }
+  };
+
+  const getOnePharmacist = async () => {
+    try {
+      let username = sessionStorage.getItem("Username");
+      const res = await axios.get("http://localhost:3001/getOnePharmacist", { params: { username } });
+      setNotifications(res.data.Notifications);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -83,6 +96,9 @@ export default function Pharm() {
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>Chat with a doctor</p>
           </div>
+        </div>
+        <div className="text-center mt-10">
+          <NotificationPopup notifications={notifications} />
         </div>
       </div>
     </div>

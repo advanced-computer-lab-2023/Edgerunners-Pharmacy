@@ -6,12 +6,7 @@ function PaymentCashSuccess() {
     return (
         <div>
             <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
-            <div className="justify-center flex mb-4">
-                <a href="/Patient">
-                    <Logo height='4rem' className="mt-6 mb-0" />
-                </a>
-            </div>
-            <div className='text-center mt-40'>
+            <div className='text-center mt-48'>
                 <h1>Order is on its way</h1>
                 <h3 className='text-xl'>You can track your order from <a className='text-sky-600' href='/ViewOrders'>here.</a></h3>
             </div>

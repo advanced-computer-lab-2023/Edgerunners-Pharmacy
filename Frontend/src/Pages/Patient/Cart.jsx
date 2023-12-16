@@ -13,6 +13,7 @@ import {
 import GetCart from "../getCart";
 import GetAddress from "../getAddress";
 import axios from "axios";
+import emailjs from "emailjs-com";
 import { Input } from "postcss";
 import { useNavigate } from "react-router-dom";
 
@@ -125,12 +126,22 @@ function Cart() {
   };
   const handlePayment = async () => {
     try {
+      const pharmacistData = await axios.get("http://localhost:3001/getPharmacist", {});
+
       await Promise.all(CartData.map(async (medicine) => {
         const { medicineName, count } = medicine;
-        await axios.put("http://localhost:3001/updateQuantity", {
+        const response = await axios.put("http://localhost:3001/updateQuantity", {
           Name: medicineName,
           taken: count,
         });
+
+        if (response.data === "Quantity is now zero") {
+          await Promise.all(pharmacistData.data.map(async (pharmacist) => {
+            const { Name, Email, ReqStatus } = pharmacist;
+            if(ReqStatus === "Accepted")
+              await notification(medicineName, Name, Email);
+          }));
+        }
       }));
 
       if (paymentMethod === "payWithVisa") {
@@ -178,11 +189,48 @@ function Cart() {
         date: newFullDate,
         month: newMonth,
       });
+
       console.log("Order request sent successfully");
     } catch (error) {
       console.error("Error updating data:", error);
     }
-  }
+  };
+
+  const notification = async (medicineName, pharmacistName, pharmacistEmail) => {
+    try {
+      const notificationData = {
+        name: pharmacistName,
+        message: `${medicineName} is out of stock`,
+        receiver: pharmacistEmail,
+      };
+
+      if (!notificationData.receiver) {
+        console.error("Recipient email address is empty");
+        // Handle the error or notify the user about the issue
+        return;
+      }
+
+      const response = emailjs.send(
+        "service_0mev55g",
+        "template_y4a9dm4",
+        {
+          name: pharmacistName,
+          message: `${medicineName} is out of stock`,
+          receiver: pharmacistEmail,
+        },
+        "JQ3H-s3Z8rus70cVv"
+      );
+
+      await axios.put("http://localhost:3001/notifyOutOfStock", {
+        notifications: notificationData
+      });
+      
+      console.log(`Notification sent: ${medicineName}`);
+    } catch (error) {
+      console.error(`Error in notification: ${error.message}`);
+      // Handle other errors as needed...
+    }
+  };
 
   if (CartData && CartData.length > 0) {
     return (
@@ -212,7 +260,11 @@ function Cart() {
                         <button className="justify-end text-red-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ml-2" onClick={() => handledecrement(p.medicineName, p.price)}>
                           -
                         </button>
-                        <button className="justify-end text-sky-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ml-3" onClick={() => handleincrement(p.medicineName, p.price)}>
+                        <button
+                          className={`justify-end text-sky-600 outline w-9 h-9 rounded-md mb-2 mt-0.5 ml-3 ${p.count <= 0 ? 'cursor-not-allowed' : ''}`}
+                          onClick={() => handleincrement(p.medicineName, p.price)}
+                          disabled={p.count <= 0}
+                        >
                           +
                         </button>
                         <button className="justify-end ml-80 pl-52" onClick={() => handleremove(p.medicineName)}>
@@ -299,7 +351,7 @@ function Cart() {
         <SidebarPatient pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
         <div className="mt-40">
           <button className="text-sky-600  outline  w-40  h-9 rounded-md shadow ml-16" onClick={routeChange}> Back </button>
-          <div className="h-[16rem] justify-center text-center space-y-4">
+          <div className="h-[16rem] justify-center text-center space-y-4 mt-28">
             <h1>The cart is empty</h1>
             <h3>You can add medicines <a href="/ViewMedPatient">here</a></h3>
           </div>
