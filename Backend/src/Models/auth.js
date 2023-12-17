@@ -189,26 +189,32 @@ const changePassword = async (req, res) => {
             if (user) {
                 await Patient.updateOne({ Username: username }, { $set: { Password: await hashPassword(password) } });
                 res.status(200).send("Patient password successfully updated");
+                return;
             } else {
                 user = await Pharmacist.findOne({ Username: username });
                 if (user) {
                     await Pharmacist.updateOne({ Username: username }, { $set: { Password: await hashPassword(password) } });
                     res.status(200).send("Pharmacist password successfully updated");
+                    return;
                 } else {
                     user = await Admin.findOne({ Username: username });
                     if (user) {
                         await Admin.updateOne({ Username: username }, { $set: { Password: await hashPassword(password) } });
                         res.status(200).send("Admin password successfully updated");
+                        return;
                     } else {
-                        res.status(401).send("User not found");
+                        res.status(200).send("User not found");
+                        return;
                     }
                 }
             }
         } else {
-            res.status(401).send("Password must have at least 3 characters, including 1 uppercase letter, 1 lowercase letter, and 1 digit.");
+            res.status(200).send("Password must have at least 3 characters, including 1 uppercase letter, 1 lowercase letter, and 1 digit.");
+            return;
         }
     } else {
-        res.status(401).send("Passwords don't match");
+        res.status(200).send("Passwords don't match");
+        return;
     }
 }
 

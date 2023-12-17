@@ -409,7 +409,7 @@ class Login extends Component {
                                         }} className="submit">
                                             Sign Up
                                         </button>
-
+                                        <br></br>
                                     </form>
                                 </div>
                             )}
@@ -438,10 +438,14 @@ class Login extends Component {
                                     />
                                     <a href="/ResetPass">Forgot your password?</a>
                                     {this.state.success && (
-                                        <a style={{ color: "green" }}>Login successfull</a>
+                                        <div className="bg-green-500 text-white p-2 rounded-md mb-4">
+                                            Login successful
+                                        </div>
                                     )}
                                     {this.state.error && (
-                                        <a style={{ color: "red" }}>Invalid username or password</a>
+                                        <div className="bg-red-500 text-white p-2 rounded-md mb-4">
+                                            Invalid username or password
+                                        </div>
                                     )}
 
                                     <button onClick={this.signIn}>Sign In</button>

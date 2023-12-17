@@ -449,29 +449,36 @@ const getSales = async (req, res) => {
 const ResetPass = async (req, res) => {
   const newPassword = req.body.Password;
   const email = req.body.Email;
-
-  let user = await Pharmacist.findOne({ Email: req.params.Email });
+  console.log(email);
+  let user = await Pharmacist.findOne({ Email:email});
   if (user) {
     await Pharmacist.updateOne(
       { Email: email, ReqStatus: "Accepted" },
       { $set: { Password: await hashPassword(newPassword) } }
     ).catch("An error happened");
+    res.status(200).send("all good");
+        return;
   } else {
-    user = await Patient.findOne({ Email: req.params.Email });
+    user = await Patient.findOne({ Email: email });
     if (user) {
       await Patient.updateOne(
         { Email: email },
         { $set: { Password: await hashPassword(newPassword) } }
       ).catch("An error happened");
+      res.status(200).send("all good");
+        return;
     } else {
-      user = await Admin.findOne({ Email: req.params.Email });
+      user = await Admin.findOne({ Email: email });
       if (user) {
         await Admin.updateOne(
           { Email: email },
           { $set: { Password: await hashPassword(newPassword) } }
         ).catch("An error happened");
+        res.status(200).send("all good");
+        return;
       } else {
-        res.status(404).send("Email not found");
+        res.status(200).send("Email not found");
+        return;
       }
     }
   }
