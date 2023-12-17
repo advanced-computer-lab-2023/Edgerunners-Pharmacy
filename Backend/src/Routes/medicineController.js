@@ -327,6 +327,13 @@ const getOneMedicine = async (req, res) => {
   res.status(200).json(overthecounter);
 };
 
+const getAllMedicines = async (req, res) => {
+  let filter = {};
+  filter.Status = "Not";
+  const user = await Medicine.find(filter);
+  res.status(200).json(user);
+};
+
 const showAlternatives = async (req, res) => {
   try {
     // Extract URL parameters from the request
@@ -376,4 +383,5 @@ module.exports = {
   setActiveIngredient,
   getOneMedicine,
   showAlternatives,
+  getAllMedicines,
 };
