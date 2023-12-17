@@ -46,6 +46,7 @@ const {
   getOneMedicine,
   getMedicinesPharm,
   showAlternatives,
+  getAllMedicines,
 } = require("./Routes/medicineController");
 
 const {
@@ -108,6 +109,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const cors = require("cors");
 const { protectA, protectPH, protectP, signin, changePassword } = require("./Models/auth");
+const { getPrescriptions } = require("./Routes/prescriptionsController.js");
 
 app.use(cors());
 app.use(
@@ -121,6 +123,8 @@ app.use(
 app.post("/signin", signin);
 app.put("/ResetPass", ResetPass);
 app.put("/changePassword", changePassword);
+
+app.get("/getPrescriptions", getPrescriptions);
 
 app.post("/addPatient", createPatient);
 app.get("/getPatient", getPatients);
@@ -164,6 +168,7 @@ app.put("/archiveMedicine", archiveMedicine);
 app.put("/unarchiveMedicine", unarchiveMedicine);
 app.put("/updateQuantity", updateQuantity);
 app.put("/reverseQuantity", reverseQuantity);
+app.get("/getAllMedicines",getAllMedicines);
 
 app.post("/addAdmin", createAdmin);
 app.get("/getAdmin", getAdmins);

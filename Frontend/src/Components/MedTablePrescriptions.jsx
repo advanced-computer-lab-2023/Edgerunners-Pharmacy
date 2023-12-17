@@ -13,38 +13,128 @@ export default function MedTablePrescriptions() {
   const [forceEffect, setForceEffect] = useState(false);
   const [addedToCart, setAddedToCart] = useState({});
   const [showAlternatives, setShowAlternatives] = useState(false);
-  const OverTheCounter = false;
+  const [prescribedMedicines, setPrescribedMedicines] = useState([]);
+  const [Medicine, setMedicine] = useState([]);
   const navigate = useNavigate();
+  let MedicinalUses = GetMedicinalUse({});
+  let selectedMedicine = [];
+  const uses = MedicinalUses || [];
+  const OverTheCounter = false;
 
   const HandleAlternatives = async (name) => {
     try {
-      const alternatives = await getAlternatives(name);
-
-      navigate(`/Alternatives?medicinename=${encodeURIComponent(name)}&OverTheCounter=${OverTheCounter}`, { state: { alternatives } });
+      navigate(`/Alternatives?medicinename=${encodeURIComponent(name)}&OverTheCounter=${OverTheCounter}`);
     } catch (error) {
       console.error("Error fetching alternatives:", error);
     }
   }
 
-  const getAlternatives = async (medicinename) => {
-    const res = await axios.get(`http://localhost:3001/showAlternatives`, {
-      params: {
-        medicinename,
-        OverTheCounter,
-      },
-    });
-    console.log(res.data);
-    return res.data;
-  };
+  // const selectData = () => {
+  //   let medicinedata = getMedicine();
+  //   let result1 = [];
+  //   // medicinedata.then((resultArray1) => {
+  //   //   for(let i=0;i<resultArray1.length;i++){
+  //   //     result1.push(resultArray1[i]);
+  //   //   }
+  //   // });
+  //   console.log("Medicine data:", medicinedata);
+  //   let prescriptiondata = getPrescriptions();
+  //   prescriptiondata.then((resultArray) => {
+  //     prescriptiondata = resultArray;
+  //   });
+  //   console.log("Prescriptions data:", prescriptiondata);
+  //   selectedMedicine = [];
+  //   for (let i = 0; i < medicinedata.length; i++) {
+  //     if (prescriptiondata.includes(medicinedata[i].Name)) {
+  //       selectedMedicine.push(medicinedata[i]);
+  //     }
+  //   }
+  //   console.log("Selected Medicine:", selectedMedicine);
+  // };
 
-  let MedicinalUses = GetMedicinalUse({});
-  const uses = MedicinalUses || [];
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       selectData();
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-  let Medicine = GetMedicine({
-    Name: name,
-    MedicinalUse: medicinaluse,
-    OverTheCounter,
-  });
+  //   fetchData();
+  // }, []);
+  
+  function Med() {
+    const [med, setMed] = useState();
+    useEffect(() => {
+      getMed();
+      async function getMed() {
+        const res = await axios.get(`http://localhost:3001/getAllMedicines`);
+        setMed(res.data);
+      }
+    }, []);
+    return med;
+  }
+  function MedP() {
+    const [med, setMed] = useState();
+    useEffect(() => {
+      getMed();
+      async function getMed() {
+        const res = await axios.get("http://localhost:3001/getPrescriptions", {
+          params: {
+            Patient: sessionStorage.getItem("Username"),
+          },
+        });
+        setMed(res.data);
+      }
+    }, []);
+    return med;
+  }
+
+  // const getMedicine = async () => {
+  //   try {
+  //     const res = await axios.get(`http://localhost:3001/getAllMedicines`);
+  //     setMedicine(res.data);
+  //     console.log("medicine:", res.data);
+  //     return res;
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+  let medi = Med();
+  let Per = MedP();
+
+  if(medi && Per){
+    let test = [];
+    for (let index = 0; index < medi.length; index++) {
+      test.unshift(medi[index].Name);
+    }
+    for (let i = 0; i < test.length; i++) {
+          if (Per.includes(test[i])) {
+            selectedMedicine.push(medi[i]);
+          }
+        }
+        console.log("Selected: " + selectedMedicine);
+  }
+
+
+  // const getPrescriptions = async () => {
+  //   if (sessionStorage.getItem("type") === "Patient") {
+  //     try {
+  //       const res = await axios.get("http://localhost:3001/getPrescriptions", {
+  //         params: {
+  //           Patient: sessionStorage.getItem("Username"),
+  //         },
+  //       });
+  //       setPrescribedMedicines(res.data);
+  //       console.log("prescriptions:", res.data);
+  //       return res.data;
+  //     } catch (error) {
+  //       console.error("Error fetching prescriptions:", error);
+  //       throw error;
+  //     }
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,7 +182,7 @@ export default function MedTablePrescriptions() {
     }
   };
 
-  if (Medicine) {
+  if (selectedMedicine.length > 0) {
     return (
       <div>
         <div className="form-prescription space-x-3 justify-center flex mb-4 mt-4">
@@ -130,7 +220,7 @@ export default function MedTablePrescriptions() {
         </div>
 
         <div className="grid grid-cols-4 flex -mt-44 ml-20 pb-10">
-          {Medicine.map((p, index) => {
+          {selectedMedicine.map((p, index) => {
             return (
               <div key={index} className="mt-10 mb-2 pb-2 w-[20rem] h-[16rem] rounded-md shadow-md  bg-sky-50 justify-center space-y-4">
                 <div className="justify-center pl-4 mt-6">
@@ -190,5 +280,7 @@ export default function MedTablePrescriptions() {
         </div>
       </div>
     );
+  } else {
+    return <div className="h-[16rem] justify-center text-center space-y-4 mt-48"><h1>No medicine found</h1></div>;
   }
 }
