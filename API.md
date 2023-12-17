@@ -184,6 +184,11 @@
 | :--------- | :------- | :----------- |
 | `Username` | `String` | **Required** |
 
+#### getPrescriptions
+```http
+GET /getPrescriptions
+```
+
 #### createPharmacist
 ```http
 POST /addPharmacist
@@ -299,6 +304,11 @@ PUT /updateQuantity
 PUT /reverseQuantity
 ```
 
+#### getAllMedicines
+```http
+GET /getAllMedicines
+```
+
 #### createAdmin
 ```http
 POST /addAdmin
@@ -322,4 +332,44 @@ DELETE /deleteAdmin
 #### getOneAdmin
 ```http
 GET /getOneAdmin
+```
+
+#### sendChatPatient
+```http
+PUT /sendChatPatient
+```
+
+#### sendChatDoctor
+```http
+PUT /sendChatDoctor
+```
+
+#### getChat
+```http
+GET /getChat
+```
+
+#### getAllChat
+```http
+GET /getAllChat
+```
+
+#### getDoctorsChat
+```http
+GET /getDoctorsChat
+```
+
+#### getPatientsChat
+```http
+GET /getPatientsChat
+```
+
+#### getDDoctorsChat
+```http
+GET /getDDoctorsChat
+```
+
+#### getDoctors
+```http
+GET /getDoctor
 ```
