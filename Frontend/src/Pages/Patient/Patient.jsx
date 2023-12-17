@@ -91,7 +91,7 @@ export default function Patient() {
                 size="4x"
                 style={{ color: "#0284C7" }}
               />
-              <a href="https://www.youtube.com/watch?v=7Sq6ookE6nA&t=10s&ab_channel=Achilles" style={{ textDecoration: "none" }}>
+              <a href="/ChatApp" style={{ textDecoration: "none" }}>
                 <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>Pharmacy</h3>
               </a>
               <p style={{ textAlign: "center", color: "gray" }}>Chat with a pharmacist</p>

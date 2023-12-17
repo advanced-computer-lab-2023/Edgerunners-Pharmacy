@@ -10,6 +10,14 @@ require("dotenv").config();
 const stripe = require('stripe')('sk_test_51OAYarCTaVksTfn04m2fjCWyIUscrRLMD57NmZ58DTz0O2ljqL8P42WLklVXPUZGPvmUD4hlxEkbit9nfpSPCWEB00UWnsTWUw');
 
 const {
+  getDoctors,
+} = require("./Routes/doctorController");
+
+const {
+  getPrescriptions
+} = require("./Routes/prescriptionsController.js");
+
+const {
   createPatient,
   getPatients,
   updatePatient,
@@ -67,6 +75,18 @@ const {
   getOnePharmacist,
   notifyOutOfStock,
 } = require("./Routes/pharmacistController");
+
+const {
+  createChat,
+  getChat,
+  getAllChat,
+  sendChatPatient,
+  sendChatDoctor,
+  getDoctorsChat,
+  getPatientsChat,
+  getDDoctorsChat,
+} = require("./Routes/chatController");
+const Chat = require("./Models/Chat");
 
 const MongoURI =
   process.env.MONGO_URI ||
@@ -140,6 +160,8 @@ app.get("/getSales", getSales);
 app.put("/popOrder", popOrder);
 app.get("/getOnePatient", getOnePatient);
 
+app.get("/getPrescriptions", getPrescriptions);
+
 app.post("/addPharmacist", createPharmacist);
 app.post("/uploadFile", uploadFile);
 app.get("/getPharmacist", getPharmacists);
@@ -171,7 +193,14 @@ app.put("/updateAdmin", updateAdmin);
 app.delete("/deleteAdmin", deleteAdmin);
 app.get("/getOneAdmin", getOneAdmin);
 
-
+app.put("/sendChatPatient", sendChatPatient);
+app.put("/sendChatDoctor", sendChatDoctor);
+app.get("/getChat", getChat);
+app.get("/getAllChat", getAllChat);
+app.get("/getDoctorsChat", getDoctorsChat);
+app.get("/getPatientsChat", getPatientsChat);
+app.get("/getDDoctorsChat", getDDoctorsChat);
+app.get("/getDoctor", getDoctors);
 //STRIPE ------------------------------------------------------------------------
 
 const storeItems = new Map([
