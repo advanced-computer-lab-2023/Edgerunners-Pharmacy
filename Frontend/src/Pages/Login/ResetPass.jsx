@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback, useRef } from "react";
 import emailjs from "emailjs-com";
 import axios from "axios";
-import "./resetPass.css"; // Import the CSS file
+import "./resetPass.css";
 import { Link } from "react-router-dom";
 
 export default function ResetPass() {
@@ -15,13 +15,16 @@ export default function ResetPass() {
   const [NewPass, setNewPass] = useState("");
   const [Success, setSuccess] = useState(false);
   const [Failed, setFailed] = useState(false);
+  const [emailerror, setEmailerror] = useState(false);
+  const [OTPError, setOTPerror] = useState(false);
+  const [error, setError] = useState(false);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const inputRefs = useRef([]);
   const passwordValidation = () => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{3,}$/;
     if (passwordRegex.test(NewPass)) {
-      ResetPass(); // Call the signup function here or perform other actions
+      ResetPass();
     } else {
-      // Show error in the register page
       setFailed(true);
     }
   };
@@ -34,6 +37,9 @@ export default function ResetPass() {
     if (parseInt(res1) === final1 && parseInt(res2) === final2) {
       setVerified(true);
       setOTP(false);
+      setOTPerror(false);
+    } else {
+      setOTPerror(true);
     }
   };
 
@@ -44,7 +50,7 @@ export default function ResetPass() {
   };
 
   const handle = () => {
-    if (Email !== "") {
+    if (emailRegex.test(Email)) {
       console.log(final1 + "" + final2);
       emailjs.send(
         "service_bow4wjw",
@@ -57,9 +63,11 @@ export default function ResetPass() {
         "EDcsSrK17MRIgCsU9"
       );
       setIntial(false);
+      setEmailerror(false);
       setOTP(true);
+    } else {
+      setEmailerror(true);
     }
-
   };
 
   const ResetPass = async () => {
@@ -67,16 +75,24 @@ export default function ResetPass() {
       Email: Email,
       Password: NewPass,
     });
-    setVerified(false);
+    console.log(res.data);
     if (res.data === "all good") {
+      setError(false);
       setSuccess(true);
       setFailed(false);
+      setVerified(false);
       window.location.href = "/";
     } else {
-      setFailed(true);
+      if (res.data === "Email not found") {
+        setError(true);
+        setFailed(false);
+      } else {
+        setFailed(true);
+        setError(false);
+      }
     }
   };
-
+  
   return (
     <div>
       <div className="items-center flex justify-center mt-28">
@@ -99,6 +115,11 @@ export default function ResetPass() {
                   />
                 ))}
               </div>
+              {OTPError && (
+                <div className="bg-red-500 text-white p-2 rounded-md mb-4">
+                  Incorrect OTP
+                </div>
+              )}
               <button className="button" onClick={handleVerify}>Verify</button>
             </React.Fragment>
 
@@ -112,6 +133,11 @@ export default function ResetPass() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="input-field"
               />
+              {emailerror && (
+                <div className="bg-red-500 text-white p-2 rounded-md mb-4">
+                  enter valid email
+                </div>
+              )}
               <button className="button" onClick={handle}>
                 Reset Password
               </button>
@@ -126,13 +152,26 @@ export default function ResetPass() {
                 onChange={(e) => setNewPass(e.target.value)}
                 className="input-field"
               />
+              {Success && (
+                <div className="bg-green-500 text-white p-2 rounded-md mb-4">
+                  Password updated Successfully
+                </div>
+              )}
+              {Failed && (
+                <div className="bg-red-500 text-white p-2 rounded-md mb-4">
+                  Your password doesn't meet requirements
+                </div>
+              )}
+              {error && (
+                <div className="bg-red-500 text-white p-2 rounded-md mb-4" >
+                  Error in the email
+                </div>
+              )}
               <button className="button" onClick={passwordValidation}>
                 Submit
               </button>
             </React.Fragment>
           )}
-          {Success && <p className="message">Password updated successfully.</p>}
-          {Failed && <p className="message">An error occurred.</p>}
           <div className="back-to-login">
             <Link to="/">Back to Login</Link>
           </div>
