@@ -144,7 +144,7 @@ app.post("/addPharmacist", createPharmacist);
 app.post("/uploadFile", uploadFile);
 app.get("/getPharmacist", getPharmacists);
 app.put("/updatePharmacist", updatePharmacist);
-app.put("/deletePharmacist", deletePharmacist);
+app.delete("/deletePharmacist", deletePharmacist);
 app.post("/uploadDocument", uploadDocument);
 app.get("/viewFiles/:filename", viewFiles);
 app.get("/getOnePharmacist", getOnePharmacist);

@@ -54,9 +54,21 @@ To setup everything
   npm install
 ```
 
+- sample env file:
+
+```bash
+  MONGO_URI = 'mongo database'
+  PORT = 3001
+  JWT_SECRETA = 'Admin secret'
+  JWT_SECRETPH = 'Pharmacist secret'
+  JWT_SECRETP = 'Patient secret'
+```
+
 ## Screenshots of website
 
 ![Login](Screenshots/login.png)
+![Register1](Screenshots/register1.png)
+![Register2](Screenshots/register2.png)
 ![HomePage1](Screenshots/homepage1.png)
 ![HomePage2](Screenshots/homepage2.png)
 ![HomePage3](Screenshots/homepage3.png)
@@ -250,11 +262,11 @@ const signin = async (req, res) => {
 
 ## Tests using postman
 
-![test login patient](Screenshots/test1.png)
-![test login doctor](Screenshots/test2.png)
-![test get all patients](Screenshots/test3.png)
-![test patient wallet ammount](Screenshots/test4.png)
-![test get my health records](Screenshots/test5.png)
+![test login admin](Screenshots/test1.png)
+![test get all patients](Screenshots/test2.png)
+![test get all medicinal uses](Screenshots/test3.png)
+![test get alternatives to medicine](Screenshots/test4.png)
+![test get patient cart](Screenshots/test5.png)
 
 ## Contribution
 
