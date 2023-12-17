@@ -12,6 +12,7 @@ import {
   faHandHoldingMedical,
   faPrescriptionBottleMedical,
   faSyringe,
+  faUserInjured,
   faShoppingCart,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -52,9 +53,7 @@ export default function Pharm() {
       <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
       <div className="footer mt-20">
         <div className="headers">
-          <h3>Choose one of our services
-            {/* <br></br>What You Need..<a href="https://www.youtube.com/watch?v=NlkYOKr2JXE&ab_channel=naz">.</a> */}
-          </h3>
+          <h3>Choose one of our services</h3>
         </div>
         <div className="footer-in row">
           <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
@@ -89,12 +88,25 @@ export default function Pharm() {
               size="4x"
               style={{ color: "#0284C7" }}
             />
-            <a style={{ textDecoration: "none" }}>
+            <a href="/ChatAppD" style={{ textDecoration: "none" }}>
               <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
                 Clinic
               </h3>
             </a>
             <p style={{ textAlign: "center", color: "gray" }}>Chat with a doctor</p>
+          </div>
+          <div className="col-4 text-center d-flex flex-column align-items-center bg-sky-50">
+            <FontAwesomeIcon
+              icon={faUserInjured}
+              size="4x"
+              style={{ color: "#0284C7" }}
+            />
+            <a href="/ChatAppP" style={{ textDecoration: "none" }}>
+              <h3 style={{ fontSize: "30px", textAlign: "center", marginTop: "10px" }}>
+                Patient
+              </h3>
+            </a>
+            <p style={{ textAlign: "center", color: "gray" }}>Chat with a patient</p>
           </div>
         </div>
         <div className="text-center mt-10">

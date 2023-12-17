@@ -44,6 +44,16 @@ const SidebarPharm = () => {
             <div className="navbar-collapse" id="navbarExample01">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/ChatAppD">
+                    Chat with Doctor
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/ChatAppP">
+                    Chat with Patient
+                  </a>
+                </li>
+                <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="/ViewMedPharm">
                     View Medicine
                   </a>
