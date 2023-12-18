@@ -21,6 +21,8 @@ Our goal is straightforward: to break down the complexities of traditional healt
 
 ## Build Status
 
+ - No feedback provided if there are missing fields when registering, and if no more medicine amount can be added for patient.
+
 ![GIF Waiting](https://media.giphy.com/media/jc2PkKKr3clTBekMzn/giphy.gif)
 
 ## Code Style
@@ -168,6 +170,8 @@ root.render(
         <Route path="/ViewMedPharm" element={<ViewMedPharmCopy />} />
         <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="/ViewSales" element={<ViewSales />} />
+        <Route path="/ChatAppP" element={<ChatAppP />} />
+        <Route path="/ChatAppD" element={<ChatAppD />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
@@ -189,6 +193,7 @@ root.render(
         <Route path="/PaymentCanceled" element={<PaymentCanceled />} Component={PaymentCanceled} />
         <Route path="/PaymentCashSuccess" element={<PaymentCashSuccess />} />
         <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/ChatApp" element={<ChatApp />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
