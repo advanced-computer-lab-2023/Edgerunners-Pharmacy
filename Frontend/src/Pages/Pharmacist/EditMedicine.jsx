@@ -230,7 +230,7 @@ export default function EditMedicine() {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {p.Picture}
+                              {p.Picture || "N/A"}
                             </Typography>)}
                         </td>
                         <td className={classes}>

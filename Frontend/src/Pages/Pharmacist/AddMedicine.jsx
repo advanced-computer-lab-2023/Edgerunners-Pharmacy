@@ -149,10 +149,10 @@ function AddMedicine(props) {
                                             <option value="" disabled>
                                                 Select Type
                                             </option>
-                                            <option value="OverTheCounter" enabled>
+                                            <option value="OverTheCounter" enabled="true">
                                                 Over The Counter
                                             </option>
-                                            <option value="Prescription" enabled>
+                                            <option value="Prescription" enabled="true">
                                                 Prescription
                                             </option>
                                         </select>

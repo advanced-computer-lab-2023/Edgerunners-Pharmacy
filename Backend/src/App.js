@@ -129,7 +129,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const cors = require("cors");
 const { protectA, protectPH, protectP, signin, changePassword } = require("./Models/auth");
-const { getPrescriptions } = require("./Routes/prescriptionsController.js");
 
 app.use(cors());
 app.use(

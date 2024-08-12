@@ -207,7 +207,7 @@ export default function MedTablePrescriptions() {
               setMedicinalUse(e.target.value);
             }}
           >
-            <option value="" enabled>
+            <option value="" enabled="true">
               Select Medicinal Use
             </option>
             {Array.isArray(uses) &&
